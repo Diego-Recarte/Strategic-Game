@@ -132,6 +132,7 @@ public class Ruleta extends JPanel {
     }
     public void inicio(){
         tempo.start();
+        System.out.println("hola");
     }
     public Double ConversionAngulo(double rad){
         

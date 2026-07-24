@@ -10,9 +10,10 @@ package proyecto1_22541083_programación2;
  */
 import javax.swing. *;
 import java.awt. *;
+import javax.swing.JPanel;
 import java.util.ArrayList;
-import java.util.Arrays;
-public class login extends JFrame{
+public class CrearCuenta extends JFrame {
+    
     private JLabel texto1;
     private JLabel texto2;
     private JPasswordField contra;
@@ -23,15 +24,15 @@ public class login extends JFrame{
     private JMenuBar barra;
     private JButton botonb;
     
-    public login (){
-        setTitle ("login");
+    
+    public CrearCuenta (){
+        setTitle ("Create Account");
          setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 450);
         setLayout(new BorderLayout(10, 10));
         getContentPane().setBackground(Color.WHITE);
         Inicializarbotones();
         inicializarTimer();
-        Inicializarbarra();
        
         
         setLocationRelativeTo(null);
@@ -54,9 +55,10 @@ public class login extends JFrame{
             tempo.stop();
         });
     }
+           
+          
     
     public void Inicializarbotones(){
-        
         JPanel panelLogin = new JPanel();
         JPanel Panelenvuelto =new JPanel(new GridBagLayout());
         Panelenvuelto.setOpaque(false);
@@ -142,35 +144,32 @@ public class login extends JFrame{
         btnIngresar.setFocusable(false);
 
         btnIngresar.addActionListener(e -> {
-            int index;
-            index =Encontrar (0);
             
-            if (Globales.jugadores.isEmpty()){
-                label.setText("No existen usuarios activos");
-                label.setVisible(true);
-                tempo.start();
+            
+            if (ComprobarU() && ComprobarC()){
+                Globales.jugadores.add(new jugador (user.getText(),contra.getPassword()));
+                Perfil j = new Perfil(Globales.jugadores.getLast());
+                j.setVisible(true);
             }
-            else if (index ==-1){
-                label.setText("No se encontro Usuario");
-                label.setVisible(true);
-                tempo.start();
-            }
-            else {
-                if (Arrays.equals(Globales.jugadores.get(index).getPassword(),contra.getPassword())){
-                    Perfil j = new Perfil(Globales.jugadores.get(index));
-                    j.setVisible(true);
-                }else{
-                    label.setText("Contraseña incorrecta");
+            else{
+                if (ComprobarU()==false && ComprobarC ()==false){
+                    label.setText ("Falta User y Contra");
                     label.setVisible(true);
                     tempo.start();
                 }
                 
+                label.setVisible (true);
+                repaint();
+                tempo.start();
                 
             }
+                    
+                
 
             
 
         });
+        
         label = new JLabel("Texto");
 
         label.setFont(new Font("Arial", Font.BOLD, 14));
@@ -180,12 +179,10 @@ public class login extends JFrame{
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setPreferredSize(new Dimension(150, 90));
         label.setVisible (false);
-        
         panelLogin.add(label);
+        
 
         panelLogin.add(btnIngresar);
-        
-        
         
         Panelenvuelto.add(panelLogin);
 
@@ -195,6 +192,42 @@ public class login extends JFrame{
         add(Panelenvuelto, BorderLayout.CENTER);
     }
     
+    
+    private boolean ComprobarC(){
+        
+        if ( contra.getPassword() == null || contra.getPassword().length ==0){
+            label.setText("Ingrese contraseña");
+            return false;
+            
+            
+            
+        }else if (contra.getPassword().length != 5){
+            label.setText("Debe tener 5 digitos");
+            return false;
+        }
+            
+        else{
+            return true;
+        }
+            
+
+       
+    }
+    private boolean ComprobarU(){
+        
+        if (user.getText().length() ==0){
+            label.setText("Ingrese usuario");
+            return false;
+            
+       }
+            
+        else{
+            return true;
+        }
+            
+
+       
+    }
     private void Inicializarbarra(){
         barra = new JMenuBar();
             barra.setBorderPainted(false);
@@ -239,28 +272,4 @@ public class login extends JFrame{
             
             
     }
-            
-    
-    
-    private int  Encontrar(int name){
-        if (name< Globales.jugadores.size()){
-            if (Globales.jugadores.get(name).getUser().equals(user.getText())){
-
-                return name;
-            }
-            else
-                return Encontrar (name+1);
-        }
-        else
-            return -1;
-            
-        
-        
-    }
-    
-    
 }
-    
-       
-    
-            

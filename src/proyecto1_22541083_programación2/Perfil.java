@@ -17,14 +17,18 @@ public class Perfil extends JFrame{
     private JMenuItem perfil;
     private JMenuItem Desabilitar;
     private JMenuItem Logout;
-    public Perfil(){
+    private JMenuItem Cambio;
+    private JMenuItem Ranking;
+            
+    private JMenu menu0;
+    public Perfil(jugador user){
         super("Tu perfil");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 500);
         setLayout(new BorderLayout(10, 10));
         getContentPane().setBackground(Color.WHITE);
-        Inicialivarbarra();
+        Inicialivarbarra(user);
         Inicializarinicio();
         
 
@@ -35,7 +39,7 @@ public class Perfil extends JFrame{
     
     
     
-    public void Inicialivarbarra(){
+    public void Inicialivarbarra(jugador user){
         
             barra = new JMenuBar();
             barra.setBorderPainted(false);
@@ -45,14 +49,21 @@ public class Perfil extends JFrame{
             barra.setFont(new Font("Arial", Font.BOLD, 14));
             barra.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 20));
 
-            menu = new JMenu("Menu");
+            menu = new JMenu("Mi Perfil");
             menu.setForeground(Color.WHITE);
             menu.setFont(new Font("Arial", Font.BOLD, 14));
             menu.setOpaque(false);
             menu.setBorderPainted(false);
             menu.setHorizontalAlignment(SwingConstants.CENTER);
+            
+            menu0 = new JMenu("Reportes");
+            menu0.setForeground(Color.WHITE);
+            menu0.setFont(new Font("Arial", Font.BOLD, 14));
+            menu0.setOpaque(false);
+            menu0.setBorderPainted(false);
+            menu0.setHorizontalAlignment(SwingConstants.CENTER);
 
-            perfil = new JMenuItem("Perfil");
+            perfil = new JMenuItem("ultimos juegos");
             perfil.setForeground(Color.WHITE);
             perfil.setBackground(Color.RED);
             perfil.setFont(new Font("Arial", Font.BOLD, 14));
@@ -60,6 +71,16 @@ public class Perfil extends JFrame{
             perfil.setBorderPainted(false);
 
             perfil.addActionListener(e -> {
+
+            });
+            Ranking = new JMenuItem("Ranking");
+            Ranking.setForeground(Color.WHITE);
+            Ranking.setBackground(Color.RED);
+            Ranking.setFont(new Font("Arial", Font.BOLD, 14));
+            Ranking.setHorizontalAlignment(SwingConstants.LEFT);
+            Ranking.setBorderPainted(false);
+
+            Ranking.addActionListener(e -> {
 
             });
             Desabilitar = new JMenuItem("Deshabilitar");
@@ -73,6 +94,18 @@ public class Perfil extends JFrame{
             Desabilitar.addActionListener(e -> {
 
             });
+            
+            Cambio = new JMenuItem("Cambiar Contra");
+            Cambio.setForeground(Color.WHITE);
+            Cambio.setBackground(Color.RED);
+            Cambio.setFont(new Font("Arial", Font.BOLD, 14));
+            Cambio.setHorizontalAlignment(SwingConstants.LEFT);
+            Cambio.setSize(40,80);
+            Cambio.setBorderPainted(false);
+
+            Cambio.addActionListener(e -> {
+
+            });
             Logout = new JMenuItem("Log out");
             Logout.setForeground(Color.WHITE);
             Logout.setBackground(Color.RED);
@@ -81,24 +114,31 @@ public class Perfil extends JFrame{
             Logout.setBorderPainted(false);
 
             Logout.addActionListener(e -> {
-                login l = new login ();
+                MenuInicio l = new MenuInicio ();
+        
                 l.setVisible(true);
                 this.dispose();
             });
+            
 
-            JLabel texto = new JLabel("Texto");// argegar nombre de persona 
-            texto.setForeground(Color.WHITE);
-            texto.setOpaque(false);
-            texto.setFont(new Font("Arial", Font.BOLD, 14));
-            texto.setHorizontalAlignment(SwingConstants.CENTER);
+            nombre = new JLabel(user.getUser());// argegar nombre de persona 
+            nombre.setForeground(Color.WHITE);
+            nombre.setOpaque(false);
+            nombre.setFont(new Font("Arial", Font.BOLD, 14));
+            nombre.setHorizontalAlignment(SwingConstants.CENTER);
 
-            menu.add(perfil);
+            
+            
+            menu.add(Cambio);
             menu.add(Desabilitar);
             menu.add(Logout);
+            menu0.add(Ranking);
+            menu0.add(perfil);
         
     
-            barra.add(texto);
+            barra.add(nombre);
             barra.add(Box.createHorizontalGlue());
+            barra.add(menu0);
             barra.add(menu);
             
             

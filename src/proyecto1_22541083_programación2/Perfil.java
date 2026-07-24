@@ -21,14 +21,14 @@ public class Perfil extends JFrame{
     private JMenuItem Ranking;
             
     private JMenu menu0;
-    public Perfil(jugador user){
+    public Perfil(jugador user,int index){
         super("Tu perfil");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 500);
         setLayout(new BorderLayout(10, 10));
         getContentPane().setBackground(Color.WHITE);
-        Inicialivarbarra(user);
+        Inicialivarbarra(user, index);
         Inicializarinicio();
         
 
@@ -39,7 +39,7 @@ public class Perfil extends JFrame{
     
     
     
-    public void Inicialivarbarra(jugador user){
+    public void Inicialivarbarra(jugador user, int index){
         
             barra = new JMenuBar();
             barra.setBorderPainted(false);
@@ -92,11 +92,14 @@ public class Perfil extends JFrame{
             Desabilitar.setBorderPainted(false);
 
             Desabilitar.addActionListener(e -> {
+                Eliminar d = new Eliminar (this,index);
+                d.setVisible(true);
 
             });
             
             Cambio = new JMenuItem("Cambiar Contra");
             Cambio.setForeground(Color.WHITE);
+            
             Cambio.setBackground(Color.RED);
             Cambio.setFont(new Font("Arial", Font.BOLD, 14));
             Cambio.setHorizontalAlignment(SwingConstants.LEFT);
@@ -104,7 +107,11 @@ public class Perfil extends JFrame{
             Cambio.setBorderPainted(false);
 
             Cambio.addActionListener(e -> {
-
+                    cambioC cam = new cambioC(this, user);
+                    cam.setVisible(true);
+                    
+                    
+                    
             });
             Logout = new JMenuItem("Log out");
             Logout.setForeground(Color.WHITE);

@@ -157,7 +157,7 @@ public class login extends JFrame{
             }
             else {
                 if (Arrays.equals(Globales.jugadores.get(index).getPassword(),contra.getPassword())){
-                    Perfil j = new Perfil(Globales.jugadores.get(index));
+                    Perfil j = new Perfil(Globales.jugadores.get(index), index);
                     j.setVisible(true);
                 }else{
                     label.setText("Contraseña incorrecta");

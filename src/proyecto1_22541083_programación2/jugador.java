@@ -36,6 +36,11 @@ public class jugador {
     public char[] getPassword() {
         return password;
     }
+
+    public void setPassword(char[] password) {
+        this.password = password;
+    }
+    
     
     
     

@@ -81,6 +81,8 @@ public class Perfil extends JFrame{
             Ranking.setBorderPainted(false);
 
             Ranking.addActionListener(e -> {
+                Ranking rank = new Ranking(this);
+                rank.setVisible(true);
 
             });
             Desabilitar = new JMenuItem("Deshabilitar");

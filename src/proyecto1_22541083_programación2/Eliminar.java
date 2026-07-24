@@ -22,7 +22,7 @@ public class Eliminar extends JDialog {
 
     public Eliminar (JFrame Perfil, int index) {
         super(Perfil, "Deshabilitar", true);
-        
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         panel = new JPanel();
         conten = new JPanel(new GridBagLayout());
 

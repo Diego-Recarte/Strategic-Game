@@ -33,7 +33,7 @@ public class CrearCuenta extends JFrame {
         getContentPane().setBackground(Color.WHITE);
         Inicializarbotones();
         inicializarTimer();
-       
+       Inicializarbarra();
         
         setLocationRelativeTo(null);
         setVisible(true);
@@ -145,14 +145,17 @@ public class CrearCuenta extends JFrame {
 
         btnIngresar.addActionListener(e -> {
             
-            
-            if (ComprobarU() && ComprobarC()){
+            int compU = ComprobarU();
+            int compC = ComprobarC();
+                    
+            if (compU==2 && compC==2){
                 Globales.jugadores.add(new jugador (user.getText(),contra.getPassword()));
                 Perfil j = new Perfil(Globales.jugadores.getLast(), Globales.jugadores.size()-1);
                 j.setVisible(true);
+                this.dispose();
             }
             else{
-                if (ComprobarU()==false && ComprobarC ()==false){
+                if (compU==0 && compC ==0){
                     label.setText ("Falta User y Contra");
                     label.setVisible(true);
                     tempo.start();
@@ -193,40 +196,67 @@ public class CrearCuenta extends JFrame {
     }
     
     
-    private boolean ComprobarC(){
+    private int ComprobarC(){
         
-        if ( contra.getPassword() == null || contra.getPassword().length ==0){
+        if (contra.getPassword().length ==0){
             label.setText("Ingrese contraseña");
-            return false;
+            return 0;
             
             
             
         }else if (contra.getPassword().length != 5){
             label.setText("Debe tener 5 digitos");
-            return false;
+            return 1;
         }
             
         else{
-            return true;
+            return 2;
         }
             
 
        
     }
-    private boolean ComprobarU(){
+    private int ComprobarU(){
         
         if (user.getText().length() ==0){
             label.setText("Ingrese usuario");
-            return false;
+            return 0;
             
-       }
+       } else if (isusuarioexistente (0)){
+           
+           label.setText("Usuario existente");
+            return 1;
+        
+    }
             
         else{
-            return true;
+            return 2;
         }
             
 
        
+    }
+    
+    private boolean isusuarioexistente (int index){
+        if (Globales.jugadores.size()> index){
+            
+        
+            
+            if (user.getText(). equals (Globales.jugadores.get(index).getUser())){
+                return true;
+            }else{
+                return isusuarioexistente(index+1);
+            }
+            
+            
+        }
+        else
+        {
+            return false;
+                   
+        }
+            
+        
     }
     private void Inicializarbarra(){
         barra = new JMenuBar();

@@ -63,7 +63,7 @@ public class Perfil extends JFrame{
             menu0.setBorderPainted(false);
             menu0.setHorizontalAlignment(SwingConstants.CENTER);
 
-            perfil = new JMenuItem("ultimos juegos");
+            perfil = new JMenuItem("historial");
             perfil.setForeground(Color.WHITE);
             perfil.setBackground(Color.RED);
             perfil.setFont(new Font("Arial", Font.BOLD, 14));
@@ -71,8 +71,9 @@ public class Perfil extends JFrame{
             perfil.setBorderPainted(false);
 
             perfil.addActionListener(e -> {
-
-            });
+                    partidasR par = new partidasR(user, this);
+                    par.setVisible(true);
+                            });
             Ranking = new JMenuItem("Ranking");
             Ranking.setForeground(Color.WHITE);
             Ranking.setBackground(Color.RED);

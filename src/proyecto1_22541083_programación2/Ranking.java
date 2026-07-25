@@ -55,7 +55,7 @@ public class Ranking extends JDialog{
 
 
 
-            setLocationRelativeTo(null);
+            setLocationRelativeTo(Perfil);
             
             
     }

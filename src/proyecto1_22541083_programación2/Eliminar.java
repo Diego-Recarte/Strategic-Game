@@ -19,9 +19,13 @@ public class Eliminar extends JDialog {
     private Timer tempo;
     private JPanel panel;
     private JPanel conten;
+    private JMenuBar barra;
+    private JButton botonb;
 
     public Eliminar (JFrame Perfil, int index) {
         super(Perfil, "Deshabilitar", true);
+        inicializarTimer();
+        Inicializarbarra();
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         panel = new JPanel();
         conten = new JPanel(new GridBagLayout());
@@ -39,6 +43,7 @@ public class Eliminar extends JDialog {
         
         labelE = new JLabel("");
         labelE.setHorizontalAlignment(SwingConstants.CENTER);
+        labelE.setForeground(Color.RED);
         labelE.setOpaque(false);
 
         campo = new JTextField();
@@ -68,6 +73,7 @@ public class Eliminar extends JDialog {
             }
             else{
                 labelE.setText("El valor no es igual");
+                tempo.start();
                 
             }
             
@@ -77,6 +83,7 @@ public class Eliminar extends JDialog {
         panel.add(label);
         panel.add(campo);
         panel.add(boton);
+        panel.add(labelE);
         
         conten.add(panel);
         
@@ -85,14 +92,56 @@ public class Eliminar extends JDialog {
         setSize(500, 650);
         setLocationRelativeTo(Perfil);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setJMenuBar(barra);
     }
     
     public void inicializarTimer(){
         tempo = new Timer (2100, ev -> {
-            label.setText("");
+            labelE.setText("");
             repaint();
             tempo.stop();
         });
+    }
+    
+    public void Inicializarbarra(){
+        barra = new JMenuBar();
+            barra.setBorderPainted(false);
+            barra.setMargin(new Insets(5, 5, 5, 5));
+            barra.setBackground(Color.red);
+            barra.setForeground(Color.WHITE);
+            barra.setFont(new Font("Arial", Font.BOLD, 14));
+            barra.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 20));
+            
+            
+            
+        botonb = new JButton("regresar");
+
+        botonb.setFont(new Font("Arial", Font.BOLD, 15));
+
+        botonb.setBackground(Color.red);
+
+        botonb.setForeground(Color.WHITE);
+
+        botonb.setFocusable(false);
+        botonb.setBorderPainted(false);
+
+        botonb.addActionListener(e -> {
+            
+        
+            
+            this.dispose();
+            
+            
+        });
+            
+        
+            
+        barra.add(botonb);
+            
+            
+            
+            
+        
     }
     
 

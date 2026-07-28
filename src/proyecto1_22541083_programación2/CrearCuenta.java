@@ -25,6 +25,8 @@ public class CrearCuenta extends JFrame {
     private JButton botonb;
     
     
+    private String nombre;
+    
     public CrearCuenta (){
         setTitle ("Create Account");
          setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -144,12 +146,16 @@ public class CrearCuenta extends JFrame {
         btnIngresar.setFocusable(false);
 
         btnIngresar.addActionListener(e -> {
+             nombre = user.getText();
+             nombre = nombre.trim();
             
             int compU = ComprobarU();
             int compC = ComprobarC();
+            
+            
                     
             if (compU==2 && compC==2){
-                Globales.jugadores.add(new jugador (user.getText(),contra.getPassword()));
+                Globales.jugadores.add(new jugador (nombre,contra.getPassword()));
                 Perfil j = new Perfil(Globales.jugadores.getLast(), Globales.jugadores.size()-1);
                 j.setVisible(true);
                 this.dispose();
@@ -218,7 +224,7 @@ public class CrearCuenta extends JFrame {
     }
     private int ComprobarU(){
         
-        if (user.getText().length() ==0){
+        if (nombre.length() ==0){
             label.setText("Ingrese usuario");
             return 0;
             
@@ -242,7 +248,7 @@ public class CrearCuenta extends JFrame {
             
         
             
-            if (user.getText(). equals (Globales.jugadores.get(index).getUser())){
+            if (nombre. equals (Globales.jugadores.get(index).getUser())){
                 return true;
             }else{
                 return isusuarioexistente(index+1);

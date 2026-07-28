@@ -40,6 +40,11 @@ public class jugador {
     public void setPassword(char[] password) {
         this.password = password;
     }
+
+    public int getPuntos() {
+        return puntos;
+    }
+    
     
     
     

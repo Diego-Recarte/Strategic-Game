@@ -10,6 +10,7 @@ package proyecto1_22541083_programación2;
  */
 import javax.swing. *;
 import java.awt. *;
+
 import javax.swing.table.DefaultTableModel;
 
 public class Ranking extends JDialog{
@@ -19,11 +20,13 @@ public class Ranking extends JDialog{
     private JLabel label;
     private JMenuBar barra;
     private JButton botonb;
+    private DefaultTableModel modelo;
+    private  JTable tabla;
     
     
             
     
-    public Ranking(JFrame Perfil){
+    public Ranking(JFrame Perfil,jugador user){
         
     
         super(Perfil, "Ranking", true);
@@ -50,6 +53,8 @@ public class Ranking extends JDialog{
             add(panelP);
             
             Inicializarbarra();
+            ValoresTabla(user);
+            
             
             
 
@@ -59,6 +64,46 @@ public class Ranking extends JDialog{
             
             
     }
+    private void ValoresTabla(jugador user){
+        jugador [] Vtablas = Globales.jugadores.toArray( new jugador[0]); 
+        
+        for (int i=0; i<Vtablas.length-1; i++){
+            for (int y = 0; y< Vtablas.length-1; y++){
+                if (Vtablas[y].getPuntos() < Vtablas [y+1].getPuntos()){
+                    jugador temporal = Vtablas[y];
+                    Vtablas[y] = Vtablas [y+1];
+                    Vtablas [y+1] = temporal;
+                    
+                    
+                }
+            }
+        }
+        InsertarTabla( Vtablas, 0, user);
+        
+        
+        
+    }
+    
+    private int InsertarTabla(jugador [] Vtablas, int index, jugador user){
+        
+        if (index < Vtablas.length){
+            
+            modelo.addRow(new Object[]{index+1, Vtablas[index].getUser(), Vtablas[index].getPuntos()});
+            
+            return InsertarTabla( Vtablas, index+1, user);
+        }
+        return 0;
+        
+       
+        
+        
+        
+        
+    }
+    
+    
+    
+    
     
     public void Inicializartabla(){
         panelt = new JPanel();
@@ -69,12 +114,17 @@ public class Ranking extends JDialog{
         panelt.setOpaque(false);
         
         
-        DefaultTableModel modelo = new DefaultTableModel(new String[] {"Top", "User", "Points" }, 10);
-        
-        JTable tabla = new JTable(modelo);
+        modelo = new DefaultTableModel(new String[] {"Top", "User", "Points"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+    
+        tabla = new JTable(modelo);
 
         tabla.setFont(new Font("Arial", Font.PLAIN, 13));
-        tabla.setRowHeight(24);
+        tabla.setRowHeight(20);
         tabla.setGridColor(Color.GRAY);
         tabla.setBackground(Color.WHITE);
         tabla.setForeground(Color.BLACK);
@@ -83,20 +133,27 @@ public class Ranking extends JDialog{
         tabla.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
         tabla.getTableHeader().setBackground(Color.RED);
         tabla.getTableHeader().setForeground(Color.WHITE);
+        tabla.setSelectionBackground(Color.CYAN);
+        
         
         tabla.setFocusable(false);
         tabla.setRequestFocusEnabled(false);
         tabla.setRowSelectionAllowed(false);
         tabla.setColumnSelectionAllowed(false);
         tabla.setCellSelectionEnabled(false);
+        
+        tabla.setFillsViewportHeight(true);
 
         scroll = new JScrollPane(tabla);
-        scroll.setPreferredSize(new Dimension(750, 300));
+        scroll.setPreferredSize(new Dimension(750, 225));
         panelt.add(scroll);
         
         
         
     }
+    
+    
+    
     
     public void Inicializarlabel(){
         panell = new JPanel();

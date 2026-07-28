@@ -35,6 +35,7 @@ public class partidasR extends JDialog {
         Inicializartablero(user);
         Inicializartitulo();
         Inicializarbarra();
+        IncluirTablero(user);
                 
         central = new JPanel();
 
@@ -49,6 +50,19 @@ public class partidasR extends JDialog {
         setLocationRelativeTo(Perfil);
         
     }
+    public void IncluirTablero(jugador user){
+        for (int i =0; i< Globales.Partidas.size(); i++){
+            
+        
+            if (user.getUser().equals(Globales.Partidas.get(i).getGanador()) || user.getUser().equals(Globales.Partidas.get(i).getPerdedor()))  {
+                modelo.addColumn(Globales.Partidas.get(i).getNumero(), new Object []{Globales.Partidas.get(i).getNumero(),Globales.Partidas.get(i).getGanador(), Globales.Partidas.get(i).getPerdedor(), Globales.Partidas.get(i).isIsretired()});
+                
+            }
+        }
+             
+    }
+    
+    
     public void Inicializartablero(jugador user){
          panel = new JPanel();
 
@@ -59,10 +73,16 @@ public class partidasR extends JDialog {
         
         
         
-        modelo= new DefaultTableModel(
-            new String[] { "Numero de partida"},
-            4 
-        );
+        modelo= new DefaultTableModel(new String[] { "Numero de partida"},  4)     {        
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+               
+    
+
+        
         modelo.setValueAt("Numero de partida", 0, 0);
         modelo.setValueAt("Ganador", 1, 0);
         modelo.setValueAt("Perdedor", 2, 0);
@@ -73,6 +93,7 @@ public class partidasR extends JDialog {
         tabla.setFont(new Font("Arial", Font.PLAIN, 13));
         tabla.setRowHeight(70);
         tabla.setTableHeader(null);
+        
        
         tabla.setGridColor(Color.LIGHT_GRAY);
       
@@ -89,8 +110,10 @@ public class partidasR extends JDialog {
         tabla.setColumnSelectionAllowed(false);
         tabla.setCellSelectionEnabled(false);
         
+        tabla.setFillsViewportHeight(true);
+        
         JScrollPane scroll = new JScrollPane(tabla);
-        scroll.setPreferredSize(new Dimension(350, 180));
+        scroll.setPreferredSize(new Dimension(300, 180));
         
         
         

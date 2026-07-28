@@ -12,4 +12,6 @@ import java.util.ArrayList;
 
 public class Globales {
     public static ArrayList<jugador> jugadores = new  ArrayList<>();
+    
+    public static ArrayList<Partida> Partidas = new  ArrayList<>();
 }

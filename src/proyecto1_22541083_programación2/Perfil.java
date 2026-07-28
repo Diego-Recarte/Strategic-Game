@@ -192,7 +192,9 @@ public class Perfil extends JFrame{
         iniciar.setHorizontalAlignment(SwingConstants.CENTER);
 
         iniciar.addActionListener(e -> {
-
+                juego r=  new juego();
+                r.setVisible(true);
+                this.dispose();
         });
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         iniciar.setAlignmentX(Component.CENTER_ALIGNMENT);

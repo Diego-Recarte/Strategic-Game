@@ -13,13 +13,19 @@ import java.awt. *;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.util.ArrayList;
 public class Ruleta extends JPanel {
     private BufferedImage ruleta;
     private BufferedImage marco;
+    private BufferedImage X;
     private Timer tempo;
     private Double angulo;
     private JButton botonB;
     private JButton botonN;
+    private final int radio= 80;
+    private int turno =1;
+
+            
     
     
     public Ruleta(){
@@ -35,6 +41,7 @@ public class Ruleta extends JPanel {
         
             ruleta=inicializarimagen("/Imagenes/ruleta.png");
             marco=inicializarimagen("/Imagenes/marco.png");
+            X = inicializarimagen("/Imagenes/x.png");
     
     
         Inicializarbotones();
@@ -56,6 +63,7 @@ public class Ruleta extends JPanel {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.rotate(angulo, Panelcx, Panelcy);
         g2.drawImage(ruleta,xRuleta, yRuleta,240,240, null);
+        //agregarX(g2, Panelcx, Panelcy, 0);                   trabajar con lista de personaje
         g2.dispose();
         
         g.drawImage(marco, Panelcx-marco.getWidth()/2-3, Panelcy-marco.getHeight()/2,315,315, null);
@@ -75,6 +83,50 @@ public class Ruleta extends JPanel {
         
         
     }
+    
+   /** public Arraylist<personaje>  esTurno(){               trabajar con la clase
+        if (turno ==1){
+            return personajes1;
+        }
+        else{
+            return personajes2;
+        }
+    } 
+**/
+    /**  public int agregarX(Graphics2D g2, int xruleta, int yruleta, int acum ){
+        if (acum<6){
+            
+         if (esTurno().get(acum).alive() == false){                          con lista de personajes
+                double anguloR = Math.toRadians(acum+1*60 - 60);
+
+
+                int x = xruleta +
+                        (int)(Math.cos(anguloR)*radio);
+
+                int y = yruleta +
+                        (int)(Math.sin(anguloR)*radio);
+
+
+                g2.drawImage(
+                    X,
+                    x-20,
+                    y-20,
+                    40,
+                    40,
+                    null
+                );
+            }
+            return agregarX (g2, xruleta, yruleta, acum+1);
+        }
+        else{
+            return 0;
+        } 
+            
+        
+        
+        
+        
+    } **/
     public void Inicializarbotones(){
         botonB = new JButton("Detener");
 
@@ -88,7 +140,7 @@ public class Ruleta extends JPanel {
         botonB.setOpaque(true);
 
         botonB.addActionListener(e -> {
-            /**if (variableB){
+            /**if (variableB){                               detiene ruleta 
                 botonB.setBackground(Color.WHITE);
             }**/
             inicio();
@@ -124,7 +176,7 @@ public class Ruleta extends JPanel {
     public void fin(){
         tempo.stop();
         System.out.println(angulo);
-       
+       //                                            aqui luego se enviara a el tablero para decidir que mover
         System.out.println(RevisarAngulo());
         
         

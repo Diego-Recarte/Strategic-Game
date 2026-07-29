@@ -8,6 +8,7 @@ import javax.swing. *;
 import java.awt. *;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 public class juego extends JFrame{
     
     private JPanel ruletas;
@@ -15,15 +16,20 @@ public class juego extends JFrame{
     private JButton botonN;
     private Ruleta ruletaP1;
     private Ruleta ruletaP2;
-    public juego() {
+    private JPanel tablero;
+    private ArrayList <personaje> personajes1 = new  ArrayList<>();
+    private ArrayList <personaje> personajes2 = new  ArrayList<>();
+    
+    public juego(jugador user1, jugador user2) {
     
         super("El juego");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1300, 813);
+        setSize(1500, 810);
         setLayout(new BorderLayout(10, 10));
         getContentPane().setBackground(Color.WHITE);
-        Inicializartableros();
+        Inicializarruletas();
+        InicializarTablero();
         
 
 
@@ -31,7 +37,7 @@ public class juego extends JFrame{
         setVisible(true);
     }
     
-    public void Inicializartableros(){
+    public void Inicializarruletas(){
         
     ruletas = new JPanel();
         
@@ -113,6 +119,39 @@ public class juego extends JFrame{
         ruletas.add(botonN);
         botonN.setAlignmentX(Component.CENTER_ALIGNMENT);
     
+        
+    }
+    public void InicializarTablero(){
+        
+        
+        tablero = new JPanel();
+        tablero.setLayout(new GridLayout(6, 6, 10, 10));
+        tablero.setPreferredSize(new Dimension(500, 500));
+        tablero.setOpaque(false);
+        tablero.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
+        iniciarcasillas(0);
+        
+        add(tablero, BorderLayout.CENTER);
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    public int iniciarcasillas(int acum){
+        
+        if (acum<36){
+            
+            tablero.add(new casilla());
+            return iniciarcasillas(acum+1);
+            
+            
+        }
+        return 0;
         
     }
 

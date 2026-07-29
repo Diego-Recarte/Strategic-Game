@@ -29,7 +29,7 @@ public class Perfil extends JFrame{
         setLayout(new BorderLayout(10, 10));
         getContentPane().setBackground(Color.WHITE);
         Inicialivarbarra(user, index);
-        Inicializarinicio();
+        Inicializarinicio(user);
         
 
 
@@ -157,7 +157,7 @@ public class Perfil extends JFrame{
 
         
     }
-    public void Inicializarinicio(){
+    public void Inicializarinicio(jugador user){
         panelB= new JPanel ();
         panelB.setLayout(new BoxLayout(panelB, BoxLayout.Y_AXIS));
         panelB.setPreferredSize(new Dimension(500, 400));
@@ -192,9 +192,9 @@ public class Perfil extends JFrame{
         iniciar.setHorizontalAlignment(SwingConstants.CENTER);
 
         iniciar.addActionListener(e -> {
-                juego r=  new juego();
+                InicioJuego r=  new InicioJuego(this, user); 
                 r.setVisible(true);
-                this.dispose();
+                
         });
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         iniciar.setAlignmentX(Component.CENTER_ALIGNMENT);

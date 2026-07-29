@@ -156,6 +156,7 @@ public class CrearCuenta extends JFrame {
                     
             if (compU==2 && compC==2){
                 Globales.jugadores.add(new jugador (nombre,contra.getPassword()));
+                Globales.historialJugadores.add(new jugador (nombre,contra.getPassword()));
                 Perfil j = new Perfil(Globales.jugadores.getLast(), Globales.jugadores.size()-1);
                 j.setVisible(true);
                 this.dispose();

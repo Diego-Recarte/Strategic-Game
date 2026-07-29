@@ -8,7 +8,9 @@ package proyecto1_22541083_programación2;
  *
  * @author user
  */
-import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
 public class jugador {
     private String user;
     private char [] password;
@@ -18,12 +20,13 @@ public class jugador {
     private int Ngana;
     private int Npierde;
     private int retiros;
-    private LocalDateTime tiempo;
+    private Calendar tiempo;
+   
     
     public jugador(String user,char [] password ){
         this.user = user;
         this.password=password;
-        this.tiempo= LocalDateTime.now();
+        this.tiempo= Calendar.getInstance();
         puntos = 0;
         activo = true;
         
@@ -44,6 +47,12 @@ public class jugador {
     public int getPuntos() {
         return puntos;
     }
+
+    public Date getTiempo() {
+        
+        return tiempo.getTime();
+    }
+    
     
     
     

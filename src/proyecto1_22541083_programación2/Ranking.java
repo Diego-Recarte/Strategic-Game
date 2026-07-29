@@ -65,7 +65,7 @@ public class Ranking extends JDialog{
             
     }
     private void ValoresTabla(jugador user){
-        jugador [] Vtablas = Globales.jugadores.toArray( new jugador[0]); 
+        jugador [] Vtablas = Globales.historialJugadores.toArray( new jugador[0]); 
         
         for (int i=0; i<Vtablas.length-1; i++){
             for (int y = 0; y< Vtablas.length-1; y++){

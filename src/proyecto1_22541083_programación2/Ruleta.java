@@ -24,13 +24,14 @@ public class Ruleta extends JPanel {
     private JButton botonN;
     private final int radio= 80;
     private int turno =1;
+   // private ArrayList<personaje> personajesR;
 
             
     
     
-    public Ruleta(){
+    public Ruleta(String accesoMarco, int turno){
     setLayout(new BorderLayout());
-    setPreferredSize(new Dimension (300,700));
+    setPreferredSize(new Dimension (350,320));
  
     angulo=0.00;
     
@@ -40,11 +41,13 @@ public class Ruleta extends JPanel {
     });
         
             ruleta=inicializarimagen("/Imagenes/ruleta.png");
-            marco=inicializarimagen("/Imagenes/marco.png");
-            X = inicializarimagen("/Imagenes/x.png");
+            marco=inicializarimagen(accesoMarco );
+            X = inicializarimagen("/Imagenes/X.png");
     
     
-        Inicializarbotones();
+      
+         esTurno();
+
         setOpaque(false);
     
     }
@@ -52,21 +55,26 @@ public class Ruleta extends JPanel {
     protected void paintComponent(Graphics g){
         int Panelcx = getWidth()/2;
         int Panelcy = getHeight()/2;
-        int anchoRuleta = 240;
-        int altoRuleta = 240;
+        int anchoRuleta = 250;
+        int altoRuleta = 250;
 
         int xRuleta = Panelcx - anchoRuleta / 2;
         int yRuleta = Panelcy - altoRuleta / 2;
+        
+        int xMarco = Panelcx - 360 / 2;
+        int yMarco = Panelcy - 360 / 2;
        
                 
         super.paintComponent(g);
+        g.drawImage(marco, xMarco, yMarco,360,360, null);
         Graphics2D g2 = (Graphics2D) g.create();
         g2.rotate(angulo, Panelcx, Panelcy);
-        g2.drawImage(ruleta,xRuleta, yRuleta,240,240, null);
+        g2.drawImage(ruleta,xRuleta, yRuleta,250,250, null);
         //agregarX(g2, Panelcx, Panelcy, 0);                   trabajar con lista de personaje
         g2.dispose();
         
-        g.drawImage(marco, Panelcx-marco.getWidth()/2-3, Panelcy-marco.getHeight()/2,315,315, null);
+        //g.drawImage(marco, Panelcx-marco.getWidth()/2, Panelcy-marco.getHeight()/2,150,150, null);
+        
         
         
         
@@ -84,15 +92,16 @@ public class Ruleta extends JPanel {
         
     }
     
-   /** public Arraylist<personaje>  esTurno(){               trabajar con la clase
+   public void  esTurno(){              
         if (turno ==1){
-            return personajes1;
+            
+         //   personajeR = personajes1;
+            
         }
         else{
-            return personajes2;
+        //    personajeR = personajes1;
         }
     } 
-**/
     /**  public int agregarX(Graphics2D g2, int xruleta, int yruleta, int acum ){
         if (acum<6){
             
@@ -127,51 +136,7 @@ public class Ruleta extends JPanel {
         
         
     } **/
-    public void Inicializarbotones(){
-        botonB = new JButton("Detener");
-
-        botonB.setFont(new Font("Arial", Font.BOLD, 14));
-        botonB.setPreferredSize(new Dimension(120, 35));
-        botonB.setForeground(Color.BLACK);
-        botonB.setBackground(Color.WHITE);
-
-        botonB.setFocusPainted(false);
-        botonB.setBorderPainted(false);
-        botonB.setOpaque(true);
-
-        botonB.addActionListener(e -> {
-            /**if (variableB){                               detiene ruleta 
-                botonB.setBackground(Color.WHITE);
-            }**/
-            inicio();
-            
-
-        });
-        botonN = new JButton("Detener");
-
-        botonN.setFont(new Font("Arial", Font.BOLD, 14));
-        botonN.setPreferredSize(new Dimension(120, 35));
-        botonN.setForeground(Color.WHITE);
-        botonN.setBackground(Color.BLACK);
-
-        botonN.setFocusPainted(false);
-        botonN.setBorderPainted(false);
-        botonN.setOpaque(true);
-
-        botonN.addActionListener(e -> {
-            
-            /**if (variableN==false){
-                botonN.setBackground(Color.BLACK);
-            }**/
-            fin();
-            
-
-        });
-        
-        add(botonB, BorderLayout.SOUTH);
-        add (botonN, BorderLayout.NORTH);
-
-    }
+    
     
     public void fin(){
         tempo.stop();

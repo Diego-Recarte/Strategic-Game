@@ -34,11 +34,7 @@ public class casilla extends JButton {
         filled(false);
         
         
-        if (personaje == null){
-           
-        }else{
-           // personaje.getClass
-        }
+        
         
     }
     
@@ -68,11 +64,13 @@ public class casilla extends JButton {
         
         public void addPersonaje(personaje personaje){
             this.personaje = personaje;
+            setIcon(personaje.imagen);
             
             repaint();
         }
         public void subPersonaje (){
             personaje = null;
+            setIcon(null);
             repaint();
             
         }

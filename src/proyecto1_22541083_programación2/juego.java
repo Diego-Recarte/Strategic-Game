@@ -19,6 +19,7 @@ public class juego extends JFrame{
     private JPanel tablero;
     private ArrayList <personaje> personajes1 = new  ArrayList<>();
     private ArrayList <personaje> personajes2 = new  ArrayList<>();
+    private casilla[][] casillas = new casilla[6][6];
     
     public juego(jugador user1, jugador user2) {
     
@@ -30,6 +31,7 @@ public class juego extends JFrame{
         getContentPane().setBackground(Color.WHITE);
         Inicializarruletas();
         InicializarTablero();
+        Inicializarpersonajes();
         
 
 
@@ -37,6 +39,86 @@ public class juego extends JFrame{
         setVisible(true);
     }
     
+    public void Inicializarpersonajes(){
+        personaje LoboP1a = new HombreLobo("LoboP1a");
+        
+        personaje VampiroP1a = new Vampiro("VampiroP1a");
+        
+        personaje MuerteP1a = new Muerte ("MuerteP1a");
+        
+        personaje MuerteP1b = new Muerte ("MuerteP1b");
+        
+        personaje VampiroP1b = new Vampiro("VampiroP1b");
+        
+        personaje LoboP1b = new HombreLobo("LoboP1b");
+        
+        personajes1.add(LoboP1a);
+        
+        personajes1.add(VampiroP1a);
+        
+        personajes1.add(MuerteP1a);
+        
+        
+        
+        personajes1.add(MuerteP1b);
+        
+        personajes1.add(VampiroP1b);
+        
+        personajes1.add(LoboP1b);
+        
+        casillas[5][0].addPersonaje(LoboP1a);
+        casillas[5][1].addPersonaje(VampiroP1a);
+        casillas[5][2].addPersonaje(MuerteP1a);
+        casillas[5][3].addPersonaje(MuerteP1b);
+        casillas[5][4].addPersonaje(VampiroP1b);
+        casillas[5][5].addPersonaje(LoboP1b);
+        
+        
+        
+        personaje LoboP2a = new HombreLobo("LoboP2a");
+        
+        personaje VampiroP2a = new  Vampiro("VampiroP2a");
+        
+        personaje MuerteP2a =new  Muerte("MuerteP2a");
+        
+        personaje MuerteP2b = new  Muerte("MuerteP2b");
+        
+        personaje VampiroP2b = new  Vampiro("VampiroP2b");
+        
+        personaje LoboP2b = new HombreLobo("LoboP2b");
+        
+        
+        personajes2.add(LoboP2a);
+        
+        personajes2.add(VampiroP2a);
+        
+        personajes2.add(MuerteP2a);
+        
+        personajes2.add(MuerteP2b);
+        
+        personajes2.add(MuerteP2b);
+        
+        personajes2.add(VampiroP2b);
+        
+        personajes2.add(LoboP2b);
+        
+        
+        casillas[0][0].addPersonaje(LoboP2a);
+        casillas[0][1].addPersonaje(VampiroP2a);
+        casillas[0][2].addPersonaje(MuerteP2a);
+        casillas[0][3].addPersonaje(MuerteP2b);
+        casillas[0][4].addPersonaje(VampiroP2b);
+        casillas[0][5].addPersonaje(LoboP2b);
+        
+        
+        
+                
+        
+        
+        
+        
+        
+    }
     public void Inicializarruletas(){
         
     ruletas = new JPanel();
@@ -48,11 +130,11 @@ public class juego extends JFrame{
         
     Inicializarbotondetenernegro();
     ruletas.add(Box.createVerticalStrut(5));
-     ruletaP2 = new Ruleta("/Imagenes/marco2.png", 2);
+     ruletaP2 = new Ruleta("/Imagenes/marco2.png", 2, personajes2);
     ruletaP2.setVisible(true);
     ruletas.add(ruletaP2);
     
-    ruletaP1 = new Ruleta("/Imagenes/marco1.png", 1);
+    ruletaP1 = new Ruleta("/Imagenes/marco1.png", 1, personajes1);
     ruletaP1.setVisible(true);
     ruletas.add(ruletaP1);
     
@@ -146,7 +228,13 @@ public class juego extends JFrame{
         
         if (acum<36){
             
-            tablero.add(new casilla());
+            casilla c = new casilla();
+            
+            int fila = acum / 6;
+            int columna = acum % 6;
+            
+            casillas[fila][columna]= c;
+            tablero.add(c);
             return iniciarcasillas(acum+1);
             
             

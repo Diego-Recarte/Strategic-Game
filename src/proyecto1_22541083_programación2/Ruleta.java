@@ -24,15 +24,15 @@ public class Ruleta extends JPanel {
     private JButton botonN;
     private final int radio= 80;
     private int turno =1;
-   // private ArrayList<personaje> personajesR;
+   private ArrayList<personaje> personajesR;
 
             
     
     
-    public Ruleta(String accesoMarco, int turno){
+    public Ruleta(String accesoMarco, int turno, ArrayList<personaje> personajes){
     setLayout(new BorderLayout());
     setPreferredSize(new Dimension (350,320));
- 
+    personajesR = personajes;
     angulo=0.00;
     
     tempo = new Timer (10, ev ->{ 
@@ -46,7 +46,7 @@ public class Ruleta extends JPanel {
     
     
       
-         esTurno();
+       
 
         setOpaque(false);
     
@@ -70,10 +70,10 @@ public class Ruleta extends JPanel {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.rotate(angulo, Panelcx, Panelcy);
         g2.drawImage(ruleta,xRuleta, yRuleta,250,250, null);
-        //agregarX(g2, Panelcx, Panelcy, 0);                   trabajar con lista de personaje
+        agregarX(g2, Panelcx, Panelcy, 0);                   
         g2.dispose();
         
-        //g.drawImage(marco, Panelcx-marco.getWidth()/2, Panelcy-marco.getHeight()/2,150,150, null);
+        g.drawImage(marco, Panelcx-marco.getWidth()/2, Panelcy-marco.getHeight()/2,150,150, null);
         
         
         
@@ -92,20 +92,11 @@ public class Ruleta extends JPanel {
         
     }
     
-   public void  esTurno(){              
-        if (turno ==1){
-            
-         //   personajeR = personajes1;
-            
-        }
-        else{
-        //    personajeR = personajes1;
-        }
-    } 
-    /**  public int agregarX(Graphics2D g2, int xruleta, int yruleta, int acum ){
+   
+     public int agregarX(Graphics2D g2, int xruleta, int yruleta, int acum ){
         if (acum<6){
             
-         if (esTurno().get(acum).alive() == false){                          con lista de personajes
+         if (personajesR.get(acum).Isalive() == false){                       
                 double anguloR = Math.toRadians(acum+1*60 - 60);
 
 
@@ -135,7 +126,7 @@ public class Ruleta extends JPanel {
         
         
         
-    } **/
+    } 
     
     
     public void fin(){

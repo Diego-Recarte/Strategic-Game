@@ -11,9 +11,9 @@ package proyecto1_22541083_programación2;
 public class Vampiro extends personaje{
     
     
-    public Vampiro(String nombre){
+    public Vampiro(String nombre, String acceso){
         
-        super("nnvcierv", nombre);
+        super(acceso, nombre);
         
         
         

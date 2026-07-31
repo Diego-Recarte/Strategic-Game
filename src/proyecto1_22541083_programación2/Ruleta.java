@@ -22,7 +22,7 @@ public class Ruleta extends JPanel {
     private Double angulo;
     private JButton botonB;
     private JButton botonN;
-    private final int radio= 80;
+    private final int radio= 60;
     private int turno =1;
    private ArrayList<personaje> personajesR;
 
@@ -97,7 +97,7 @@ public class Ruleta extends JPanel {
         if (acum<6){
             
          if (personajesR.get(acum).Isalive() == false){                       
-                double anguloR = Math.toRadians(acum+1*60 - 60);
+                double anguloR = Math.toRadians(acum+1*60 - 30);
 
 
                 int x = xruleta +

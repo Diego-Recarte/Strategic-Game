@@ -9,6 +9,7 @@ package proyecto1_22541083_programación2;
  * @author user
  */
 import javax.swing.ImageIcon;
+import java.awt.Image;
 
 
 public abstract class personaje {
@@ -27,10 +28,10 @@ public abstract class personaje {
         this.nombre=  nombre;
         alive= true;
         
-        if (vida == 0){
-            alive=false;
-        }
-        imagen = new ImageIcon(getClass().getResource("/imagenes/jugar.png"));
+        
+        imagen = new ImageIcon(getClass().getResource(acceso));
+        Image Escalada = imagen.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
         
         
         
@@ -54,6 +55,9 @@ public abstract class personaje {
     public void recibirataque (int ataque){
         if (escudo<=0  ){
             vida-= ataque;
+            if (vida < 0){
+                ataque = vida*-1;
+            }
 
         }else{
             escudo -= ataque;
@@ -67,6 +71,7 @@ public abstract class personaje {
 
         }
     }
+        
     
     
     public int getmovimiento() {

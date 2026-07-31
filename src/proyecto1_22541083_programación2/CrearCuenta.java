@@ -20,9 +20,13 @@ public class CrearCuenta extends JFrame {
     private JTextField user;
     private JPanel panel;
     private JLabel label;
+    private JLabel advertencia;
     private Timer tempo;
     private JMenuBar barra;
     private JButton botonb;
+    private JRadioButton Normal;
+    private JRadioButton practicante;
+    private ButtonGroup grupoTipoCuenta;
     
     
     private String nombre;
@@ -30,7 +34,7 @@ public class CrearCuenta extends JFrame {
     public CrearCuenta (){
         setTitle ("Create Account");
          setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 450);
+        setSize(600, 630);
         setLayout(new BorderLayout(10, 10));
         getContentPane().setBackground(Color.WHITE);
         Inicializarbotones();
@@ -67,12 +71,12 @@ public class CrearCuenta extends JFrame {
 
         panelLogin.setBounds(100, 50, 300, 280);
 
-        panelLogin.setLayout(new GridLayout(6, 1, 10, 10));
+        panelLogin.setLayout(new GridLayout(8, 1, 8, 8));
 
         panelLogin.setBackground(Color.WHITE);
 
         panelLogin.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        panelLogin.setPreferredSize( new Dimension (350,250));
+        panelLogin.setPreferredSize( new Dimension (350,520));
 
 
         
@@ -131,6 +135,95 @@ public class CrearCuenta extends JFrame {
         });
 
         panelLogin.add(chkMostrar);
+        
+        JPanel panelradio = new JPanel();
+        panelradio.setLayout(new  FlowLayout(FlowLayout.LEFT));
+        panelradio.setPreferredSize(new Dimension(100, 20));
+        panelradio.setOpaque(false);
+        
+       Normal = new JRadioButton("Cuenta normal");
+       practicante = new JRadioButton("Cuenta de practicante");
+       
+       
+       Normal.setFont(new Font("Arial", Font.BOLD, 10));
+        Normal.setPreferredSize(new Dimension(100, 15));
+        Normal.setMaximumSize(new Dimension(100, 15));
+
+        Normal.setForeground(Color.black);
+
+        Normal.setFocusPainted(false);
+        Normal.setBorderPainted(false);
+        Normal.setContentAreaFilled(false);
+        Normal.setOpaque(false);
+        Normal.addActionListener(e -> {
+            
+            advertencia.setText(" ");
+            advertencia.setVisible (false);
+        });
+
+        
+
+
+
+
+        practicante.setFont(new Font("Arial", Font.BOLD, 10));
+        practicante.setPreferredSize(new Dimension(140, 15));
+        practicante.setMaximumSize(new Dimension(140, 15));
+
+        practicante.setForeground(Color.black);
+      
+        practicante.setFocusPainted(false);
+        practicante.setBorderPainted(false);
+        practicante.setContentAreaFilled(false);
+        practicante.setOpaque(false);
+        practicante.addActionListener(e -> {
+            
+            advertencia.setText("* tu cuenta tendra 1 tiro extra pero recibira 1 punto por victoria");
+            advertencia.setVisible (true);
+        });
+
+        
+
+       
+        grupoTipoCuenta = new ButtonGroup();
+        grupoTipoCuenta.add(Normal);
+        grupoTipoCuenta.add(practicante);
+        
+        Normal.setSelected(true);
+
+        panelradio.add(Normal);
+        panelradio.add(practicante);
+        
+        JLabel Jtipo = new JLabel("Tipo de usuario");
+
+        Jtipo.setFont(new Font("Arial", Font.BOLD, 16));
+        
+        advertencia = new JLabel("  ");
+
+        advertencia .setFont(new Font("Arial", Font.BOLD, 9));
+        advertencia .setForeground(Color.red);
+        advertencia .setOpaque(false);
+
+        advertencia .setHorizontalAlignment(SwingConstants.CENTER);
+        advertencia .setPreferredSize(new Dimension(150, 30));
+        advertencia.setVisible (false);
+        
+        
+        JPanel paneltipo = new JPanel();
+        
+        paneltipo.setOpaque(false);
+        paneltipo.setLayout(new GridLayout(3, 1, 0, 0));
+        paneltipo.setPreferredSize( new Dimension (330, 60));
+        
+        paneltipo.add(Jtipo);
+        Jtipo.setHorizontalAlignment(SwingConstants.LEFT);
+       
+        paneltipo.add(panelradio);
+        paneltipo.add(advertencia);
+        panelLogin.add(paneltipo);
+        
+        
+        
 
 
      
@@ -155,11 +248,15 @@ public class CrearCuenta extends JFrame {
             
                     
             if (compU==2 && compC==2){
-                Globales.jugadores.add(new jugador (nombre,contra.getPassword()));
-                Globales.historialJugadores.add(new jugador (nombre,contra.getPassword()));
-                Perfil j = new Perfil(Globales.jugadores.getLast(), Globales.jugadores.size()-1);
-                j.setVisible(true);
-                this.dispose();
+                
+                if (practicante.isSelected()){
+                    principiante print = new principiante(this);
+                }
+                else{
+                    
+                    Seguir();
+                    
+                }
             }
             else{
                 if (compU==0 && compC ==0){
@@ -289,11 +386,20 @@ public class CrearCuenta extends JFrame {
 
         botonb.addActionListener(e -> {
             
-        
-            MenuInicio l = new MenuInicio();
+            if (practicante.isSelected()){
+                principiante prin = new principiante(this);
+                prin.setVisible(true);
+            }else{
+                 MenuInicio l = new MenuInicio();
 
-            l.setVisible(true);
-            this.dispose();
+                    l.setVisible(true);
+                    this.dispose();
+            }
+            
+            
+            
+        
+            
             
             
         });
@@ -308,5 +414,16 @@ public class CrearCuenta extends JFrame {
         add (barra, BorderLayout.NORTH);
             
             
+    }
+    
+    public void Seguir(){
+        
+        
+        
+        Globales.jugadores.add(new jugador (nombre,contra.getPassword()));
+                    Globales.historialJugadores.add(new jugador (nombre,contra.getPassword()));
+                    Perfil j = new Perfil(Globales.jugadores.getLast(), Globales.jugadores.size()-1);
+                    j.setVisible(true);
+                    this.dispose();
     }
 }

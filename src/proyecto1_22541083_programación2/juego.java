@@ -40,17 +40,17 @@ public class juego extends JFrame{
     }
     
     public void Inicializarpersonajes(){
-        personaje LoboP1a = new HombreLobo("LoboP1a");
+        personaje LoboP1a = new HombreLobo("HombreLobo", "/Imagenes/personajes_casillas/hombrelobop1a.png");
         
-        personaje VampiroP1a = new Vampiro("VampiroP1a");
+        personaje VampiroP1a = new Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop1a.png" );
         
-        personaje MuerteP1a = new Muerte ("MuerteP1a");
+        personaje MuerteP1a = new Muerte ("Muerte", "/Imagenes/personajes_casillas/muertep1a.png");
         
-        personaje MuerteP1b = new Muerte ("MuerteP1b");
+        personaje MuerteP1b = new Muerte ("Muerte", "/Imagenes/personajes_casillas/muertep1b.png");
         
-        personaje VampiroP1b = new Vampiro("VampiroP1b");
+        personaje VampiroP1b = new Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop1b.png");
         
-        personaje LoboP1b = new HombreLobo("LoboP1b");
+        personaje LoboP1b = new HombreLobo("HombreLobo", "/Imagenes/personajes_casillas/hombrelobop1b.png");
         
         personajes1.add(LoboP1a);
         
@@ -75,17 +75,17 @@ public class juego extends JFrame{
         
         
         
-        personaje LoboP2a = new HombreLobo("LoboP2a");
+        personaje LoboP2a = new HombreLobo("HombreLobo","/Imagenes/personajes_casillas/hombrelobop2a.png" );
         
-        personaje VampiroP2a = new  Vampiro("VampiroP2a");
+        personaje VampiroP2a = new  Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop2a.png");
         
-        personaje MuerteP2a =new  Muerte("MuerteP2a");
+        personaje MuerteP2a =new  Muerte("Muerte","/Imagenes/personajes_casillas/muertep2a.png");
         
-        personaje MuerteP2b = new  Muerte("MuerteP2b");
+        personaje MuerteP2b = new  Muerte("Muerte","/Imagenes/personajes_casillas/muertep2b.png");
         
-        personaje VampiroP2b = new  Vampiro("VampiroP2b");
+        personaje VampiroP2b = new  Vampiro("Vampiro","/Imagenes/personajes_casillas/vampirop2b.png");
         
-        personaje LoboP2b = new HombreLobo("LoboP2b");
+        personaje LoboP2b = new HombreLobo("HombreLobo","/Imagenes/personajes_casillas/hombrelobop2b.png" );
         
         
         personajes2.add(LoboP2a);
@@ -94,7 +94,6 @@ public class juego extends JFrame{
         
         personajes2.add(MuerteP2a);
         
-        personajes2.add(MuerteP2b);
         
         personajes2.add(MuerteP2b);
         

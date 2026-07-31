@@ -29,6 +29,7 @@ public class MenuInicio extends JFrame {
     Inicializarbotones();
      setLocationRelativeTo(null);
      setVisible(true);
+     System.out.println(getClass().getResource("/Imagenes/personajes_casillas/hombrelobop1a.png"));
     }
     
     

@@ -10,9 +10,9 @@ package proyecto1_22541083_programación2;
  */
 public class Muerte extends personaje{
     
-    public Muerte (String nombre){
+    public Muerte (String nombre, String acceso){
         
-        super("nnvcierv", nombre);
+        super(acceso, nombre);
         
         
         

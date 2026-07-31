@@ -65,6 +65,7 @@ public class casilla extends JButton {
         public void addPersonaje(personaje personaje){
             this.personaje = personaje;
             setIcon(personaje.imagen);
+            setDisabledIcon(personaje.imagen);
             
             repaint();
         }

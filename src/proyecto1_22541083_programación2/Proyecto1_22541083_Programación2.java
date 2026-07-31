@@ -15,6 +15,7 @@ public class Proyecto1_22541083_Programación2 {
      * @param args the command line arguments
      */ 
     public static void main(String[] args) {
+        
         SwingUtilities.invokeLater(() -> new MenuInicio().setVisible(true));
     }
 

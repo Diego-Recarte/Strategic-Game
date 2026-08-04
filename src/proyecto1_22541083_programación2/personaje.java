@@ -82,6 +82,12 @@ public abstract class personaje {
     public boolean Isalive(){
         return alive;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+    
+    
     
     
     

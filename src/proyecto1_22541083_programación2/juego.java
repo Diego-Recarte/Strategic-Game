@@ -6,6 +6,7 @@ package proyecto1_22541083_programación2;
 
 import javax.swing. *;
 import java.awt. *;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +40,12 @@ public class juego extends JFrame{
     private Ruleta ruletaP1;
     private Ruleta ruletaP2;
     private JPanel tablero;
+    
+    private Timer tiempo;
+    private int veces = 0;
+    
+    private ArrayList <casilla> posiciones = new  ArrayList<>();
+    
     
     private jugador user1;
     private jugador user2;
@@ -456,6 +463,154 @@ public class juego extends JFrame{
             
         }
         return 0;
+        
+    }
+    
+    
+    
+    
+    public int movimiento(int fila, int columna, int acum){
+        casilla intermedia;
+        if (acum<8){
+            
+            switch (acum){
+                case 0:
+                       intermedia = AsignarPosicion(fila+1, columna, casillas[fila][columna], false,casillas[fila][columna] );
+                       if (intermedia != null){
+                           AsignarPosicion(fila+2, columna, casillas[fila][columna], true, intermedia );
+                       }
+                    break;
+                    
+                case 1:
+                    intermedia = AsignarPosicion(fila+1, columna+1, casillas[fila][columna], false,casillas[fila][columna] );
+                       if (intermedia != null){
+                           AsignarPosicion(fila+2, columna+2, casillas[fila][columna], true, intermedia );
+                       }
+                    break;
+                
+                case 2:
+                    intermedia = AsignarPosicion(fila, columna+1, casillas[fila][columna], false,casillas[fila][columna] );
+                       if (intermedia != null){
+                           AsignarPosicion(fila, columna+2, casillas[fila][columna], true, intermedia );
+                       }
+                    break;
+                    
+                case 3:
+                    intermedia = AsignarPosicion(fila-1, columna+1, casillas[fila][columna], false,casillas[fila][columna] );
+                       if (intermedia != null){
+                           AsignarPosicion(fila-2, columna+2, casillas[fila][columna], true, intermedia );
+                       }
+                    break;
+                    
+                case 4:
+                    intermedia = AsignarPosicion(fila-1, columna, casillas[fila][columna], false,casillas[fila][columna] );
+                       if (intermedia != null){
+                           AsignarPosicion(fila-2, columna, casillas[fila][columna], true, intermedia );
+                       }
+                    break;
+                    
+                case 5:
+                    intermedia = AsignarPosicion(fila-1, columna-1, casillas[fila][columna], false,casillas[fila][columna] );
+                       if (intermedia != null){
+                           AsignarPosicion(fila-2, columna-2, casillas[fila][columna], true, intermedia );
+                       }
+                    break;
+                    
+                case 6:
+                    intermedia = AsignarPosicion(fila, columna-1, casillas[fila][columna], false,casillas[fila][columna] );
+                       if (intermedia != null){
+                           AsignarPosicion(fila, columna-2, casillas[fila][columna], true, intermedia );
+                       }
+                    break;
+                    
+                case 7:
+                    intermedia = AsignarPosicion(fila+1, columna-1, casillas[fila][columna], false,casillas[fila][columna] );
+                       if (intermedia != null){
+                           AsignarPosicion(fila+2, columna-2, casillas[fila][columna], true, intermedia );
+                       }
+                    break;
+            }
+            return movimiento( fila,  columna,  acum+1);
+        }
+        return 0;
+        
+        
+    }
+    
+    public casilla AsignarPosicion(int fila, int columna, casilla inicio, boolean islobo, casilla intermedio){
+        if (fila < 0 || fila >= casillas.length || columna < 0 || columna >= casillas[0].length){
+            return null;
+        }
+        else if (casillas[fila][columna].getPersonaje() == null){
+                  casillas[fila][columna].filled(true);
+                  
+                   ActionListener movimiento = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            casilla actual = (casilla) e.getSource();
+                            desplazamiento(inicio, actual, islobo, intermedio, this);
+                        }
+                    };
+                  casillas[fila][columna].addActionListener(movimiento);
+                  posiciones.add(casillas[fila][columna]);
+                  return casillas[fila][columna] ;
+
+        }
+        else{
+            return null;
+        }
+        
+    }
+    
+    public void desplazamiento(casilla inicio, casilla fin, boolean islobo, casilla intermedio, ActionListener movimiento){
+        for (casilla c : posiciones){
+                c.filled(false);
+                
+                for (ActionListener al : c.getActionListeners()) {
+                c.removeActionListener(al);
+                    }
+            }
+        if (islobo==false){
+            
+            personaje temp= inicio.getPersonaje();
+            inicio.subPersonaje();
+            inicio.border(false);
+            fin.addPersonaje(temp);
+            posiciones.clear();
+        }else{
+            personaje tempo = inicio.getPersonaje();
+            
+            
+            tiempo = new Timer(300, e -> {
+                veces++;
+
+                if (veces == 1) {
+                    inicio.subPersonaje();
+                    inicio.border(false);
+                    intermedio.addPersonaje(tempo);
+                    tiempo.stop();
+                    tiempo.restart();
+                }else if (veces == 2){
+                    intermedio.subPersonaje();
+                    fin.addPersonaje(tempo);
+                    veces=0;
+                    tiempo.stop();
+                    
+                }
+            });
+            
+            tiempo.start();
+            posiciones.clear();
+            
+           
+            
+            
+            
+            
+            
+        }
+        
+        
         
     }
 

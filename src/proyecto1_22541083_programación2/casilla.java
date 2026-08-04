@@ -24,6 +24,8 @@ public class casilla extends JButton {
     
     public casilla(){
         
+        setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        
         setPreferredSize(new Dimension(15, 15));
         setMaximumSize(new Dimension(15, 15));
         setEnabled(false);
@@ -43,6 +45,18 @@ public class casilla extends JButton {
         this.relleno = relleno;
         if (relleno){
             setBackground(Color.yellow);
+            setBorder(BorderFactory.createLineBorder(Color.YELLOW, 3));
+        }else{
+            setBackground(Color.gray);
+        }
+        repaint();
+                
+    }
+    public void border (boolean relleno){
+        this.relleno = relleno;
+        if (relleno){
+            
+            setBorder(BorderFactory.createLineBorder(Color.YELLOW, 3));
         }else{
             setBackground(Color.gray);
         }
@@ -75,6 +89,12 @@ public class casilla extends JButton {
             repaint();
             
         }
+
+    public personaje getPersonaje() {
+        return personaje;
+    }
+        
+        
         
       
         

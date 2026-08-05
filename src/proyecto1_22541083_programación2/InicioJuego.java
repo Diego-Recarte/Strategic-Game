@@ -58,11 +58,12 @@ public class InicioJuego extends JDialog {
     }
 
     private void ValoresTabla(jugador user) {
-        jugador[] Vtablas = Globales.historialJugadores.toArray(new jugador[0]);
+        jugador[] Vtablas = Globales.jugadores.toArray(new jugador[0]);
 
         for (int i = 0; i < Vtablas.length - 1; i++) {
             for (int y = 0; y < Vtablas.length - 1; y++) {
-                if (Vtablas[y].getPuntos() < Vtablas[y + 1].getPuntos()) {
+                
+                if (Vtablas[y].getPuntos() < Vtablas[y + 1].getPuntos() && Vtablas[y].isActivo()) {
                     jugador temporal = Vtablas[y];
                     Vtablas[y] = Vtablas[y + 1];
                     Vtablas[y + 1] = temporal;

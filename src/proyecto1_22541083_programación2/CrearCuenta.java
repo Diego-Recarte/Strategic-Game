@@ -418,12 +418,16 @@ public class CrearCuenta extends JFrame {
     
     public void Seguir(){
         
-        
-        
-        Globales.jugadores.add(new jugador (nombre,contra.getPassword()));
-                    Globales.historialJugadores.add(new jugador (nombre,contra.getPassword()));
-                    Perfil j = new Perfil(Globales.jugadores.getLast(), Globales.jugadores.size()-1);
-                    j.setVisible(true);
-                    this.dispose();
+        if (practicante.isSelected()){
+             Globales.jugadores.add(new jugador (nombre,contra.getPassword(),2));
+            
+        }else{
+            Globales.jugadores.add(new jugador (nombre, contra.getPassword(), 1));
+        }
+
+                    
+        Perfil j = new Perfil(Globales.jugadores.getLast(), Globales.jugadores.size()-1);
+        j.setVisible(true);
+        this.dispose();
     }
 }

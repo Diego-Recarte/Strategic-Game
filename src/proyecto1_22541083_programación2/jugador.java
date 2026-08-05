@@ -21,15 +21,22 @@ public class jugador {
     private int Npierde;
     private int retiros;
     private Calendar tiempo;
+    private TipoJugador tipo;
    
     
-    public jugador(String user,char [] password ){
+    public jugador(String user,char [] password, int tipo ){
         this.user = user;
         this.password=password;
         this.tiempo= Calendar.getInstance();
         puntos = 0;
         activo = true;
-        
+        if (tipo == 1){
+            this.tipo = TipoJugador.normal;
+            
+        } else if (tipo == 2){
+            this.tipo = TipoJugador.participante;
+            
+        }
     }
 
     public String getUser() {
@@ -52,6 +59,29 @@ public class jugador {
         
         return tiempo.getTime();
     }
+    
+    public void setactivo(boolean activo){
+        this.activo = activo;
+    }
+
+    public TipoJugador getTipo() {
+        return tipo;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+    
+    public String getfechaCreacion (){
+        int dia = tiempo.get(Calendar.DAY_OF_MONTH);
+        int mes = tiempo.get(Calendar.MONTH) + 1;
+        int anio = tiempo.get(Calendar.YEAR);
+
+        return  dia + "/" + mes + "/" + anio;
+    }
+    
+    
+    
     
     
     

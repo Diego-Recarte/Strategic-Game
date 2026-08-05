@@ -56,7 +56,7 @@ public class Eliminar extends JDialog {
 
         boton.addActionListener(e -> {
             if (campo.getText().equals(Globales.jugadores.get(index).getUser()) ){
-                Globales.jugadores.remove(index);
+                Globales.jugadores.get(index).setactivo(false);
                 JOptionPane.showMessageDialog(
                     this,
                     "Cuenta deshabilitada exitosamente",

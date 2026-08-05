@@ -33,7 +33,7 @@ public class Ranking extends JDialog{
 
 
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            setSize(800, 500);
+            setSize(1100, 500);
             setLayout(new BorderLayout(10, 10));
             getContentPane().setBackground(Color.WHITE);
             Inicializartabla();
@@ -65,11 +65,11 @@ public class Ranking extends JDialog{
             
     }
     private void ValoresTabla(jugador user){
-        jugador [] Vtablas = Globales.historialJugadores.toArray( new jugador[0]); 
+        jugador [] Vtablas = Globales.jugadores.toArray( new jugador[0]); 
         
         for (int i=0; i<Vtablas.length-1; i++){
             for (int y = 0; y< Vtablas.length-1; y++){
-                if (Vtablas[y].getPuntos() < Vtablas [y+1].getPuntos()){
+                if (Vtablas[y].getPuntos() < Vtablas [y+1].getPuntos() && Vtablas[y].isActivo()){
                     jugador temporal = Vtablas[y];
                     Vtablas[y] = Vtablas [y+1];
                     Vtablas [y+1] = temporal;
@@ -88,7 +88,8 @@ public class Ranking extends JDialog{
         
         if (index < Vtablas.length){
             
-            modelo.addRow(new Object[]{index+1, Vtablas[index].getUser(), Vtablas[index].getPuntos()});
+            modelo.addRow(new Object[]{index+1, Vtablas[index].getUser(), Vtablas[index].getPuntos(), Vtablas[index].getTipo().getTipo(), Vtablas[index].getfechaCreacion () });
+            
             
             return InsertarTabla( Vtablas, index+1, user);
         }
@@ -110,11 +111,11 @@ public class Ranking extends JDialog{
 
         panelt.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         panelt.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panelt.setPreferredSize(new Dimension(750, 300));
+        panelt.setPreferredSize(new Dimension(100, 300));
         panelt.setOpaque(false);
         
         
-        modelo = new DefaultTableModel(new String[] {"Top", "User", "Points"}, 0) {
+        modelo = new DefaultTableModel(new String[] {"Top", "User", "Points", "type", "registered date."}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;

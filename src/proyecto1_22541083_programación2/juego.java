@@ -46,6 +46,14 @@ public class juego extends JFrame{
     
     private ArrayList <casilla> posiciones = new  ArrayList<>(); 
     private ArrayList <casilla> areaataque = new  ArrayList<>();
+    private int turno;
+    
+    private int [] indexs= new int[2]; 
+    
+    private int rondas1;
+    private int rondas2;
+    private int rondast1;
+    private int rondast2;
     
     
     private jugador user1;
@@ -68,24 +76,87 @@ public class juego extends JFrame{
         Inicializarpersonajes();
         Inicializarstatus();
         
+        iniciarcantidadronda(1);
+        
+        
+        
+        
+        
 
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setVisible(true);
     }
     
+    public void finturno(int turno){
+        if (turno ==1){
+            
+            if (rondast1 > 0){
+                //mensaje de toca a jugador 1 otra vez
+                iniciarturno(1);
+            }else{
+                //mensaje de turno de jugador 2
+                
+                iniciarcantidadronda(2);
+            }
+                
+            
+            
+            
+            
+        }else if (turno == 2){
+            if (rondast2 > 0){
+                //mensaje de toca a jugador 2 otra vez
+                iniciarturno(2);
+            }else{
+                //mensaje de turno de jugador 1
+                
+                iniciarcantidadronda(1);
+            }
+        }
+        
+    }
+    public void iniciarturno(int toca){
+        if (toca ==1){
+ 
+            ruletaP1.inicio();
+            botonB.setBackground(Color.yellow);
+            botonB.setEnabled(true);
+            turno =1;
+            rondast1--;
+        }else if (toca == 2){
+            ruletaP2.inicio();
+            botonN.setBackground(Color.yellow);
+            botonB.setEnabled(true);
+            turno =2;
+            rondast2--;
+        }
+    }
+    public void iniciarcantidadronda(int toca){
+        if (toca ==1){
+            
+                rondast1=rondas1;
+                finturno(1);
+                
+            
+        }else if (toca == 2){
+            rondast2=rondas2;
+            finturno(1);
+        }
+    }
+    
     public void Inicializarpersonajes(){
-        personaje LoboP1a = new HombreLobo("HombreLobo", "/Imagenes/personajes_casillas/hombrelobop1a.png", 1);
+        personaje LoboP1a = new HombreLobo("LoboP1a", "/Imagenes/personajes_casillas/hombrelobop1a.png", 1);
         
-        personaje VampiroP1a = new Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop1a.png", 1 );
+        personaje VampiroP1a = new Vampiro("VampiroP1a", "/Imagenes/personajes_casillas/vampirop1a.png", 1 );
         
-        personaje MuerteP1a = new Muerte ("Muerte", "/Imagenes/personajes_casillas/muertep1a.png", 1);
+        personaje MuerteP1a = new Muerte ("MuerteP1a", "/Imagenes/personajes_casillas/muertep1a.png", 1);
         
-        personaje MuerteP1b = new Muerte ("Muerte", "/Imagenes/personajes_casillas/muertep1b.png", 1);
+        personaje MuerteP1b = new Muerte ("MuerteP1b", "/Imagenes/personajes_casillas/muertep1b.png", 1);
         
-        personaje VampiroP1b = new Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop1b.png", 1);
+        personaje VampiroP1b = new Vampiro("VampiroP1b", "/Imagenes/personajes_casillas/vampirop1b.png", 1);
         
-        personaje LoboP1b = new HombreLobo("HombreLobo", "/Imagenes/personajes_casillas/hombrelobop1b.png", 1);
+        personaje LoboP1b = new HombreLobo("LoboP1b", "/Imagenes/personajes_casillas/hombrelobop1b.png", 1);
         
         personajes1.add(LoboP1a);
         
@@ -110,17 +181,17 @@ public class juego extends JFrame{
         
         
         
-        personaje LoboP2a = new HombreLobo("HombreLobo","/Imagenes/personajes_casillas/hombrelobop2a.png", 2 );
+        personaje LoboP2a = new HombreLobo("LoboP2a","/Imagenes/personajes_casillas/hombrelobop2a.png", 2 );
         
-        personaje VampiroP2a = new  Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop2a.png", 2);
+        personaje VampiroP2a = new  Vampiro("VampiroP2a", "/Imagenes/personajes_casillas/vampirop2a.png", 2);
         
-        personaje MuerteP2a =new  Muerte("Muerte","/Imagenes/personajes_casillas/muertep2a.png", 2);
+        personaje MuerteP2a =new  Muerte("MuerteP2a","/Imagenes/personajes_casillas/muertep2a.png", 2);
         
-        personaje MuerteP2b = new  Muerte("Muerte","/Imagenes/personajes_casillas/muertep2b.png", 2);
+        personaje MuerteP2b = new  Muerte("MuerteP2b","/Imagenes/personajes_casillas/muertep2b.png", 2);
         
-        personaje VampiroP2b = new  Vampiro("Vampiro","/Imagenes/personajes_casillas/vampirop2b.png", 2);
+        personaje VampiroP2b = new  Vampiro("VampiroP2b","/Imagenes/personajes_casillas/vampirop2b.png", 2);
         
-        personaje LoboP2b = new HombreLobo("HombreLobo","/Imagenes/personajes_casillas/hombrelobop2b.png", 2 );
+        personaje LoboP2b = new HombreLobo("LoboP2b","/Imagenes/personajes_casillas/hombrelobop2b.png", 2 );
         
         
         personajes2.add(LoboP2a);
@@ -227,13 +298,20 @@ public class juego extends JFrame{
         botonB.setFocusPainted(false);
         botonB.setBorderPainted(false);
         botonB.setOpaque(true);
+        botonB.setContentAreaFilled(true);
+  
+        botonB.setRolloverEnabled(false);
+        botonB.setEnabled(false);
         
 
         botonB.addActionListener(e -> {
-            /**if (variableB){                               detiene ruleta 
+            
+                ruletaP1.fin();
+            
                 botonB.setBackground(Color.WHITE);
-            }**/
-            ruletaP1.inicio();
+                encontrarPersonaje(1, ruletaP1.RevisarAngulo());
+            
+            
                     
             
 
@@ -316,16 +394,21 @@ public class juego extends JFrame{
         botonN.setFocusPainted(false);
         botonN.setBorderPainted(false);
         botonN.setOpaque(true);
+        botonN.setContentAreaFilled(true);
+  
+        botonN.setRolloverEnabled(false);
 
         botonN.addActionListener(e -> {
             
-            /**if (variableN==false){
-                botonN.setBackground(Color.BLACK);
-            }**/
-            ruletaP1. fin();
+            
+            
+            ruletaP2. fin();
+            botonN.setBackground(Color.black);
+            encontrarPersonaje(2, ruletaP2.RevisarAngulo());
             
 
         });
+        botonN.setEnabled(false);
         ruletas.add(botonN);
         botonN.setAlignmentX(Component.CENTER_ALIGNMENT);
     
@@ -465,6 +548,82 @@ public class juego extends JFrame{
         }
         return 0;
         
+    }
+    
+    //obtener casilla de personaje
+    
+    public void encontrarPersonaje(int turno, int numero){
+        
+        if (turno==1){
+            switch (numero){
+                case 1:
+                    indexs = localizarPersonaje ("MuerteP1a");
+                    
+                    break;
+                case 2:
+                    indexs = localizarPersonaje ("VampiroP1a");
+                    break;
+                case 3:
+                    indexs = localizarPersonaje ("LoboP1a");
+                    break;
+                case 4:
+                    indexs = localizarPersonaje ("MuerteP1b");
+                    break;
+                case 5:
+                    indexs = localizarPersonaje ("VampiroP1b");
+                    break;
+                case 6:
+                    indexs = localizarPersonaje ("LoboP1b");
+                    break;
+            }
+        }else if (turno ==2){
+            switch (numero){
+                case 1:
+                    indexs = localizarPersonaje ("MuerteP2a");
+                    
+                    break;
+                case 2:
+                    indexs = localizarPersonaje ("VampiroP2a");
+                    break;
+                case 3:
+                    indexs = localizarPersonaje ("LoboP2a");
+                    break;
+                case 4:
+                    indexs = localizarPersonaje ("MuerteP2b");
+                    break;
+                case 5:
+                    indexs = localizarPersonaje ("VampiroP2b");
+                    break;
+                case 6:
+                    indexs = localizarPersonaje ("LoboP2b");
+                    break;
+            }
+            
+        }
+        
+        
+    }
+    
+    public int[] localizarPersonaje (String nombre){
+        int [] index = new int[2];
+        
+        for (int i = 0; i<6; i++){
+            for (int z=0; z<6; z++){
+                if (casillas[i][z].getPersonaje()== null){
+                    
+                }else{
+                    
+                
+                    if (casillas[i][6].getPersonaje().getNombre().equals(nombre)){
+                        index[0]=i;
+                        index[1]=z;
+                    }
+                }
+
+            }
+            
+        }
+        return index; 
     }
     
     

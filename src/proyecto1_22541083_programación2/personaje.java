@@ -23,10 +23,14 @@ public abstract class personaje {
     protected int fila;
     protected int columna;
     protected ImageIcon imagen;
+    protected int  equipo;
     
-    public personaje(String acceso, String nombre){
+    public personaje(String acceso, String nombre, int equipo){
         this.nombre=  nombre;
+        this.equipo = equipo;
+        
         alive= true;
+        
         
         
         imagen = new ImageIcon(getClass().getResource(acceso));
@@ -52,11 +56,26 @@ public abstract class personaje {
         
     
     
-    public void recibirataque (int ataque){
-        if (escudo<=0  ){
+    public int recibirataque (int ataque, int combo){
+        if (ataque == 0){
+            //mensaje de roptura de escudo
+            return 1;
+        }
+        else if (escudo<=0  ){
             vida-= ataque;
-            if (vida < 0){
-                ataque = vida*-1;
+            if (vida <= 0){
+                vida = 0;
+                alive = false;
+                //mensaje y muerte
+                return 2;
+                
+            }else{
+                if (combo == 1){
+                    //mensaje de quitar vida y escudo
+                    return 3;
+                }
+                //mensaje de quitar vida
+                return 4;
             }
 
         }else{
@@ -65,16 +84,25 @@ public abstract class personaje {
             if (escudo < 0){
                 ataque = escudo*-1;
                 escudo=0;
-                recibirataque(ataque); 
                 
+                return recibirataque(ataque, 1); 
+                
+                
+            }else{
+                //mensaje de quitar escudo
+                return 5;
             }
 
         }
     }
+
+    public int getEquipo() {
+        return equipo;
+    }
         
     
     
-    public int getmovimiento() {
+    public int getmovimientos() {
         
         return movimiento;
     }
@@ -86,6 +114,12 @@ public abstract class personaje {
     public String getNombre() {
         return nombre;
     }
+
+    public int getAtaque() {
+        return ataque;
+    }
+    
+    
     
     
     

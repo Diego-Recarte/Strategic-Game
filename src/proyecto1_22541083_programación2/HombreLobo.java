@@ -11,9 +11,9 @@ package proyecto1_22541083_programación2;
 public class HombreLobo extends personaje{
     
     
-    public HombreLobo(String nombre, String acceso){
+    public HombreLobo(String nombre, String acceso, int equipo){
         
-        super(acceso, nombre);
+        super(acceso, nombre, equipo);
         
         
         

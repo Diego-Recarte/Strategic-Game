@@ -19,6 +19,8 @@ import java.util.ArrayList;
 public class casilla extends JButton {
     private personaje personaje;
     private boolean relleno;
+    private boolean atacable;
+    
     
     
     
@@ -34,6 +36,7 @@ public class casilla extends JButton {
         setBorderPainted(false);
         
         filled(false);
+        atacable (false);
         
         
         
@@ -58,7 +61,7 @@ public class casilla extends JButton {
             
             setBorder(BorderFactory.createLineBorder(Color.YELLOW, 3));
         }else{
-            setBackground(Color.gray);
+            setBorder(null);
         }
         repaint();
                 
@@ -73,7 +76,29 @@ public class casilla extends JButton {
                 g2.fillRect(0, 0, getWidth(), getHeight());
                 g2.dispose();
             }
+            if (atacable){
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setColor( new Color(255, 0, 0, 150));
+                g2.fillRect(0, 0, getWidth(), getHeight());
+                g2.dispose();
+            }
         }
+        
+        public void atacable (boolean atacable){
+            this.atacable = atacable;
+            if (relleno){
+
+                setBorder(BorderFactory.createLineBorder(Color.red, 3));
+            }else{
+                setBorder(null);
+            }
+            repaint();
+
+        }
+        
+        
+        
+        
         
         
         public void addPersonaje(personaje personaje){

@@ -44,7 +44,8 @@ public class juego extends JFrame{
     private Timer tiempo;
     private int veces = 0;
     
-    private ArrayList <casilla> posiciones = new  ArrayList<>();
+    private ArrayList <casilla> posiciones = new  ArrayList<>(); 
+    private ArrayList <casilla> areaataque = new  ArrayList<>();
     
     
     private jugador user1;
@@ -74,17 +75,17 @@ public class juego extends JFrame{
     }
     
     public void Inicializarpersonajes(){
-        personaje LoboP1a = new HombreLobo("HombreLobo", "/Imagenes/personajes_casillas/hombrelobop1a.png");
+        personaje LoboP1a = new HombreLobo("HombreLobo", "/Imagenes/personajes_casillas/hombrelobop1a.png", 1);
         
-        personaje VampiroP1a = new Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop1a.png" );
+        personaje VampiroP1a = new Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop1a.png", 1 );
         
-        personaje MuerteP1a = new Muerte ("Muerte", "/Imagenes/personajes_casillas/muertep1a.png");
+        personaje MuerteP1a = new Muerte ("Muerte", "/Imagenes/personajes_casillas/muertep1a.png", 1);
         
-        personaje MuerteP1b = new Muerte ("Muerte", "/Imagenes/personajes_casillas/muertep1b.png");
+        personaje MuerteP1b = new Muerte ("Muerte", "/Imagenes/personajes_casillas/muertep1b.png", 1);
         
-        personaje VampiroP1b = new Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop1b.png");
+        personaje VampiroP1b = new Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop1b.png", 1);
         
-        personaje LoboP1b = new HombreLobo("HombreLobo", "/Imagenes/personajes_casillas/hombrelobop1b.png");
+        personaje LoboP1b = new HombreLobo("HombreLobo", "/Imagenes/personajes_casillas/hombrelobop1b.png", 1);
         
         personajes1.add(LoboP1a);
         
@@ -109,17 +110,17 @@ public class juego extends JFrame{
         
         
         
-        personaje LoboP2a = new HombreLobo("HombreLobo","/Imagenes/personajes_casillas/hombrelobop2a.png" );
+        personaje LoboP2a = new HombreLobo("HombreLobo","/Imagenes/personajes_casillas/hombrelobop2a.png", 2 );
         
-        personaje VampiroP2a = new  Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop2a.png");
+        personaje VampiroP2a = new  Vampiro("Vampiro", "/Imagenes/personajes_casillas/vampirop2a.png", 2);
         
-        personaje MuerteP2a =new  Muerte("Muerte","/Imagenes/personajes_casillas/muertep2a.png");
+        personaje MuerteP2a =new  Muerte("Muerte","/Imagenes/personajes_casillas/muertep2a.png", 2);
         
-        personaje MuerteP2b = new  Muerte("Muerte","/Imagenes/personajes_casillas/muertep2b.png");
+        personaje MuerteP2b = new  Muerte("Muerte","/Imagenes/personajes_casillas/muertep2b.png", 2);
         
-        personaje VampiroP2b = new  Vampiro("Vampiro","/Imagenes/personajes_casillas/vampirop2b.png");
+        personaje VampiroP2b = new  Vampiro("Vampiro","/Imagenes/personajes_casillas/vampirop2b.png", 2);
         
-        personaje LoboP2b = new HombreLobo("HombreLobo","/Imagenes/personajes_casillas/hombrelobop2b.png" );
+        personaje LoboP2b = new HombreLobo("HombreLobo","/Imagenes/personajes_casillas/hombrelobop2b.png", 2 );
         
         
         personajes2.add(LoboP2a);
@@ -469,6 +470,12 @@ public class juego extends JFrame{
     
     
     
+    
+    
+    
+    
+    
+    
     public int movimiento(int fila, int columna, int acum){
         casilla intermedia;
         if (acum<8){
@@ -563,13 +570,7 @@ public class juego extends JFrame{
     }
     
     public void desplazamiento(casilla inicio, casilla fin, boolean islobo, casilla intermedio, ActionListener movimiento){
-        for (casilla c : posiciones){
-                c.filled(false);
-                
-                for (ActionListener al : c.getActionListeners()) {
-                c.removeActionListener(al);
-                    }
-            }
+         limpiarMovimientos();
         if (islobo==false){
             
             personaje temp= inicio.getPersonaje();
@@ -601,17 +602,152 @@ public class juego extends JFrame{
             
             tiempo.start();
             posiciones.clear();
-            
-           
-            
-            
-            
-            
+
             
         }
         
         
         
+    }
+    public void limpiarMovimientos() {
+            for (casilla c : posiciones) {
+                c.filled(false);
+                for (ActionListener al : c.getActionListeners()) {
+                    c.removeActionListener(al);
+                }
+            }
+            posiciones.clear();
+        }
+    
+    // ataque
+    public int ataque (int fila, int columna, int acum, int invalido){
+        
+        if (acum<8){
+            
+            switch (acum){
+                case 0:
+                        invalido+=Asignarataque(fila+1, columna, casillas[fila][columna] );
+                       
+                    break;
+                    
+                case 1:
+                     invalido+=Asignarataque(fila+1, columna+1, casillas[fila][columna] );
+                       
+                    break;
+                
+                case 2:
+                     invalido+=Asignarataque(fila, columna+1, casillas[fila][columna] );
+                       
+                    break;
+                    
+                case 3:
+                     invalido+=Asignarataque(fila-1, columna+1, casillas[fila][columna] );
+                       
+                    break;
+                    
+                case 4:
+                    invalido+=Asignarataque(fila-1, columna, casillas[fila][columna] );
+                       
+                    break;
+                    
+                case 5:
+                     invalido+=Asignarataque(fila-1, columna-1, casillas[fila][columna] );
+                       
+                    break;
+                    
+                case 6:
+                     invalido+=Asignarataque(fila, columna-1, casillas[fila][columna] );
+                       
+                    break;
+                    
+                case 7:
+                     invalido+=Asignarataque(fila+1, columna-1, casillas[fila][columna] );
+                       
+                    break;
+            }
+            return ataque( fila,  columna,  acum+1, invalido);
+        }
+        else if (invalido == 8){
+            //texto de no se encontro oponentes
+        }
+        return 0;
+        
+        
+    }
+    
+     public int Asignarataque(int fila, int columna, casilla atacante){
+        if (fila < 0 || fila >= casillas.length || columna < 0 || columna >= casillas[0].length){
+            return 1;
+            
+        }
+        else if (casillas[fila][columna].getPersonaje() == null ){
+            return 1;
+                  
+
+        }
+        else if (casillas[fila][columna].getPersonaje().equipo!=atacante.getPersonaje().getEquipo()){
+                
+        
+            casillas[fila][columna].atacable(true);
+                  
+                   ActionListener ataque = new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            casilla actual = (casilla) e.getSource();
+                            atacando(atacante, actual, this);
+                        }
+                    };
+                  casillas[fila][columna].addActionListener(ataque);
+                  areaataque.add(casillas[fila][columna]);
+                  
+                  return 0;
+                 
+            
+        }
+        else {
+            return 1;
+        }
+        
+    }
+     
+     public void atacando(casilla atacante, casilla atacado, ActionListener ataque){
+        limpiarAtaques();
+  
+            int resultado;
+            resultado = atacado.getPersonaje().recibirataque(atacante.getPersonaje().getAtaque(),0);
+            
+            areaataque.clear();
+            
+            switch (resultado){
+                
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                    //mensajes para el chat y muerte en caso de ser necesario
+        
+
+            
+            }
+        
+        
+        
+    }
+     
+     public void limpiarAtaques() {
+        for (casilla c : areaataque) {
+            c.atacable(false);
+            for (ActionListener al : c.getActionListeners()) {
+                c.removeActionListener(al);
+            }
+        }
+        areaataque.clear();
     }
 
 

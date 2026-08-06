@@ -10,7 +10,7 @@ package proyecto1_22541083_programación2;
  */
 public class Zombie extends personaje {
     
-    private int indice;
+    private final int indice;
     
     
     public Zombie (String nombre, String acceso, int equipo, Muerte muerte){

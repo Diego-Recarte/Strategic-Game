@@ -56,12 +56,12 @@ public abstract class personaje {
         
     
     
-    public int recibirataque (int ataque, int combo){
+    public int recibirataque (int ataque, int combo, boolean directo){
         if (ataque == 0){
             //mensaje de roptura de escudo
             return 1;
         }
-        else if (escudo<=0  ){
+        else if (escudo<=0 || directo  ){
             vida-= ataque;
             if (vida <= 0){
                 vida = 0;
@@ -85,7 +85,7 @@ public abstract class personaje {
                 ataque = escudo*-1;
                 escudo=0;
                 
-                return recibirataque(ataque, 1); 
+                return recibirataque(ataque, 1, false); 
                 
                 
             }else{
@@ -118,6 +118,8 @@ public abstract class personaje {
     public int getAtaque() {
         return ataque;
     }
+    
+    public abstract int  especial(personaje victima, int tipo);
     
     
     

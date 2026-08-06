@@ -8,31 +8,43 @@ package proyecto1_22541083_programación2;
  *
  * @author user
  */
-public class Vampiro extends personaje{
+public class Zombie extends personaje {
+    
+    private int indice;
     
     
-    public Vampiro(String nombre, String acceso, int equipo){
+    public Zombie (String nombre, String acceso, int equipo, Muerte muerte){
         
         super(acceso, nombre, equipo);
+        
+        indice = muerte.getZombies().size()-1;
+        
+        
+        
+        
+        
+        
+        
         
         
         
     }
-
+    
+    
     
     @Override
     public  void inicializarStats(){
         
-        vida=4;
-        escudo =5;
-        ataque=3;
+        vida=1;
+        escudo =0;
+        ataque=1;
                 
     }
     
-    public int  especial(personaje victima, int tipo){
-        int resultado = victima.recibirataque(1, 0, true);
-        vida++;
-        
-        return resultado;
+    
+    public int  especial(personaje victima,int tipo){
+        return 0;
     }
+        
+        
 }

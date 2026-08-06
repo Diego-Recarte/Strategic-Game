@@ -28,4 +28,8 @@ public class HombreLobo extends personaje{
         ataque=5;
                 
     }
+    
+    public int  especial(personaje victima, int tipo){
+        return 0;
+    }
 }

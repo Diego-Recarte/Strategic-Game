@@ -20,6 +20,9 @@ public class juego extends JFrame{
     private JPanel statp2;
     private JPanel statp1;
     private JPanel statchat;
+    private JPanel cardRuletas;
+    private CardLayout cambioruleta;
+    
     
     private JLabel nombre1;
     private JLabel nombre2;
@@ -77,9 +80,11 @@ public class juego extends JFrame{
         Inicializarpersonajes();
         Inicializarstatus();
         
-        iniciarcantidadronda(1);
+        iniciarcantidadronda(2);
+        
         rondas1=this.user1.getTipo().getTurnosIniciales();
         rondas2=this.user2.getTipo().getTurnosIniciales();
+        cambiarRuleta();
         
         
                 
@@ -276,7 +281,10 @@ public class juego extends JFrame{
     
     
     public void Inicializarruletas(){
-        
+    cambioruleta = new CardLayout();
+    cardRuletas = new JPanel(cambioruleta);
+    cardRuletas.setOpaque(false);
+    
     ruletas = new JPanel();
         
     ruletas.setLayout(new BoxLayout(ruletas, BoxLayout.Y_AXIS));
@@ -305,11 +313,12 @@ public class juego extends JFrame{
     ruletas.add(Box.createVerticalStrut(5));
      ruletaP2 = new Ruleta("/Imagenes/marco2.png", 2, personajes2);
     ruletaP2.setVisible(true);
-    ruletas.add(ruletaP2);
+    cardRuletas.add(ruletaP2,"2");
     
     ruletaP1 = new Ruleta("/Imagenes/marco1.png", 1, personajes1);
     ruletaP1.setVisible(true);
-    ruletas.add(ruletaP1);
+    cardRuletas.add(ruletaP1, "1");
+    ruletas.add(cardRuletas);
     
     
     Inicializarbotondetenerblanco();
@@ -333,6 +342,10 @@ public class juego extends JFrame{
     
        
     }
+    private void cambiarRuleta(){
+        cambioruleta.show(cardRuletas, String.valueOf( turno));
+    }
+    
     public void Inicializarbotondetenerblanco(){
         botonB = new JButton("Detener");
 

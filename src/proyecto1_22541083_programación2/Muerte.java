@@ -23,9 +23,9 @@ public class Muerte extends personaje{
     
     public void addZombie(){
         if (equipo ==1){
-            zombies.add(new Zombie("zombie","\"/Imagenes/personajes_casillas/zombie1.png\" ",equipo,this));
+            zombies.add(new Zombie("zombie","/Imagenes/personajes_casillas/zombie1.png",equipo,this));
         }else if (equipo ==2){
-            zombies.add(new Zombie("zombie","\"/Imagenes/personajes_casillas/zombie2.png\"",equipo,this));
+            zombies.add(new Zombie("zombie","/Imagenes/personajes_casillas/zombie2.png",equipo,this));
         }
         
     }

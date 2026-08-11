@@ -38,6 +38,7 @@ public class Zombie extends personaje {
         vida=1;
         escudo =0;
         ataque=1;
+          System.out.println("Zombie inicializado: vida=" + vida + ", escudo=" + escudo);
                 
     }
     

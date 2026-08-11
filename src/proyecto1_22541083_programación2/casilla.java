@@ -30,7 +30,7 @@ public class casilla extends JButton {
         
         setPreferredSize(new Dimension(15, 15));
         setMaximumSize(new Dimension(15, 15));
-        setEnabled(false);
+        
         setFocusable(false);
         setFocusPainted(false);
         setBorderPainted(false);

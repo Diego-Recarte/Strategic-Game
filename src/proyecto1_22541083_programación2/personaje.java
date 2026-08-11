@@ -38,6 +38,8 @@ public abstract class personaje {
         imagen = new ImageIcon(Escalada);
         
         
+        inicializarStats();
+        
         
         
         
@@ -57,16 +59,21 @@ public abstract class personaje {
     
     
     public int recibirataque (int ataque, int combo, boolean directo){
+        System.out.println("dentro del metodo"+ ataque);
         if (ataque == 0){
             //mensaje de roptura de escudo
             return 1;
         }
         else if (escudo<=0 || directo  ){
+            System.out.println(ataque);
+        
             vida-= ataque;
             if (vida <= 0){
                 vida = 0;
                 alive = false;
                 //mensaje y muerte
+                System.out.println("Personaje murió, eliminando del tablero");
+                
                 return 2;
                 
             }else{

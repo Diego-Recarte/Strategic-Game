@@ -6,7 +6,7 @@ package proyecto1_22541083_programación2;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.*; 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +50,8 @@ public class juego extends JFrame{
     
     private ArrayList <casilla> posiciones = new  ArrayList<>(); 
     private ArrayList <casilla> areaataque = new  ArrayList<>();
-    private int turno;
+    private ArrayList <JButton> acciones = new  ArrayList<>();
+    private int turno=1;
     
     private int [] indexs= new int[2]; 
     
@@ -59,12 +60,16 @@ public class juego extends JFrame{
     private int rondast1;
     private int rondast2;
     
+    private boolean ruleta1detener;
+    private boolean ruleta2detener;
     
     private jugador user1;
     private jugador user2;
     private ArrayList <personaje> personajes1 = new  ArrayList<>();
     private ArrayList <personaje> personajes2 = new  ArrayList<>();
+    
     private casilla[][] casillas = new casilla[6][6];
+   
     
     public juego(jugador user1, jugador user2) {
     
@@ -80,11 +85,13 @@ public class juego extends JFrame{
         Inicializarpersonajes();
         Inicializarstatus();
         
-        iniciarcantidadronda(2);
+        iniciarcantidadronda(1);
+        cambiarRuleta();
+
         
         rondas1=this.user1.getTipo().getTurnosIniciales();
         rondas2=this.user2.getTipo().getTurnosIniciales();
-        cambiarRuleta();
+        
         
         
                 
@@ -97,7 +104,8 @@ public class juego extends JFrame{
         setVisible(true);
     }
     
-    public void finturno(int turno){
+    public void finturno(){
+        casillas[indexs[0]][indexs[1]].border(false);
         if (turno ==1){
             
             if (rondast1 > 0){
@@ -126,23 +134,35 @@ public class juego extends JFrame{
         
     }
     public void iniciarturno(int toca){
+       
         if (toca ==1){
- 
+            
+            ruleta1detener= true;
+            
             ruletaP1.inicio();
             botonB.setBackground(Color.yellow);
-            botonB.setEnabled(true);
+            botonB.setForeground(Color.black);
+           
             turno =1;
             rondast1--;
         }else if (toca == 2){
+            ruleta2detener= true;
             ruletaP2.inicio();
             botonN.setBackground(Color.yellow);
-            botonN.setEnabled(true);
+            botonN.setForeground(Color.black);
+            
             turno =2;
             rondast2--;
         }
+        
+        cambiarRuleta();
+
     }
     public void iniciarcantidadronda(int toca){
+        rondasbonus(toca);
         if (toca ==1){
+            
+            
             
                 rondast1=rondas1;
                 iniciarturno(1);
@@ -155,7 +175,7 @@ public class juego extends JFrame{
     }
     
     
-    public int rondasbonus(int toca){
+    public void rondasbonus(int toca){
         if (toca ==1){
             int vivos = Contarvivos(personajes1);
             switch(vivos){
@@ -165,8 +185,10 @@ public class juego extends JFrame{
                 case 2:
                     rondas1 += 1;
                     break;
+                default:
+                    break;
             }
-            return 1;
+        
             
             
             
@@ -179,12 +201,14 @@ public class juego extends JFrame{
                 case 2:
                     rondas2 += 1;
                     break;
+                default:
+                    break;
             }
-           return 1;
+           
             
         }
         
-        return 0;
+      
         
         
     }
@@ -196,6 +220,30 @@ public class juego extends JFrame{
             }
         }
         return vivos;
+    }
+    
+    public void VerificarFin(){
+        int vivos;
+        if (turno==1){
+            vivos = Contarvivos( personajes2);
+            if (vivos==0){
+                partidaFin(user1,user2, false);
+            }
+            
+            
+        }else if (turno ==2){
+            vivos = Contarvivos( personajes1);
+            if (vivos ==0){
+                partidaFin(user2,user1, false);
+            }
+        }
+    }
+    
+    private void partidaFin(jugador ganador, jugador perdedor, boolean isRetirado){
+        
+        
+        
+        
     }
     
     //personajes
@@ -313,12 +361,14 @@ public class juego extends JFrame{
     ruletas.add(Box.createVerticalStrut(5));
      ruletaP2 = new Ruleta("/Imagenes/marco2.png", 2, personajes2);
     ruletaP2.setVisible(true);
-    cardRuletas.add(ruletaP2,"2");
+    
     
     ruletaP1 = new Ruleta("/Imagenes/marco1.png", 1, personajes1);
     ruletaP1.setVisible(true);
     cardRuletas.add(ruletaP1, "1");
+    cardRuletas.add(ruletaP2, "2");
     ruletas.add(cardRuletas);
+    
     
     
     Inicializarbotondetenerblanco();
@@ -343,7 +393,12 @@ public class juego extends JFrame{
        
     }
     private void cambiarRuleta(){
-        cambioruleta.show(cardRuletas, String.valueOf( turno));
+        if (turno ==1){
+             cambioruleta.show(cardRuletas, "1");
+        }else if (turno ==2){
+             cambioruleta.show(cardRuletas, "2");
+        }
+       
     }
     
     public void Inicializarbotondetenerblanco(){
@@ -363,15 +418,32 @@ public class juego extends JFrame{
         botonB.setContentAreaFilled(true);
   
         botonB.setRolloverEnabled(false);
-        botonB.setEnabled(false);
+        
         
 
         botonB.addActionListener(e -> {
             
-                ruletaP1.fin();
             
-                botonB.setBackground(Color.WHITE);
-                encontrarPersonaje(1, ruletaP1.RevisarAngulo());
+            if (ruleta1detener){
+                    ruleta1detener= false;
+                    ruletaP1.fin();
+
+                    botonB.setBackground(Color.WHITE);
+                    botonB.setForeground(Color.black);
+                    personaje personaje =encontrarPersonaje(1, ruletaP1.RevisarAngulo());
+                    if (personaje == null){
+
+                        iniciarturno(1);
+                    }else{
+
+                        casillas[indexs[0]][indexs[1]].border(true);
+                        addAcciones (1);
+                    }
+            }
+                
+                
+                
+                
             
             
                     
@@ -385,6 +457,219 @@ public class juego extends JFrame{
         
 
     }
+    
+    private void addAcciones (int equipo){
+        if (equipo == 1){
+            mover1.setBackground(Color.yellow);
+            atacar1.setBackground(Color.yellow);
+            mover1.setForeground(Color.black);
+            atacar1.setForeground(Color.black);
+            if (casillas[indexs[0]][indexs[1]].getPersonaje().getNombre().equals("LoboP1a")||casillas[indexs[0]][indexs[1]].getPersonaje().getNombre().equals("LoboP1b") ){
+                
+                mover1.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    
+                    movimiento(indexs[0],indexs[1], 0, true);
+                });
+                
+                atacar1.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    
+                    ataque (indexs[0],indexs[1],0,0, false);
+                    
+                    
+                    
+                });
+                
+                
+                
+            }else if (casillas[indexs[0]][indexs[1]].getPersonaje().getNombre().equals("VampiroP1b")||casillas[indexs[0]][indexs[1]].getPersonaje().getNombre().equals("VampiroP1a") ){
+                especial1.setBackground(Color.yellow);
+                especial1.setForeground(Color.black);
+                mover1.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                     movimiento(indexs[0],indexs[1], 0, false);
+                    
+                    
+                    
+                    
+                });
+                
+                atacar1.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    ataque (indexs[0],indexs[1],0,0, false);
+                    
+                });
+                
+                especial1.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    ataque (indexs[0],indexs[1],0,0, true);
+                    
+                    
+                });
+                
+                
+                
+                
+            }else{
+                especial1.setBackground(Color.yellow);
+                especial1.setForeground(Color.black);
+                
+                mover1.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                     movimiento(indexs[0],indexs[1], 0, false);
+                    
+                });
+                
+                atacar1.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    ataque (indexs[0],indexs[1],0,0,false);
+                    
+                });
+                
+                especial1.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    especial esp = new especial(this, casillas[indexs[0]] [indexs[1]].getPersonaje(), 1, casillas);
+                    esp.setLocationRelativeTo(this);
+                    esp.setVisible(true);
+                    
+                    
+                   
+                    
+                    
+                    
+                });
+                
+                
+            }
+            
+            
+            
+            
+        }else if (equipo ==2){
+            
+            mover2.setBackground(Color.yellow);
+            atacar2.setBackground(Color.yellow);
+            mover2.setForeground(Color.black);
+            atacar2.setForeground(Color.black);
+            
+            if (casillas[indexs[0]][indexs[1]].getPersonaje().getNombre().equals("LoboP2a")||casillas[indexs[0]][indexs[1]].getPersonaje().getNombre().equals("LoboP2b") ){
+                mover2.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    movimiento(indexs[0],indexs[1], 0, true);
+                    
+                    
+                });
+                
+                atacar2.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    ataque (indexs[0],indexs[1],0,0, false);
+                    
+                });
+                
+                
+                
+            }else if(casillas[indexs[0]][indexs[1]].getPersonaje().getNombre().equals("VampiroP2b")||casillas[indexs[0]][indexs[1]].getPersonaje().getNombre().equals("VampiroP2a")) {
+                especial2.setBackground(Color.yellow);
+                especial2.setForeground(Color.black);
+                mover2.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                     movimiento(indexs[0],indexs[1], 0, false);
+                    
+                });
+                
+                atacar2.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    ataque (indexs[0],indexs[1],0,0, false);
+                });
+                
+                especial2.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    ataque (indexs[0],indexs[1],0,0, false);
+                    
+                });
+            }
+            else{
+                especial2.setBackground(Color.yellow);
+                especial2.setForeground(Color.black);
+                mover2.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                     movimiento(indexs[0],indexs[1], 0, false);
+                    
+                });
+                
+                atacar2.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    ataque (indexs[0],indexs[1],0,0, false);
+                    
+                });
+                
+                especial2.addActionListener(e->{
+                    limpiarMovimientos();
+                    limpiarAtaques();
+                    especial es = new especial(this, casillas[indexs[0]] [indexs[1]].getPersonaje(), 2, casillas);
+                    es.setLocationRelativeTo(this);
+                    es.setVisible(true);
+                    
+                    
+                });
+                
+            }
+        }
+    }
+    
+    private void quitarActionListeners(AbstractButton boton) {
+        for (ActionListener listener : boton.getActionListeners()) {
+            boton.removeActionListener(listener);
+        }
+        
+    }
+    
+   public void removeAciones(int equipo){
+       if (equipo ==1){
+           
+           quitarActionListeners(mover1);
+           quitarActionListeners(atacar1);
+           quitarActionListeners(especial1);
+           
+           mover1.setBackground(Color.white);
+           atacar1.setBackground(Color.white);
+           especial1.setBackground(Color.white);
+           
+           mover1.setForeground(Color.black);
+           atacar1.setForeground(Color.black);
+           especial1.setForeground(Color.black);
+           
+       }else if (equipo ==2){
+           quitarActionListeners(mover2);
+           quitarActionListeners(atacar2);
+           quitarActionListeners(especial2);
+           
+           mover2.setBackground(Color.black);
+           atacar2.setBackground(Color.black);
+           especial2.setBackground(Color.black);
+           
+           mover2.setForeground(Color.white);
+           atacar2.setForeground(Color.white);
+           especial2.setForeground(Color.white);
+       }
+   }
+    
     
     public void Inicializarstatus(){
         
@@ -462,15 +747,26 @@ public class juego extends JFrame{
 
         botonN.addActionListener(e -> {
             
+            if (ruleta2detener){
             
-            
-            ruletaP2. fin();
-            botonN.setBackground(Color.black);
-            encontrarPersonaje(2, ruletaP2.RevisarAngulo());
+                ruleta2detener= false;
+                ruletaP2. fin();
+                botonN.setBackground(Color.black);
+                botonN.setForeground(Color.white);
+                personaje personaje =encontrarPersonaje(2, ruletaP2.RevisarAngulo());
+                if (personaje == null){
+                    iniciarturno(2);
+                }else{
+
+                 casillas[indexs[0]][indexs[1]].border(true);
+                 addAcciones (2);
+                }
+            }
+             
             
 
         });
-        botonN.setEnabled(false);
+        
         ruletas.add(botonN);
         botonN.setAlignmentX(Component.CENTER_ALIGNMENT);
     
@@ -616,26 +912,27 @@ public class juego extends JFrame{
     
     public personaje encontrarPersonaje(int turno, int numero){
         
+        
         if (turno==1){
             switch (numero){
                 case 1:
-                    indexs = localizarPersonaje ("MuerteP1a");
+                    indexs = localizarPersonaje ("MuerteP1b");
                     
                     break;
                 case 2:
-                    indexs = localizarPersonaje ("VampiroP1a");
+                    indexs = localizarPersonaje ("LoboP1b");
                     break;
                 case 3:
-                    indexs = localizarPersonaje ("LoboP1a");
-                    break;
-                case 4:
-                    indexs = localizarPersonaje ("MuerteP1b");
-                    break;
-                case 5:
                     indexs = localizarPersonaje ("VampiroP1b");
                     break;
+                case 4:
+                    indexs = localizarPersonaje ("MuerteP1a");
+                    break;
+                case 5:
+                    indexs = localizarPersonaje ("LoboP1a");
+                    break;
                 case 6:
-                    indexs = localizarPersonaje ("LoboP1b");
+                    indexs = localizarPersonaje ("VampiroP1a");
                     break;
             }
         }else if (turno ==2){
@@ -645,19 +942,19 @@ public class juego extends JFrame{
                     
                     break;
                 case 2:
-                    indexs = localizarPersonaje ("VampiroP2a");
+                    indexs = localizarPersonaje ("LoboP2a");
                     break;
                 case 3:
-                    indexs = localizarPersonaje ("LoboP2a");
+                    indexs = localizarPersonaje ("VampiroP2b");
                     break;
                 case 4:
                     indexs = localizarPersonaje ("MuerteP2b");
                     break;
                 case 5:
-                    indexs = localizarPersonaje ("VampiroP2b");
+                    indexs = localizarPersonaje ("LoboP2b");
                     break;
                 case 6:
-                    indexs = localizarPersonaje ("LoboP2b");
+                    indexs = localizarPersonaje ("VampiroP2a");
                     break;
             }
             
@@ -710,68 +1007,68 @@ public class juego extends JFrame{
     //movimiento
     
     
-    public int movimiento(int fila, int columna, int acum){
+    public int movimiento(int fila, int columna, int acum, boolean islobo){
         casilla intermedia;
         if (acum<8){
             
             switch (acum){
                 case 0:
-                       intermedia = AsignarPosicion(fila+1, columna, casillas[fila][columna], false,casillas[fila][columna] );
-                       if (intermedia != null){
-                           AsignarPosicion(fila+2, columna, casillas[fila][columna], true, intermedia );
+                       intermedia = AsignarPosicion(fila+1, columna, casillas[fila][columna], islobo,casillas[fila][columna] );
+                       if (intermedia != null && islobo){
+                           AsignarPosicion(fila+2, columna, casillas[fila][columna], islobo, intermedia );
                        }
                     break;
                     
                 case 1:
-                    intermedia = AsignarPosicion(fila+1, columna+1, casillas[fila][columna], false,casillas[fila][columna] );
-                       if (intermedia != null){
-                           AsignarPosicion(fila+2, columna+2, casillas[fila][columna], true, intermedia );
+                    intermedia = AsignarPosicion(fila+1, columna+1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                       if (intermedia != null && islobo){
+                           AsignarPosicion(fila+2, columna+2, casillas[fila][columna], islobo, intermedia );
                        }
                     break;
                 
                 case 2:
-                    intermedia = AsignarPosicion(fila, columna+1, casillas[fila][columna], false,casillas[fila][columna] );
-                       if (intermedia != null){
-                           AsignarPosicion(fila, columna+2, casillas[fila][columna], true, intermedia );
+                    intermedia = AsignarPosicion(fila, columna+1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                       if (intermedia != null && islobo){
+                           AsignarPosicion(fila, columna+2, casillas[fila][columna], islobo, intermedia );
                        }
                     break;
                     
                 case 3:
-                    intermedia = AsignarPosicion(fila-1, columna+1, casillas[fila][columna], false,casillas[fila][columna] );
-                       if (intermedia != null){
-                           AsignarPosicion(fila-2, columna+2, casillas[fila][columna], true, intermedia );
+                    intermedia = AsignarPosicion(fila-1, columna+1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                       if (intermedia != null && islobo){
+                           AsignarPosicion(fila-2, columna+2, casillas[fila][columna], islobo, intermedia );
                        }
                     break;
                     
                 case 4:
-                    intermedia = AsignarPosicion(fila-1, columna, casillas[fila][columna], false,casillas[fila][columna] );
-                       if (intermedia != null){
-                           AsignarPosicion(fila-2, columna, casillas[fila][columna], true, intermedia );
+                    intermedia = AsignarPosicion(fila-1, columna, casillas[fila][columna], islobo,casillas[fila][columna] );
+                       if (intermedia != null && islobo){
+                           AsignarPosicion(fila-2, columna, casillas[fila][columna], islobo, intermedia );
                        }
                     break;
                     
                 case 5:
-                    intermedia = AsignarPosicion(fila-1, columna-1, casillas[fila][columna], false,casillas[fila][columna] );
-                       if (intermedia != null){
-                           AsignarPosicion(fila-2, columna-2, casillas[fila][columna], true, intermedia );
+                    intermedia = AsignarPosicion(fila-1, columna-1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                       if (intermedia != null && islobo){
+                           AsignarPosicion(fila-2, columna-2, casillas[fila][columna], islobo, intermedia );
                        }
                     break;
                     
                 case 6:
-                    intermedia = AsignarPosicion(fila, columna-1, casillas[fila][columna], false,casillas[fila][columna] );
-                       if (intermedia != null){
-                           AsignarPosicion(fila, columna-2, casillas[fila][columna], true, intermedia );
+                    intermedia = AsignarPosicion(fila, columna-1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                       if (intermedia != null && islobo){
+                           AsignarPosicion(fila, columna-2, casillas[fila][columna], islobo, intermedia );
                        }
                     break;
                     
                 case 7:
-                    intermedia = AsignarPosicion(fila+1, columna-1, casillas[fila][columna], false,casillas[fila][columna] );
-                       if (intermedia != null){
-                           AsignarPosicion(fila+2, columna-2, casillas[fila][columna], true, intermedia );
+                    intermedia = AsignarPosicion(fila+1, columna-1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                       if (intermedia != null && islobo){
+                           AsignarPosicion(fila+2, columna-2, casillas[fila][columna], islobo, intermedia );
                        }
                     break;
             }
-            return movimiento( fila,  columna,  acum+1);
+            return movimiento( fila,  columna,  acum+1,islobo);
         }
         return 0;
         
@@ -804,13 +1101,17 @@ public class juego extends JFrame{
     }
     
     public void desplazamiento(casilla inicio, casilla fin, boolean islobo, casilla intermedio, ActionListener movimiento){
-         limpiarMovimientos();
+        
         if (islobo==false){
             
             personaje temp= inicio.getPersonaje();
             inicio.subPersonaje();
             inicio.border(false);
             fin.addPersonaje(temp);
+            limpiarMovimientos();
+            removeAciones(turno);
+            VerificarFin();
+            finturno();
             
         }else{
             personaje tempo = inicio.getPersonaje();
@@ -830,6 +1131,10 @@ public class juego extends JFrame{
                     fin.addPersonaje(tempo);
                     veces = 0;
                     tiempo.stop();
+                    limpiarMovimientos();
+                    removeAciones(turno);
+                    VerificarFin();
+                    finturno();//fin turno al final de timer
                 }
             });
             tiempo.start();
@@ -837,6 +1142,7 @@ public class juego extends JFrame{
 
             
         }
+        
         
         
         
@@ -852,52 +1158,52 @@ public class juego extends JFrame{
         }
     
     // ataque
-    public int ataque (int fila, int columna, int acum, int invalido){
+    public int ataque (int fila, int columna, int acum, int invalido, boolean isvampiro){
         
         if (acum<8){
             
             switch (acum){
                 case 0:
-                        invalido+=Asignarataque(fila+1, columna, casillas[fila][columna],1  );
+                        invalido+=Asignarataque(fila+1, columna, casillas[fila][columna],isvampiro  );
                        
                     break;
                     
                 case 1:
-                     invalido+=Asignarataque(fila+1, columna+1, casillas[fila][columna],1  );
+                     invalido+=Asignarataque(fila+1, columna+1, casillas[fila][columna],isvampiro  );
                        
                     break;
                 
                 case 2:
-                     invalido+=Asignarataque(fila, columna+1, casillas[fila][columna],1  );
+                     invalido+=Asignarataque(fila, columna+1, casillas[fila][columna],isvampiro  );
                        
                     break;
                     
                 case 3:
-                     invalido+=Asignarataque(fila-1, columna+1, casillas[fila][columna],1  );
+                     invalido+=Asignarataque(fila-1, columna+1, casillas[fila][columna],isvampiro  );
                        
                     break;
                     
                 case 4:
-                    invalido+=Asignarataque(fila-1, columna, casillas[fila][columna],1  );
+                    invalido+=Asignarataque(fila-1, columna, casillas[fila][columna],isvampiro  );
                        
                     break;
                     
                 case 5:
-                     invalido+=Asignarataque(fila-1, columna-1, casillas[fila][columna],1  );
+                     invalido+=Asignarataque(fila-1, columna-1, casillas[fila][columna],isvampiro  );
                        
                     break;
                     
                 case 6:
-                     invalido+=Asignarataque(fila, columna-1, casillas[fila][columna],1  );
+                     invalido+=Asignarataque(fila, columna-1, casillas[fila][columna],isvampiro  );
                        
                     break;
                     
                 case 7:
-                     invalido+=Asignarataque(fila+1, columna-1, casillas[fila][columna],1 );
+                     invalido+=Asignarataque(fila+1, columna-1, casillas[fila][columna],isvampiro );
                        
                     break;
             }
-            return ataque( fila,  columna,  acum+1, invalido);
+            return ataque( fila,  columna,  acum+1, invalido, isvampiro);
         }
         else if (invalido == 8){
             //texto de no se encontro oponentes
@@ -927,12 +1233,12 @@ public class juego extends JFrame{
               
     }
     
-     public int Asignarataque(int fila, int columna, casilla atacante, int tipo){
+     public int Asignarataque(int fila, int columna, casilla atacante, boolean tipo){
         if (buscaratacante(fila, columna,  atacante)==0){
         
             
-            switch (tipo){
-                case 1:
+            if (tipo== false){
+                
                     
         
                         casillas[fila][columna].atacable(true);
@@ -948,8 +1254,10 @@ public class juego extends JFrame{
                        areaataque.add(casillas[fila][columna]);
 
                        return 0;
+                       
+            }else if (tipo == true){
                         
-                case 2:
+                
                     
                         casillas[fila][columna].atacable(true);
 
@@ -989,26 +1297,32 @@ public class juego extends JFrame{
                 case 1:
                     break;
                 case 2:
+                    atacado.subPersonaje();
                     break;
                 case 3:
                     break;
                 case 4:
                     break;
                 case 5:
+                    
                     break;
                     //mensajes para el chat y muerte en caso de ser necesario
         
 
             
             }
+            VerificarFin();
+            finturno();
          
      }
      
      public void atacando(casilla atacante, casilla atacado, ActionListener ataque){
         limpiarAtaques();
+        System.out.println("atacando() ejecutado");
   
-            int resultado;
-            resultado = atacado.getPersonaje().recibirataque(atacante.getPersonaje().getAtaque(),0, false);
+        int resultado;
+        resultado = atacado.getPersonaje().recibirataque(atacante.getPersonaje().getAtaque(),0, false);
+        System.out.println("se ataco");
             
             
             switch (resultado){
@@ -1016,18 +1330,23 @@ public class juego extends JFrame{
                 case 1:
                     break;
                 case 2:
+                    atacado.subPersonaje();
                     break;
                 case 3:
                     break;
                 case 4:
                     break;
                 case 5:
+                    
                     break;
                     //mensajes para el chat y muerte en caso de ser necesario
         
 
             
             }
+            removeAciones(turno);
+            VerificarFin();
+            finturno();
         
         
         
@@ -1046,7 +1365,10 @@ public class juego extends JFrame{
      
      
     //espeiales 
-     public int rangoLanza(int fila, int columna, int acum){
+     public int rangoLanza( int acum){
+         int fila = indexs[0];
+         int columna = indexs[1];
+         
         casilla intermedia;
         if (acum<8){
             
@@ -1107,7 +1429,7 @@ public class juego extends JFrame{
                        }
                     break;
             }
-            return rangoLanza( fila,  columna,  acum+1);
+            return rangoLanza(acum+1);
         }
         return 0;
         
@@ -1149,18 +1471,24 @@ public class juego extends JFrame{
                 case 1:
                     break;
                 case 2:
+                    atacado.subPersonaje();
                     break;
                 case 3:
                     break;
                 case 4:
                     break;
                 case 5:
+                    
                     break;
                     //mensajes para el chat y muerte en caso de ser necesario
         
 
             
             }
+            
+            removeAciones(turno);
+            VerificarFin();
+            finturno();
             
             
         
@@ -1170,6 +1498,35 @@ public class juego extends JFrame{
      
      
      //muerte especial 2(zombie);
+     public boolean  seleccionarZombie(Muerte muerte){
+         boolean iszombie= false;
+         for (personaje zombie: muerte.getZombies()){
+            for(int i=0; i<6 ; i++){
+                for (int y = 0 ; y<6 ; y ++){
+
+                    if (casillas[i][y].getPersonaje()!=null){
+                        if (casillas[i][y].getPersonaje()==zombie){
+                            casillas[i][y].border(true);
+                            
+                            
+                            
+                            casillas[i][y].addActionListener(e -> {
+                                ataquezombie( 0, 0, muerte);
+                            });
+                            posiciones.add(casillas[i][y]);
+                            
+                            iszombie= true;
+                                    
+                        }
+                    }
+
+
+                }
+            }
+            
+         }
+         return iszombie;
+     }
      
      public boolean asignarZombie(Muerte muerte){
          
@@ -1183,7 +1540,7 @@ public class juego extends JFrame{
                    ActionListener aparecer = new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            
+                            System.out.println("Casilla clickeada: fila=");
                             CrearZombie(destino, this, muerte);
                         }
                     };
@@ -1203,17 +1560,121 @@ public class juego extends JFrame{
      
      
      public void CrearZombie(casilla casilla, ActionListener movimiento, Muerte muerte){
-         limpiarMovimientos();
+           System.out.println("CrearZombie llamado");
+       
          muerte.addZombie();
-         casilla.addPersonaje(muerte.getZombies().getLast());
+          for (int fila =0; fila<6; fila++){
+             for (int columna =0; columna<6; columna++){
+                 
+                  casillas[fila][columna].filled(false);
+             }
+          }
+         casilla.addPersonaje(muerte.getZombies().get(muerte.getZombies().size() - 1));
+         limpiarMovimientos();
+         removeAciones(turno);
+         finturno();
          
-         
+        
          
          
          
          
          
      }
+     //ataque zombie
+     public int ataquezombie ( int acum, int invalido, Muerte muerte){
+         limpiarMovimientos();
+        int fila = indexs[0];
+        int columna = indexs[1];
+        if (acum<8){
+            
+            switch (acum){
+                case 0:
+                    if(hayMuerte( fila+2,  columna, muerte)){
+                        invalido+=Asignarataque(fila+1, columna, casillas[fila][columna],false  );
+                    }
+                       
+                    break;
+                    
+                case 1:
+                    if(hayMuerte( fila+2,  columna+2, muerte)){
+                     invalido+=Asignarataque(fila+1, columna+1, casillas[fila][columna],false  );
+                    }
+                       
+                    break;
+                
+                case 2:
+                    if(hayMuerte( fila,  columna+2, muerte)){
+                     invalido+=Asignarataque(fila, columna+1, casillas[fila][columna],false  );
+                    }
+                       
+                    break;
+                    
+                case 3:
+                
+                    if(hayMuerte( fila-2,  columna+ 2, muerte)){
+                     invalido+=Asignarataque(fila-1, columna+1, casillas[fila][columna],false  );
+                    }
+                       
+                    break;
+                    
+                case 4:
+                
+                    if(hayMuerte( fila-2,  columna, muerte)){
+                    invalido+=Asignarataque(fila-1, columna, casillas[fila][columna],false  );
+                    }
+                     
+                       
+                    break;
+                    
+                case 5:
+                    if(hayMuerte( fila-2,  columna-2, muerte)){
+                     invalido+=Asignarataque(fila-1, columna-1, casillas[fila][columna],false  );
+                    }
+                       
+                    break;
+                    
+                case 6:
+                    if(hayMuerte( fila,  columna-2, muerte)){
+                     invalido+=Asignarataque(fila, columna-1, casillas[fila][columna],false );
+                    }
+                       
+                    break;
+                    
+                case 7:
+                    if(hayMuerte( fila+2,  columna-2, muerte)){
+                     invalido+=Asignarataque(fila+1, columna-1, casillas[fila][columna],false );
+                    }
+                       
+                    break;
+            }
+            return ataquezombie( acum+1, invalido, muerte);
+        }
+        else if (invalido == 8){
+            //texto de no se encontro oponentes
+        }
+        return 0;
+        
+        
+    }
+    private boolean hayMuerte(int fila, int columna, Muerte muerte){
+       if (fila < 0 || fila >= casillas.length ||columna < 0 || columna >= casillas[0].length) {
+            return true;
+        }else{
+           
+       
+        if ( casillas[fila][columna]==null){
+            return true;
+        }else if (casillas[fila][columna].getPersonaje()==muerte){
+            return false;
+        }else{
+            return true;
+        }
+       }
+       
+        
+    }
+     
      
      
      

@@ -97,8 +97,9 @@ public class especial extends JDialog {
         lanza.setHorizontalAlignment(SwingConstants.CENTER);
 
         lanza.addActionListener(e -> {
-            padre.rangoLanza(0);
             this.dispose();
+            padre.rangoLanza(0);
+            
         });
 
         zombie = new JButton("Zombie");

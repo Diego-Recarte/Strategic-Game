@@ -22,6 +22,8 @@ public class juego extends JFrame{
     private JPanel statchat;
     private JPanel cardRuletas;
     private CardLayout cambioruleta;
+    private  CardLayout cardLayout1;
+    private  CardLayout cardLayout2;
     
     
     private JLabel nombre1;
@@ -51,6 +53,8 @@ public class juego extends JFrame{
     private ArrayList <casilla> posiciones = new  ArrayList<>(); 
     private ArrayList <casilla> areaataque = new  ArrayList<>();
     private ArrayList <JButton> acciones = new  ArrayList<>();
+    private ArrayList <estadisticas> estadisticas1 = new  ArrayList<>();
+    private ArrayList <estadisticas> estadisticas2 = new  ArrayList<>();
     private int turno=1;
     
     private int [] indexs= new int[2]; 
@@ -60,8 +64,15 @@ public class juego extends JFrame{
     private int rondast1;
     private int rondast2;
     
+    private personaje personaje1;
+    private personaje personaje2;
+    
+    
     private boolean ruleta1detener;
     private boolean ruleta2detener;
+    
+    
+    
     
     private jugador user1;
     private jugador user2;
@@ -106,6 +117,7 @@ public class juego extends JFrame{
     
     public void finturno(){
         casillas[indexs[0]][indexs[1]].border(false);
+        Actualizarstats();
         if (turno ==1){
             
             if (rondast1 > 0){
@@ -156,6 +168,7 @@ public class juego extends JFrame{
         }
         
         cambiarRuleta();
+       
 
     }
     public void iniciarcantidadronda(int toca){
@@ -676,23 +689,73 @@ public class juego extends JFrame{
        status = new JPanel();
 
         status.setLayout(new BoxLayout( status, BoxLayout.Y_AXIS));
-         status.setPreferredSize(new Dimension(350, 900));
+         status.setPreferredSize(new Dimension(350, 500));
+         status.setMinimumSize(new Dimension(350, 500));
+         status.setMaximumSize(new Dimension(350, 500));
+         
          status.setOpaque(false);
          status.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
          
          
          statp2 = new JPanel();
-         statp2.setBackground(Color.black);
+         statp2.setLayout(new BoxLayout(statp2, BoxLayout.Y_AXIS));
+         statp2.setOpaque(false);
+        
          statp2.setPreferredSize(new Dimension(350, 300));
+         statp2.setMaximumSize(new Dimension(350, 300));
+         statp2.setMinimumSize(new Dimension(350, 300));
+         cardLayout2 = new CardLayout();
+        statp2.setLayout(cardLayout2);
+         
+        estadisticas2.add(new estadisticas(personajes2.get(0)));
+        estadisticas2.add(new estadisticas(personajes2.get(1)));
+        estadisticas2.add(new estadisticas(personajes2.get(2)));
+        estadisticas2.add(new estadisticas(personajes2.get(3)));
+        estadisticas2.add(new estadisticas(personajes2.get(4)));
+        estadisticas2.add(new estadisticas(personajes2.get(5)));
+        
+        statp2.add(estadisticas2.get(0), "LoboP2a");
+        statp2.add( estadisticas2.get(1), "VampiroP2a");
+        statp2.add( estadisticas2.get(2), "MuerteP2a");
+        statp2.add( estadisticas2.get(3), "MuerteP2b");
+        statp2.add( estadisticas2.get(4), "VampiroP2b");
+        statp2.add( estadisticas2.get(5), "LoboP2b");
          
          statchat = new JPanel();
          statchat.setBackground(Color.black);
-         statchat.setPreferredSize(new Dimension(350, 300));
+         statchat.setPreferredSize(new Dimension(350, 200));
+         statchat.setMaximumSize(new Dimension(350, 200));
+         statchat.setMinimumSize(new Dimension(350, 200));
+         
          
          statp1 = new JPanel();
-         statp1.setBackground(Color.black);
-         statp1.setPreferredSize(new Dimension(350, 300));
+         statp1.setOpaque(false);
          
+         statp1.setPreferredSize(new Dimension(350, 300));
+         statp1.setMaximumSize(new Dimension(350, 300));
+         statp1.setMinimumSize(new Dimension(350, 300));
+        
+          cardLayout1 = new CardLayout();
+        statp1.setLayout(cardLayout1);
+        
+        
+        estadisticas1.add(new estadisticas(personajes1.get(0)));
+        estadisticas1.add(new estadisticas(personajes1.get(1)));
+        estadisticas1.add(new estadisticas(personajes1.get(2)));
+        estadisticas1.add(new estadisticas(personajes1.get(3)));
+        estadisticas1.add(new estadisticas(personajes1.get(4)));
+        estadisticas1.add(new estadisticas(personajes1.get(5)));
+        
+        statp1.add(estadisticas1.get(0), "LoboP1a");
+        statp1.add( estadisticas1.get(1), "VampiroP1a");
+        statp1.add( estadisticas1.get(2), "MuerteP1a");
+        statp1.add( estadisticas1.get(3), "MuerteP1b");
+        statp1.add( estadisticas1.get(4), "VampiroP1b");
+        statp1.add( estadisticas1.get(5), "LoboP1b");
+         
+        
+        
+      
          
          status.add(statp2);
          status.add(statchat);
@@ -708,9 +771,33 @@ public class juego extends JFrame{
          
          
     }
+  
+    public void Actualizarstats(){
+        
+            try{
+                
+            
+                cardLayout2.show(statp2,personaje2.getNombre());
+            }catch (Exception e){
+                
+            }
+            
+            try {
+                cardLayout1.show(statp1,personaje1.getNombre());
+            }catch (Exception e){
+                
+            }
+
+            for (int i = 0; i <6; i++){
+                estadisticas1.get(i).Actualizar();
+                estadisticas2.get(i).Actualizar();
+            }
+        
+                    
+        
+    }
     public void inicializarnombres(){
          nombre1= new JLabel(user1.getUser());
-
         nombre1.setFont(new Font("Arial", Font.BOLD, 20));
         nombre1.setForeground(Color.BLACK);
         nombre1.setOpaque(false);
@@ -993,6 +1080,13 @@ public class juego extends JFrame{
             }
             
         }
+        
+        if (turno==1){
+            personaje1= casillas[index[0]][index[1]].getPersonaje();
+        }else if (turno ==2){
+            personaje2= casillas[index[0]][index[1]].getPersonaje();
+        }
+        Actualizarstats();
         return index; 
     }
     
@@ -1086,7 +1180,7 @@ public class juego extends JFrame{
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             casilla actual = (casilla) e.getSource();
-                            desplazamiento(inicio, actual, islobo, intermedio, this);
+                            desplazamiento(inicio, actual, islobo, intermedio, this, fila, columna);
                         }
                     };
                   casillas[fila][columna].addActionListener(movimiento);
@@ -1100,7 +1194,7 @@ public class juego extends JFrame{
         
     }
     
-    public void desplazamiento(casilla inicio, casilla fin, boolean islobo, casilla intermedio, ActionListener movimiento){
+    public void desplazamiento(casilla inicio, casilla fin, boolean islobo, casilla intermedio, ActionListener movimiento, int fila, int columna){
         
         if (islobo==false){
             
@@ -1108,6 +1202,10 @@ public class juego extends JFrame{
             inicio.subPersonaje();
             inicio.border(false);
             fin.addPersonaje(temp);
+            indexs[0]=fila;
+            indexs[1]=columna;
+            
+                    
             limpiarMovimientos();
             removeAciones(turno);
             VerificarFin();
@@ -1131,6 +1229,8 @@ public class juego extends JFrame{
                     fin.addPersonaje(tempo);
                     veces = 0;
                     tiempo.stop();
+                    indexs[0]=fila;
+                    indexs[1]=columna;
                     limpiarMovimientos();
                     removeAciones(turno);
                     VerificarFin();
@@ -1297,6 +1397,9 @@ public class juego extends JFrame{
                 case 1:
                     break;
                 case 2:
+                    if (atacado.getClass().getSimpleName().equals("Muerte")){
+                        eliminarZombies(atacado.getPersonaje());
+                    }
                     atacado.subPersonaje();
                     break;
                 case 3:
@@ -1330,6 +1433,9 @@ public class juego extends JFrame{
                 case 1:
                     break;
                 case 2:
+                    if (atacado.getClass().getSimpleName().equals("Muerte")){
+                        eliminarZombies(atacado.getPersonaje());
+                    }
                     atacado.subPersonaje();
                     break;
                 case 3:
@@ -1463,7 +1569,7 @@ public class juego extends JFrame{
         
   
             int resultado;
-            resultado = atacado.getPersonaje().recibirataque(atacante.getPersonaje().getAtaque(),0, false);
+            resultado = atacado.getPersonaje().recibirataque(2,0, true);
             
             
             switch (resultado){
@@ -1471,6 +1577,9 @@ public class juego extends JFrame{
                 case 1:
                     break;
                 case 2:
+                    if (atacado.getClass().getSimpleName().equals("Muerte")){
+                        eliminarZombies(atacado.getPersonaje());
+                    }
                     atacado.subPersonaje();
                     break;
                 case 3:
@@ -1673,6 +1782,25 @@ public class juego extends JFrame{
        }
        
         
+    }
+    private void eliminarZombies(personaje personaje){
+        
+        Muerte muerte = (Muerte) personaje;
+        
+        for (Zombie z: muerte.getZombies()){
+            if (z.Isalive()){
+                for (int i = 0; i<6; i++){
+                    for(int y =0; y<6; y++){
+                        if (casillas[i][y].getPersonaje()==null){
+                            
+                        }else if (casillas[i][y].getPersonaje()==z ){
+                            z.eliminar(0, false);
+                            casillas[i][y].subPersonaje();
+                        }
+                    }
+                }
+            }
+        }
     }
      
      

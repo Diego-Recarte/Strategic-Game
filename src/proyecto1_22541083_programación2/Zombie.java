@@ -46,6 +46,13 @@ public class Zombie extends personaje {
     public int  especial(personaje victima,int tipo){
         return 0;
     }
+
+    public void eliminar (int vida, boolean alive) {
+        this.vida = vida;
+
+        this.alive = alive;
+    }
+    
         
         
 }

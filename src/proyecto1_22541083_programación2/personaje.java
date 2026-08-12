@@ -125,6 +125,15 @@ public abstract class personaje {
     public int getAtaque() {
         return ataque;
     }
+
+    public int getVida() {
+        return vida;
+    }
+
+    public int getEscudo() {
+        return escudo;
+    }
+    
     
     public abstract int  especial(personaje victima, int tipo);
     

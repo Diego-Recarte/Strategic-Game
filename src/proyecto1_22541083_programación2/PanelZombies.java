@@ -95,8 +95,14 @@ public class PanelZombies extends JDialog {
         invocar.setHorizontalAlignment(SwingConstants.CENTER);
 
         invocar.addActionListener(e -> {
-            padre.asignarZombie(parca);
             this.dispose();
+                
+            try{
+                padre.asignarZombie(parca);
+            }catch(ExcepcionSinInvocar ex){
+                
+            }
+            
         });
 
         atacar = new JButton("atacar");
@@ -127,11 +133,28 @@ public class PanelZombies extends JDialog {
             }
 
             if (vivo) {
+              
+                try{
                 padre.seleccionarZombie(parca);
                 this.dispose();
-            } else {
-                error.setText("No hay zombies");
+                }
+                catch(ExcepcionSinZombies ex){
+                    this.dispose();
+                }
+                
+                
+                
+            }else{
+                try{
+                    this.dispose();
+                  throw new ExcepcionSinZombies ();
+                }
+                catch(ExcepcionSinZombies  ex){
+                    
+                }
             }
+                
+            
         });
 
         panelB.add(invocar);

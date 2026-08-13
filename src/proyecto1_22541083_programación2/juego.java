@@ -43,11 +43,22 @@ public class juego extends JFrame{
     private JButton retirar1;
     private JButton retirar2;
     
+    private JLabel lrondas1;
+    private JLabel lturno1;
+    private JLabel lcantidadturno1;
+    private JLabel lrondas2;
+    private JLabel lturno2;
+    private JLabel lcantidadturno2;
+    
+    
+           
+    
     private Ruleta ruletaP1;
     private Ruleta ruletaP2;
     private JPanel tablero;
     
     private Timer tiempo;
+    private Timer tiempoturno;
     private int veces = 0;
     
     private ArrayList <casilla> posiciones = new  ArrayList<>(); 
@@ -95,13 +106,13 @@ public class juego extends JFrame{
         InicializarTablero();
         Inicializarpersonajes();
         Inicializarstatus();
-        
+          
+        rondas1=this.user1.getTipo().getTurnosIniciales();
+        rondas2=this.user2.getTipo().getTurnosIniciales();
         iniciarcantidadronda(1);
         cambiarRuleta();
 
-        
-        rondas1=this.user1.getTipo().getTurnosIniciales();
-        rondas2=this.user2.getTipo().getTurnosIniciales();
+      
         
         
         
@@ -118,31 +129,39 @@ public class juego extends JFrame{
     public void finturno(){
         casillas[indexs[0]][indexs[1]].border(false);
         Actualizarstats();
-        if (turno ==1){
+        
+        tiempoturno = new Timer (2000, ev ->{
             
-            if (rondast1 > 0){
-                //mensaje de toca a jugador 1 otra vez
-                iniciarturno(1);
-            }else{
-                //mensaje de turno de jugador 2
-                
-                iniciarcantidadronda(2);
+        
+            if (turno ==1){
+
+                if (rondast1 > 0){
+                    //mensaje de toca a jugador 1 otra vez
+                    iniciarturno(1);
+                }else{
+                    //mensaje de turno de jugador 2
+
+                    iniciarcantidadronda(2);
+                }
+
+
+
+
+
+            }else if (turno == 2){
+                if (rondast2 > 0){
+                    //mensaje de toca a jugador 2 otra vez
+                    iniciarturno(2);
+                }else{
+                    //mensaje de turno de jugador 1
+
+                    iniciarcantidadronda(1);
+                }
             }
-                
-            
-            
-            
-            
-        }else if (turno == 2){
-            if (rondast2 > 0){
-                //mensaje de toca a jugador 2 otra vez
-                iniciarturno(2);
-            }else{
-                //mensaje de turno de jugador 1
-                
-                iniciarcantidadronda(1);
-            }
-        }
+        });
+        
+        tiempoturno.setRepeats(false);
+        tiempoturno.start();
         
     }
     public void iniciarturno(int toca){
@@ -156,6 +175,7 @@ public class juego extends JFrame{
             botonB.setForeground(Color.black);
            
             turno =1;
+            ActualizarLabelrondas();
             rondast1--;
         }else if (toca == 2){
             ruleta2detener= true;
@@ -164,6 +184,7 @@ public class juego extends JFrame{
             botonN.setForeground(Color.black);
             
             turno =2;
+            ActualizarLabelrondas();
             rondast2--;
         }
         
@@ -353,7 +374,7 @@ public class juego extends JFrame{
     ruletas.setOpaque(false);
     ruletas.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     
-    retirar2 = new JButton ("Retirar");
+    retirar2 = new JButton ("opciones");
         
     retirar2.setFont(new Font("Arial", Font.BOLD, 10));
     retirar2.setPreferredSize(new Dimension(100, 15));
@@ -364,12 +385,46 @@ public class juego extends JFrame{
 
      retirar2.setFocusPainted(false);
     retirar2.setBorderPainted(false);
-        
      ruletas.add(retirar2);
      retirar2.setAlignmentX(Component.CENTER_ALIGNMENT);
      
      ruletas.add(Box.createVerticalStrut(15));
-        
+     
+     lrondas2= new JLabel();
+    InicializarJlabelrondas(lrondas2);
+    ruletas.add(lrondas2);
+ 
+    
+    ruletas.add(Box.createVerticalStrut(5));
+    lcantidadturno2= new JLabel();
+    InicializarJlabelrondas(lcantidadturno2);
+    ruletas.add(lcantidadturno2);
+    
+    
+   
+      
+     ruletas.add(Box.createVerticalStrut(15));
+    
+    
+     lturno2= new JLabel("RIVAL");
+     lturno2.setFont(new Font("Arial", Font.BOLD, 17));
+    lturno2.setForeground(Color.white);
+    lturno2.setBackground(Color.black);
+
+    lturno2.setHorizontalAlignment(SwingConstants.CENTER);
+    lturno2.setPreferredSize(new Dimension(200, 80));
+    lturno2.setMaximumSize(new Dimension(200, 80));
+    lturno2.setMinimumSize(new Dimension(200, 80));
+
+    lturno2.setHorizontalAlignment(SwingConstants.CENTER);
+    lturno2.setAlignmentX(Component.CENTER_ALIGNMENT);
+     lturno2.setOpaque(true);
+    ruletas.add(lturno2);
+    
+    
+ 
+    ruletas.add(Box.createVerticalStrut(15));
+
     Inicializarbotondetenernegro();
     ruletas.add(Box.createVerticalStrut(5));
      ruletaP2 = new Ruleta("/Imagenes/marco2.png", 2, personajes2);
@@ -381,13 +436,41 @@ public class juego extends JFrame{
     cardRuletas.add(ruletaP1, "1");
     cardRuletas.add(ruletaP2, "2");
     ruletas.add(cardRuletas);
-    
+    cardRuletas.setAlignmentX(Component.CENTER_ALIGNMENT);
     
     
     Inicializarbotondetenerblanco();
+    
     ruletas.add(Box.createVerticalStrut(15));
     
-    retirar1 = new JButton ("Retirar");
+    
+    ruletas.add(Box.createVerticalStrut(15));
+    
+     lturno1= new JLabel();
+     lturno1.setFont(new Font("Arial", Font.BOLD, 17));
+    lturno1.setForeground(Color.black);
+    lturno1.setBackground(Color.white);
+    lturno1.setHorizontalAlignment(SwingConstants.CENTER);
+    lturno1.setPreferredSize(new Dimension(200, 80));
+     lturno1.setMaximumSize(new Dimension(200, 80));
+    lturno1.setMinimumSize(new Dimension(200, 80));
+    ruletas.add(lturno1);
+    lturno1.setHorizontalAlignment(SwingConstants.CENTER);
+    lturno1.setAlignmentX(Component.CENTER_ALIGNMENT);
+    ruletas.add(Box.createVerticalStrut(5));
+    
+    lrondas1= new JLabel();
+     InicializarJlabelrondas(lrondas1);
+    ruletas.add(lrondas1);
+   
+    ruletas.add(Box.createVerticalStrut(15));
+    
+    lcantidadturno1 = new JLabel();
+    InicializarJlabelrondas(lcantidadturno1);
+    ruletas.add(lcantidadturno1);
+    ruletas.add(Box.createVerticalStrut(15));
+    
+    retirar1 = new JButton ("Opciones");
     retirar1.setFont(new Font("Arial", Font.BOLD, 10));
     retirar1.setPreferredSize(new Dimension(100, 15));
      retirar1.setMaximumSize(new Dimension (100, 15));
@@ -397,6 +480,10 @@ public class juego extends JFrame{
 
      retirar1.setFocusPainted(false);
     retirar1.setBorderPainted(false);
+    retirar1.addActionListener(ev->{
+        opcionesTurno ot = new opcionesTurno(this, turno);
+        ot.setVisible(true);
+    });
     
     ruletas.add(retirar1);
     retirar1.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -413,6 +500,36 @@ public class juego extends JFrame{
         }
        
     }
+    private void InicializarJlabelrondas(JLabel label){
+        
+        label.setFont(new Font("Arial", Font.BOLD, 10));
+        label.setForeground(Color.BLACK);
+        label.setOpaque(false);
+
+
+        label.setPreferredSize(new Dimension(160, 13));
+         label.setAlignmentX(Component.CENTER_ALIGNMENT);
+         label.setHorizontalAlignment(SwingConstants.LEFT);
+
+    }
+    private void ActualizarLabelrondas(){
+        if (turno ==1){
+            lturno1.setText("TE TOCA");
+            lturno2.setText("Rival");
+        }else if (turno ==2){
+            lturno1.setText("Rival");
+            lturno2.setText("TE TOCA");
+        }
+        
+        lrondas1.setText("Tiradaso por Rondas: "+ rondas1);
+        lrondas2.setText("Tiradas por Rondas: "+ rondas2);
+     
+        lcantidadturno1.setText("Tiradas: "+rondast1);
+         lcantidadturno2.setText("Tiradas: "+rondast2);
+        
+    }
+            
+            
     
     public void Inicializarbotondetenerblanco(){
         botonB = new JButton("Detener");
@@ -467,6 +584,7 @@ public class juego extends JFrame{
         
         ruletas.add(botonB);
         botonB.setAlignmentX(Component.CENTER_ALIGNMENT);
+       
         
 
     }
@@ -483,14 +601,25 @@ public class juego extends JFrame{
                     limpiarMovimientos();
                     limpiarAtaques();
                     
-                    movimiento(indexs[0],indexs[1], 0, true);
+                    
+                    try{
+                        movimiento(indexs[0],indexs[1], 0, true, 0);
+                    }
+                    catch (ExcepcionSinMovimiento ex){
+                            
+                    }
                 });
                 
                 atacar1.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
                     
-                    ataque (indexs[0],indexs[1],0,0, false);
+                    try{
+                        ataque (indexs[0],indexs[1],0,0, false);
+                    }
+                    catch (ExcepcionSinEnemigos ex){
+                            
+                    }
                     
                     
                     
@@ -504,7 +633,12 @@ public class juego extends JFrame{
                 mover1.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
-                     movimiento(indexs[0],indexs[1], 0, false);
+                    
+                    try{
+                        movimiento(indexs[0],indexs[1], 0, false, 0);
+                    }catch (ExcepcionSinMovimiento ex){
+                            
+                    }
                     
                     
                     
@@ -514,14 +648,24 @@ public class juego extends JFrame{
                 atacar1.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
+                    try{
                     ataque (indexs[0],indexs[1],0,0, false);
+                    }
+                    catch (ExcepcionSinEnemigos ex){
+                            
+                    }
                     
                 });
                 
                 especial1.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
+                    try{
                     ataque (indexs[0],indexs[1],0,0, true);
+                    }
+                    catch (ExcepcionSinEnemigos ex){
+                            
+                    }
                     
                     
                 });
@@ -536,14 +680,26 @@ public class juego extends JFrame{
                 mover1.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
-                     movimiento(indexs[0],indexs[1], 0, false);
+                    
+                    try{
+                        
+                    
+                        movimiento(indexs[0],indexs[1], 0, false, 0);
+                    }catch (ExcepcionSinMovimiento ex){
+                            
+                    }
                     
                 });
                 
                 atacar1.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
+                    try{
                     ataque (indexs[0],indexs[1],0,0,false);
+                    }
+                    catch (ExcepcionSinEnemigos ex){
+                            
+                    }
                     
                 });
                 
@@ -578,7 +734,12 @@ public class juego extends JFrame{
                 mover2.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
-                    movimiento(indexs[0],indexs[1], 0, true);
+                    
+                    try{
+                        movimiento(indexs[0],indexs[1], 0, true, 0);
+                    }catch (ExcepcionSinMovimiento ex){
+                            
+                    }
                     
                     
                 });
@@ -586,7 +747,12 @@ public class juego extends JFrame{
                 atacar2.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
+                    try{
                     ataque (indexs[0],indexs[1],0,0, false);
+                    }
+                    catch (ExcepcionSinEnemigos ex){
+                            
+                    }
                     
                 });
                 
@@ -598,20 +764,35 @@ public class juego extends JFrame{
                 mover2.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
-                     movimiento(indexs[0],indexs[1], 0, false);
+                    
+                    try{
+                     movimiento(indexs[0],indexs[1], 0, false, 0);
+                    }catch (ExcepcionSinMovimiento ex){
+                            
+                    }
                     
                 });
                 
                 atacar2.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
+                    try{
                     ataque (indexs[0],indexs[1],0,0, false);
+                    }
+                    catch (ExcepcionSinEnemigos ex){
+                            
+                    }
                 });
                 
                 especial2.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
+                    try{
                     ataque (indexs[0],indexs[1],0,0, false);
+                    }
+                    catch (ExcepcionSinEnemigos ex){
+                            
+                    }
                     
                 });
             }
@@ -621,14 +802,24 @@ public class juego extends JFrame{
                 mover2.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
-                     movimiento(indexs[0],indexs[1], 0, false);
+                    
+                    try{
+                     movimiento(indexs[0],indexs[1], 0, false, 0);
+                    }catch (ExcepcionSinMovimiento ex){
+                            
+                    }
                     
                 });
                 
                 atacar2.addActionListener(e->{
                     limpiarMovimientos();
                     limpiarAtaques();
+                    try{
                     ataque (indexs[0],indexs[1],0,0, false);
+                    }
+                    catch (ExcepcionSinEnemigos ex){
+                            
+                    }
                     
                 });
                 
@@ -1098,23 +1289,32 @@ public class juego extends JFrame{
     
     
     
-    //movimiento
+    //movimiento                                                                                          **************
     
     
-    public int movimiento(int fila, int columna, int acum, boolean islobo){
+    public int movimiento(int fila, int columna, int acum, boolean islobo, int movimientos) throws ExcepcionSinMovimiento{
         casilla intermedia;
+      
         if (acum<8){
             
             switch (acum){
                 case 0:
                        intermedia = AsignarPosicion(fila+1, columna, casillas[fila][columna], islobo,casillas[fila][columna] );
+                       if (intermedia != null){
+                           movimientos++;
+                       }
+                    
                        if (intermedia != null && islobo){
+                           
                            AsignarPosicion(fila+2, columna, casillas[fila][columna], islobo, intermedia );
                        }
                     break;
                     
                 case 1:
                     intermedia = AsignarPosicion(fila+1, columna+1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                    if (intermedia != null){
+                           movimientos++;
+                       }
                        if (intermedia != null && islobo){
                            AsignarPosicion(fila+2, columna+2, casillas[fila][columna], islobo, intermedia );
                        }
@@ -1122,6 +1322,9 @@ public class juego extends JFrame{
                 
                 case 2:
                     intermedia = AsignarPosicion(fila, columna+1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                    if (intermedia != null){
+                           movimientos++;
+                       }
                        if (intermedia != null && islobo){
                            AsignarPosicion(fila, columna+2, casillas[fila][columna], islobo, intermedia );
                        }
@@ -1129,6 +1332,9 @@ public class juego extends JFrame{
                     
                 case 3:
                     intermedia = AsignarPosicion(fila-1, columna+1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                    if (intermedia != null){
+                           movimientos++;
+                       }
                        if (intermedia != null && islobo){
                            AsignarPosicion(fila-2, columna+2, casillas[fila][columna], islobo, intermedia );
                        }
@@ -1136,6 +1342,9 @@ public class juego extends JFrame{
                     
                 case 4:
                     intermedia = AsignarPosicion(fila-1, columna, casillas[fila][columna], islobo,casillas[fila][columna] );
+                    if (intermedia != null){
+                           movimientos++;
+                       }
                        if (intermedia != null && islobo){
                            AsignarPosicion(fila-2, columna, casillas[fila][columna], islobo, intermedia );
                        }
@@ -1143,6 +1352,9 @@ public class juego extends JFrame{
                     
                 case 5:
                     intermedia = AsignarPosicion(fila-1, columna-1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                    if (intermedia != null){
+                           movimientos++;
+                       }
                        if (intermedia != null && islobo){
                            AsignarPosicion(fila-2, columna-2, casillas[fila][columna], islobo, intermedia );
                        }
@@ -1150,6 +1362,9 @@ public class juego extends JFrame{
                     
                 case 6:
                     intermedia = AsignarPosicion(fila, columna-1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                    if (intermedia != null){
+                           movimientos++;
+                       }
                        if (intermedia != null && islobo){
                            AsignarPosicion(fila, columna-2, casillas[fila][columna], islobo, intermedia );
                        }
@@ -1157,12 +1372,20 @@ public class juego extends JFrame{
                     
                 case 7:
                     intermedia = AsignarPosicion(fila+1, columna-1, casillas[fila][columna], islobo,casillas[fila][columna] );
+                    if (intermedia != null){
+                           movimientos++;
+                       }
                        if (intermedia != null && islobo){
                            AsignarPosicion(fila+2, columna-2, casillas[fila][columna], islobo, intermedia );
                        }
                     break;
             }
-            return movimiento( fila,  columna,  acum+1,islobo);
+            
+            
+            return movimiento( fila,  columna,  acum+1,islobo, movimientos);
+        }
+        if (movimientos==0){
+            throw new ExcepcionSinMovimiento();
         }
         return 0;
         
@@ -1258,7 +1481,7 @@ public class juego extends JFrame{
         }
     
     // ataque
-    public int ataque (int fila, int columna, int acum, int invalido, boolean isvampiro){
+    public int ataque (int fila, int columna, int acum, int invalido, boolean isvampiro) throws  ExcepcionSinEnemigos {
         
         if (acum<8){
             
@@ -1306,7 +1529,7 @@ public class juego extends JFrame{
             return ataque( fila,  columna,  acum+1, invalido, isvampiro);
         }
         else if (invalido == 8){
-            //texto de no se encontro oponentes
+            throw new ExcepcionSinEnemigos();
         }
         return 0;
         
@@ -1318,7 +1541,7 @@ public class juego extends JFrame{
             
         }
         else if (casillas[fila][columna].getPersonaje() == null ){
-            return 1;
+            return 2;
                   
 
         }
@@ -1471,78 +1694,147 @@ public class juego extends JFrame{
      
      
     //espeiales 
-     public int rangoLanza( int acum){
+     public int rangoLanza( int acum, int rango) throws ExcepcionSinEnemigos{
          int fila = indexs[0];
          int columna = indexs[1];
          
-        casilla intermedia;
+        int resultado;
         if (acum<8){
             
             switch (acum){
                 case 0:
-                       intermedia = Asignarlanzamiento(fila+1, columna, casillas[fila][columna],casillas[fila][columna] );
-                       if (intermedia != null){
-                           Asignarlanzamiento(fila+2, columna, casillas[fila][columna],casillas[fila][columna] );
+                       resultado= Asignarlanzamiento(fila+1, columna, casillas[fila][columna],casillas[fila][columna] );
+                       if (resultado ==1){
+                           rango++;
+                       }
+                       else if (resultado == 2){
+                            
+                           
+                           resultado =Asignarlanzamiento(fila+2, columna, casillas[fila][columna],casillas[fila][columna] );
+                           if (resultado ==1){
+                                rango++;
+                            }
+                          
                        }
                     break;
                     
                 case 1:
-                    intermedia = Asignarlanzamiento(fila+1, columna+1, casillas[fila][columna],casillas[fila][columna] );
-                       if (intermedia != null){
-                            Asignarlanzamiento(fila+2, columna+2, casillas[fila][columna],casillas[fila][columna] );
+                    resultado= Asignarlanzamiento(fila+1, columna+1, casillas[fila][columna],casillas[fila][columna] );
+                       if (resultado ==1){
+                           rango++;
+                       }
+                       else if (resultado == 2){
+                            
+                            resultado = Asignarlanzamiento(fila+2, columna+2, casillas[fila][columna],casillas[fila][columna] );
+                            if (resultado ==1){
+                                rango++;
+                            }
+                            
                        }
                     break;
                 
                 case 2:
-                    intermedia = Asignarlanzamiento(fila, columna+1, casillas[fila][columna],casillas[fila][columna] );
-                       if (intermedia != null){
-                           Asignarlanzamiento(fila, columna+2, casillas[fila][columna],casillas[fila][columna] );
+                    resultado = Asignarlanzamiento(fila, columna+1, casillas[fila][columna],casillas[fila][columna] );
+                       if (resultado ==1){
+                           rango++;
+                       }
+                       else if (resultado == 2){
+                            
+                           
+                           resultado =Asignarlanzamiento(fila, columna+2, casillas[fila][columna],casillas[fila][columna] );
+                           if (resultado ==1){
+                                rango++;
+                            }
                        }
                     break;
                     
                 case 3:
-                    intermedia = Asignarlanzamiento(fila-1, columna+1, casillas[fila][columna],casillas[fila][columna] );
-                       if (intermedia != null){
-                           Asignarlanzamiento(fila-2, columna+2, casillas[fila][columna],casillas[fila][columna] );
+                    resultado = Asignarlanzamiento(fila-1, columna+1, casillas[fila][columna],casillas[fila][columna] );
+                       if (resultado ==1){
+                           rango++;
+                       }
+                       else if (resultado == 2){
+                            
+                           
+                           resultado =Asignarlanzamiento(fila-2, columna+2, casillas[fila][columna],casillas[fila][columna] );
+                           if (resultado ==1){
+                                rango++;
+                            }
                        }
                     break;
                     
                 case 4:
-                    intermedia =  Asignarlanzamiento(fila-1, columna, casillas[fila][columna],casillas[fila][columna] );
-                       if (intermedia != null){
-                           Asignarlanzamiento(fila-2, columna, casillas[fila][columna],casillas[fila][columna] );
+                    resultado =  Asignarlanzamiento(fila-1, columna, casillas[fila][columna],casillas[fila][columna] );
+                       if (resultado ==1){
+                           rango++;
+                       }
+                       else if (resultado == 2){
+                        
+                           
+                           resultado =Asignarlanzamiento(fila-2, columna, casillas[fila][columna],casillas[fila][columna] );
+                           if (resultado ==1){
+                                rango++;
+                            }
                        }
                     break;
                     
                 case 5:
-                    intermedia = Asignarlanzamiento(fila-1, columna-1, casillas[fila][columna],casillas[fila][columna] );
-                       if (intermedia != null){
-                           Asignarlanzamiento(fila-2, columna-2, casillas[fila][columna],casillas[fila][columna] );
+                    resultado = Asignarlanzamiento(fila-1, columna-1, casillas[fila][columna],casillas[fila][columna] );
+                    
+                       if (resultado ==1){
+                           rango++;
+                       }
+                       else if (resultado == 2){
+                           
+                           
+                           resultado =Asignarlanzamiento(fila-2, columna-2, casillas[fila][columna],casillas[fila][columna] );
+                           if (resultado ==1){
+                                rango++;
+                            }
                        }
                     break;
                     
                 case 6:
-                    intermedia = Asignarlanzamiento(fila, columna-1, casillas[fila][columna],casillas[fila][columna] );
-                       if (intermedia != null){
-                            Asignarlanzamiento(fila, columna-2, casillas[fila][columna],casillas[fila][columna] );
+                    resultado = Asignarlanzamiento(fila, columna-1, casillas[fila][columna],casillas[fila][columna] );
+                       if (resultado ==1){
+                           rango++;
+                       }
+                       else if (resultado == 2){
+                            
+                            
+                           resultado =Asignarlanzamiento(fila, columna-2, casillas[fila][columna],casillas[fila][columna] );
+                            if (resultado ==1){
+                                rango++;
+                            }
                        }
                     break;
                     
                 case 7:
-                    intermedia = Asignarlanzamiento(fila+1, columna-1, casillas[fila][columna],casillas[fila][columna] );
-                       if (intermedia != null){
-                           Asignarlanzamiento(fila+2, columna-2, casillas[fila][columna],casillas[fila][columna] );
+                    resultado = Asignarlanzamiento(fila+1, columna-1, casillas[fila][columna],casillas[fila][columna] );
+                       if (resultado ==1){
+                           rango++;
+                       }
+                       else if (resultado == 2){
+                            
+                           resultado =Asignarlanzamiento(fila+2, columna-2, casillas[fila][columna],casillas[fila][columna] );
+                           if (resultado ==1){
+                                rango++;
+                            }
                        }
                     break;
             }
-            return rangoLanza(acum+1);
+            return rangoLanza(acum+1, rango);
+        }
+        if (rango ==0){
+            throw new ExcepcionSinEnemigos();
         }
         return 0;
         
         
     }
-     public casilla Asignarlanzamiento(int fila, int columna, casilla atacante,  casilla intermedia){
-        if (buscaratacante(fila, columna,  atacante)==0){
+     public int Asignarlanzamiento(int fila, int columna, casilla atacante,  casilla intermedia){
+         int resultado =buscaratacante(fila, columna,  atacante);
+        if (resultado==0){
 
             casillas[fila][columna].atacable(true);
 
@@ -1556,10 +1848,13 @@ public class juego extends JFrame{
            casillas[fila][columna].addActionListener(ataque);
            areaataque.add(casillas[fila][columna]);
 
-           return (casillas[fila][columna]);
+           return 1;
                
+        }else if(resultado ==2){
+            return 2;
         }
-        return null;
+        
+        return 3;
         
      }
      
@@ -1607,7 +1902,7 @@ public class juego extends JFrame{
      
      
      //muerte especial 2(zombie);
-     public boolean  seleccionarZombie(Muerte muerte){
+     public boolean  seleccionarZombie(Muerte muerte) throws ExcepcionSinZombies{
          boolean iszombie= false;
          for (personaje zombie: muerte.getZombies()){
             for(int i=0; i<6 ; i++){
@@ -1617,10 +1912,16 @@ public class juego extends JFrame{
                         if (casillas[i][y].getPersonaje()==zombie){
                             casillas[i][y].border(true);
                             
+                            final int  fila= i;
+                            final int columna =y;
                             
                             
                             casillas[i][y].addActionListener(e -> {
-                                ataquezombie( 0, 0, muerte);
+                                try{
+                                    ataquezombie( 0, 8, muerte, fila, columna);
+                                }catch (ExcepcionSinEnemigos ex){
+                                    
+                                }
                             });
                             posiciones.add(casillas[i][y]);
                             
@@ -1634,10 +1935,14 @@ public class juego extends JFrame{
             }
             
          }
+         if (!iszombie){
+             throw new ExcepcionSinZombies();
+             
+         }
          return iszombie;
      }
      
-     public boolean asignarZombie(Muerte muerte){
+     public boolean asignarZombie(Muerte muerte) throws ExcepcionSinInvocar{
          
          boolean Espacio= false;
          for (int fila =0; fila<6; fila++){
@@ -1662,6 +1967,9 @@ public class juego extends JFrame{
                  
              }
              
+         }
+         if (!Espacio){
+             throw new ExcepcionSinInvocar();
          }
          return Espacio;
          
@@ -1691,10 +1999,9 @@ public class juego extends JFrame{
          
      }
      //ataque zombie
-     public int ataquezombie ( int acum, int invalido, Muerte muerte){
+     public int ataquezombie ( int acum, int invalido, Muerte muerte,int  fila,int columna)throws ExcepcionSinEnemigos{
          limpiarMovimientos();
-        int fila = indexs[0];
-        int columna = indexs[1];
+       
         if (acum<8){
             
             switch (acum){
@@ -1757,10 +2064,10 @@ public class juego extends JFrame{
                        
                     break;
             }
-            return ataquezombie( acum+1, invalido, muerte);
+            return ataquezombie( acum+1, invalido, muerte, fila, columna);
         }
         else if (invalido == 8){
-            //texto de no se encontro oponentes
+             throw new ExcepcionSinEnemigos();
         }
         return 0;
         

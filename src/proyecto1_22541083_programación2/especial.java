@@ -97,8 +97,15 @@ public class especial extends JDialog {
         lanza.setHorizontalAlignment(SwingConstants.CENTER);
 
         lanza.addActionListener(e -> {
+            
+            try{
+            padre.rangoLanza(0,0);
             this.dispose();
-            padre.rangoLanza(0);
+            }catch(ExcepcionSinEnemigos ex){
+                this.dispose();
+                
+            }
+            
             
         });
 

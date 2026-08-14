@@ -17,26 +17,24 @@ public class estadisticas extends JPanel{
     private JLabel ataque1;
     private JLabel escudo1;
     private JLabel vida1;
-    private JButton capturadas1;
-    private JButton guia;
-    private JButton info;
-    private JPanel statsP1;
+ 
+  
     private personaje personaje;
     
     public estadisticas(personaje personaje){
         this.personaje= personaje;
-         setPreferredSize(new Dimension(350, 250));
-         setMinimumSize(new Dimension(350, 250));
-        setMaximumSize(new Dimension(350, 250));
+         setPreferredSize(new Dimension(350, 230));
+         setMinimumSize(new Dimension(350, 230));
+        setMaximumSize(new Dimension(350, 230));
          
          setOpaque(false);
-         inicializarStats();
+         inicializarStats(personaje);
     }
     
-    private void inicializarStats(){
+    private void inicializarStats( personaje personaje){
 
         
-         inicializarEstadisticas();
+         inicializarEstadisticas( personaje);
          Actualizar();
          
        
@@ -45,14 +43,14 @@ public class estadisticas extends JPanel{
         add(vida1);
          add(escudo1);
          add(ataque1);
-         add(statsP1);
+
          
          
     
         
          
     }
-      private void inicializarEstadisticas(){
+      private void inicializarEstadisticas( personaje personaje){
        
        
        imagenCarta1= new JLabel();
@@ -73,56 +71,19 @@ public class estadisticas extends JPanel{
        ajustesLabel(vida1);
        
        
-       statsP1= new JPanel();
-       statsP1.setLayout(new BoxLayout(statsP1, BoxLayout.X_AXIS));
-       statsP1.setPreferredSize(new Dimension (300, 40));
-       statsP1.setMaximumSize(new Dimension (300, 40));
-       statsP1.setMinimumSize(new Dimension (300, 40));
-       statsP1.setOpaque(false);
        
-     
-       
-       capturadas1= new JButton();
-       ajustesPanel("Capturadas", capturadas1);
-       guia= new JButton();
-       ajustesPanel("Guia", guia);
-       info= new JButton();
-       ajustesPanel("Info", info);
-       
-       
-       statsP1.add(capturadas1);
-       statsP1.add(guia);
-       statsP1.add(info);
        
      vida1.setHorizontalAlignment(SwingConstants.CENTER);
      ataque1.setHorizontalAlignment(SwingConstants.CENTER);
      escudo1.setHorizontalAlignment(SwingConstants.CENTER);
-     guia.setHorizontalAlignment(SwingConstants.CENTER);
-     capturadas1.setHorizontalAlignment(SwingConstants.CENTER);
-       
+    
        
    
      
         
     }
     
-    private void ajustesPanel (String nombre, JButton boton){
-        boton.setText(nombre);
-
-        boton.setFont(new Font("Arial", Font.BOLD, 10));
-        boton.setPreferredSize(new Dimension(130, 22));
-        boton.setMaximumSize(new Dimension(130, 22));
-
-        boton.setForeground(Color.gray);
-        boton.setBackground(Color.black);
-
-        boton.setFocusPainted(false);
-        boton.setBorderPainted(false);
-     
-
-        boton.setHorizontalAlignment(SwingConstants.CENTER);
-
-    }
+   
     private void ajustesLabel(JLabel label){
         label.setPreferredSize(new Dimension (350, 30));
         label.setMaximumSize(new Dimension (350, 30));

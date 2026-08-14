@@ -105,12 +105,13 @@ public class juego extends JFrame{
         Inicializarruletas();
         InicializarTablero();
         Inicializarpersonajes();
-        Inicializarstatus();
+        
           
         rondas1=this.user1.getTipo().getTurnosIniciales();
         rondas2=this.user2.getTipo().getTurnosIniciales();
         iniciarcantidadronda(1);
         cambiarRuleta();
+        Inicializarstatus();
 
       
         
@@ -140,7 +141,7 @@ public class juego extends JFrame{
                     iniciarturno(1);
                 }else{
                     //mensaje de turno de jugador 2
-
+                    turno =2;
                     iniciarcantidadronda(2);
                 }
 
@@ -154,7 +155,7 @@ public class juego extends JFrame{
                     iniciarturno(2);
                 }else{
                     //mensaje de turno de jugador 1
-
+                    turno=1;
                     iniciarcantidadronda(1);
                 }
             }
@@ -174,7 +175,7 @@ public class juego extends JFrame{
             botonB.setBackground(Color.yellow);
             botonB.setForeground(Color.black);
            
-            turno =1;
+            
             ActualizarLabelrondas();
             rondast1--;
         }else if (toca == 2){
@@ -183,7 +184,7 @@ public class juego extends JFrame{
             botonN.setBackground(Color.yellow);
             botonN.setForeground(Color.black);
             
-            turno =2;
+           
             ActualizarLabelrondas();
             rondast2--;
         }
@@ -222,10 +223,7 @@ public class juego extends JFrame{
                 default:
                     break;
             }
-        
-            
-            
-            
+
         }else if (toca ==2){
            int vivos =  Contarvivos( personajes2);
            switch(vivos){
@@ -293,20 +291,21 @@ public class juego extends JFrame{
         personaje VampiroP1b = new Vampiro("VampiroP1b", "/Imagenes/personajes_casillas/vampirop1b.png", 1);
         
         personaje LoboP1b = new HombreLobo("LoboP1b", "/Imagenes/personajes_casillas/hombrelobop1b.png", 1);
+       
         
-        personajes1.add(LoboP1a);
+         
+        //DKKKKKK
+      
         
-        personajes1.add(VampiroP1a);
-        
-        personajes1.add(MuerteP1a);
-        
-        
-        
+      
         personajes1.add(MuerteP1b);
-        
+        personajes1.add(VampiroP1a);
+        personajes1.add(LoboP1a);
+        personajes1.add(MuerteP1a);
         personajes1.add(VampiroP1b);
-        
         personajes1.add(LoboP1b);
+
+
         
         casillas[5][0].addPersonaje(LoboP1a);
         casillas[5][1].addPersonaje(VampiroP1a);
@@ -330,19 +329,14 @@ public class juego extends JFrame{
         personaje LoboP2b = new HombreLobo("LoboP2b","/Imagenes/personajes_casillas/hombrelobop2b.png", 2 );
         
         
-        personajes2.add(LoboP2a);
-        
+          
+         personajes2.add(MuerteP2a);
         personajes2.add(VampiroP2a);
-        
-        personajes2.add(MuerteP2a);
-        
-        
-        personajes2.add(MuerteP2b);
-        
-        personajes2.add(VampiroP2b);
-        
         personajes2.add(LoboP2b);
-        
+        personajes2.add(MuerteP2b);
+        personajes2.add(VampiroP2b);
+        personajes2.add(LoboP2a);
+
         
         casillas[0][0].addPersonaje(LoboP2a);
         casillas[0][1].addPersonaje(VampiroP2a);
@@ -424,8 +418,13 @@ public class juego extends JFrame{
     
  
     ruletas.add(Box.createVerticalStrut(15));
-
+    
+    
+    try{
     Inicializarbotondetenernegro();
+    }catch(ExcepcionNoPersonaje ex){
+        
+    }
     ruletas.add(Box.createVerticalStrut(5));
      ruletaP2 = new Ruleta("/Imagenes/marco2.png", 2, personajes2);
     ruletaP2.setVisible(true);
@@ -438,8 +437,13 @@ public class juego extends JFrame{
     ruletas.add(cardRuletas);
     cardRuletas.setAlignmentX(Component.CENTER_ALIGNMENT);
     
+    try{
+        Inicializarbotondetenerblanco();
+                         
+    }catch(ExcepcionNoPersonaje ex){
+
+    }
     
-    Inicializarbotondetenerblanco();
     
     ruletas.add(Box.createVerticalStrut(15));
     
@@ -531,7 +535,7 @@ public class juego extends JFrame{
             
             
     
-    public void Inicializarbotondetenerblanco(){
+    public void Inicializarbotondetenerblanco()throws ExcepcionNoPersonaje{
         botonB = new JButton("Detener");
 
         botonB.setFont(new Font("Arial", Font.BOLD, 14));
@@ -563,7 +567,12 @@ public class juego extends JFrame{
                     personaje personaje =encontrarPersonaje(1, ruletaP1.RevisarAngulo());
                     if (personaje == null){
 
-                        iniciarturno(1);
+                         finturno();
+                         try{
+                         throw new  ExcepcionNoPersonaje();
+                         }catch(ExcepcionNoPersonaje ex){
+                             
+                         }
                     }else{
 
                         casillas[indexs[0]][indexs[1]].border(true);
@@ -880,9 +889,9 @@ public class juego extends JFrame{
        status = new JPanel();
 
         status.setLayout(new BoxLayout( status, BoxLayout.Y_AXIS));
-         status.setPreferredSize(new Dimension(350, 500));
-         status.setMinimumSize(new Dimension(350, 500));
-         status.setMaximumSize(new Dimension(350, 500));
+         status.setPreferredSize(new Dimension(350, 700));
+         status.setMinimumSize(new Dimension(350, 700));
+         status.setMaximumSize(new Dimension(350, 700));
          
          status.setOpaque(false);
          status.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -892,9 +901,9 @@ public class juego extends JFrame{
          statp2.setLayout(new BoxLayout(statp2, BoxLayout.Y_AXIS));
          statp2.setOpaque(false);
         
-         statp2.setPreferredSize(new Dimension(350, 300));
-         statp2.setMaximumSize(new Dimension(350, 300));
-         statp2.setMinimumSize(new Dimension(350, 300));
+         statp2.setPreferredSize(new Dimension(350, 250));
+         statp2.setMaximumSize(new Dimension(350, 250));
+         statp2.setMinimumSize(new Dimension(350, 250));
          cardLayout2 = new CardLayout();
         statp2.setLayout(cardLayout2);
          
@@ -905,12 +914,16 @@ public class juego extends JFrame{
         estadisticas2.add(new estadisticas(personajes2.get(4)));
         estadisticas2.add(new estadisticas(personajes2.get(5)));
         
-        statp2.add(estadisticas2.get(0), "LoboP2a");
+        statp2.add(estadisticas2.get(0), "MuerteP2a");
         statp2.add( estadisticas2.get(1), "VampiroP2a");
-        statp2.add( estadisticas2.get(2), "MuerteP2a");
+        statp2.add( estadisticas2.get(2), "LoboP2b");
         statp2.add( estadisticas2.get(3), "MuerteP2b");
         statp2.add( estadisticas2.get(4), "VampiroP2b");
-        statp2.add( estadisticas2.get(5), "LoboP2b");
+        statp2.add( estadisticas2.get(5), "LoboP2a");
+        
+        
+
+       
          
          statchat = new JPanel();
          statchat.setBackground(Color.black);
@@ -922,9 +935,9 @@ public class juego extends JFrame{
          statp1 = new JPanel();
          statp1.setOpaque(false);
          
-         statp1.setPreferredSize(new Dimension(350, 300));
-         statp1.setMaximumSize(new Dimension(350, 300));
-         statp1.setMinimumSize(new Dimension(350, 300));
+         statp1.setPreferredSize(new Dimension(350, 250));
+         statp1.setMaximumSize(new Dimension(350, 250));
+         statp1.setMinimumSize(new Dimension(350, 250));
         
           cardLayout1 = new CardLayout();
         statp1.setLayout(cardLayout1);
@@ -937,21 +950,100 @@ public class juego extends JFrame{
         estadisticas1.add(new estadisticas(personajes1.get(4)));
         estadisticas1.add(new estadisticas(personajes1.get(5)));
         
-        statp1.add(estadisticas1.get(0), "LoboP1a");
-        statp1.add( estadisticas1.get(1), "VampiroP1a");
-        statp1.add( estadisticas1.get(2), "MuerteP1a");
-        statp1.add( estadisticas1.get(3), "MuerteP1b");
-        statp1.add( estadisticas1.get(4), "VampiroP1b");
-        statp1.add( estadisticas1.get(5), "LoboP1b");
-         
-        
         
       
-         
+        statp1.add(estadisticas1.get(0), "MuerteP1b");
+        statp1.add( estadisticas1.get(1), "VampiroP1a");
+        statp1.add( estadisticas1.get(2), "LoboP1a");
+        statp1.add( estadisticas1.get(3), "MuerteP1a");
+        statp1.add( estadisticas1.get(4), "VampiroP1b");
+        statp1.add( estadisticas1.get(5), "LoboP1b");
+        
+       
+       
+        
+        
+        
+        
+        JButton capturadas2= new JButton();
+          ajustesPanel("Capturadas", capturadas2);
+          capturadas2.addActionListener(ev ->{
+
+       
+                 Capturadas cp = new Capturadas (this, personajes1.toArray(new personaje[0]),2);
+                 cp.setVisible(true);
+                 
+                
+
+            
+            });
+        JButton guia2= new JButton();
+        ajustesPanel("Guia", guia2);
+        JButton info2= new JButton();
+        
+        ajustesPanel("Info", info2);
+        info2.addActionListener(ev->{
+        InformacionPersonaje Ip = new InformacionPersonaje(this,personajes2.toArray(new personaje[0]),2);
+            Ip.setVisible(true);
+            
+        });
+        
+        
+        
+        JPanel statsP2= new JPanel();
+        statsP2.setLayout(new BoxLayout(statsP2, BoxLayout.X_AXIS));
+        statsP2.setPreferredSize(new Dimension (300, 40));
+        statsP2.setMaximumSize(new Dimension (300, 40));
+        statsP2.setMinimumSize(new Dimension (300, 40));
+        statsP2.setOpaque(false);
+        statsP2.add(capturadas2);
+        statsP2.add(guia2);
+        statsP2.add(info2);
+         guia2.setHorizontalAlignment(SwingConstants.CENTER);
+        capturadas2.setHorizontalAlignment(SwingConstants.CENTER);
+        info2.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        status.add(statsP2);
          status.add(statp2);
          status.add(statchat);
          status.add(statp1);
-         
+         JButton capturadas1= new JButton();
+          ajustesPanel("Capturadas", capturadas1);
+          capturadas1.addActionListener(ev ->{
+
+       
+                 Capturadas cp = new Capturadas (this, personajes2.toArray(new personaje[0]),1);
+                 cp.setVisible(true);
+            
+        });
+        JButton guia= new JButton();
+        ajustesPanel("Guia", guia);
+        
+        JButton info= new JButton();
+        ajustesPanel("Info", info);
+        info.addActionListener(ev->{
+        InformacionPersonaje Ip = new InformacionPersonaje(this,personajes1.toArray(new personaje[0]),1);
+            Ip.setVisible(true);
+            
+        });
+        
+        JPanel statsP1= new JPanel();
+        statsP1.setLayout(new BoxLayout(statsP1, BoxLayout.X_AXIS));
+        statsP1.setPreferredSize(new Dimension (300, 40));
+        statsP1.setMaximumSize(new Dimension (300, 40));
+        statsP1.setMinimumSize(new Dimension (300, 40));
+        statsP1.setOpaque(false);
+        statsP1.add(capturadas1);
+        statsP1.add(guia);
+        statsP1.add(info);
+         guia.setHorizontalAlignment(SwingConstants.CENTER);
+        capturadas1.setHorizontalAlignment(SwingConstants.CENTER);
+        info.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        status.add(statsP1);
+   
+       
+       
          add(status, BorderLayout.EAST);
          
          
@@ -961,6 +1053,23 @@ public class juego extends JFrame{
          
          
          
+    }
+     private void ajustesPanel (String nombre, JButton boton){
+        boton.setText(nombre);
+
+        boton.setFont(new Font("Arial", Font.BOLD, 10));
+        boton.setPreferredSize(new Dimension(130, 22));
+        boton.setMaximumSize(new Dimension(130, 22));
+
+        boton.setForeground(Color.gray);
+        boton.setBackground(Color.black);
+
+        boton.setFocusPainted(false);
+        boton.setBorderPainted(false);
+     
+
+        boton.setHorizontalAlignment(SwingConstants.CENTER);
+
     }
   
     public void Actualizarstats(){
@@ -1007,7 +1116,7 @@ public class juego extends JFrame{
            
         
     }
-    public void Inicializarbotondetenernegro(){
+    public void Inicializarbotondetenernegro()throws ExcepcionNoPersonaje{
         botonN = new JButton("Detener");
 
         botonN.setFont(new Font("Arial", Font.BOLD, 14));
@@ -1033,7 +1142,14 @@ public class juego extends JFrame{
                 botonN.setForeground(Color.white);
                 personaje personaje =encontrarPersonaje(2, ruletaP2.RevisarAngulo());
                 if (personaje == null){
-                    iniciarturno(2);
+                     finturno();
+                     try{
+                          throw new ExcepcionNoPersonaje();
+                         
+                     }
+                     catch(ExcepcionNoPersonaje ex){
+                         
+                     }
                 }else{
 
                  casillas[indexs[0]][indexs[1]].border(true);
@@ -1241,9 +1357,14 @@ public class juego extends JFrame{
             
         }
         personaje personajeuso =casillas[indexs[0]] [indexs[1]].getPersonaje();
-            if (personajeuso.Isalive()){
+            if (personajeuso==null){
+                return null;
+            }
+            else if (personajeuso.Isalive()){
                 return personajeuso;
             }else{
+                
+                
                 return null;
             }
         

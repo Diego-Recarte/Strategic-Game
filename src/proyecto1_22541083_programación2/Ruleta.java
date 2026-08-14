@@ -97,7 +97,7 @@ public class Ruleta extends JPanel {
         if (acum<6){
             
          if (personajesR.get(acum).Isalive() == false){                       
-                double anguloR = Math.toRadians(acum+1*60 - 30);
+                double anguloR = Math.toRadians(acum * 60 - 90);
 
 
                 int x = xruleta +
@@ -105,14 +105,15 @@ public class Ruleta extends JPanel {
 
                 int y = yruleta +
                         (int)(Math.sin(anguloR)*radio);
-
+                        
+                int tam = 85;
 
                 g2.drawImage(
                     X,
-                    x-20,
-                    y-20,
-                    40,
-                    40,
+                    x-tam/2,
+                    y-tam/2,
+                    tam,// RADIO, SINO 40
+                    tam,
                     null
                 );
             }

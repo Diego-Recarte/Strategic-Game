@@ -29,6 +29,9 @@ public class juego extends JFrame{
     private JLabel nombre1;
     private JLabel nombre2;
     
+    
+    private JTextArea chat;
+    private ArrayList<String> mensajes = new ArrayList<>();
   
     
     private JPanel acciones1;
@@ -131,7 +134,7 @@ public class juego extends JFrame{
         casillas[indexs[0]][indexs[1]].border(false);
         Actualizarstats();
         
-        tiempoturno = new Timer (2000, ev ->{
+        tiempoturno = new Timer (1500, ev ->{
             
         
             if (turno ==1){
@@ -259,20 +262,23 @@ public class juego extends JFrame{
         if (turno==1){
             vivos = Contarvivos( personajes2);
             if (vivos==0){
-                partidaFin(user1,user2, false);
+                partidaFin(user1,user2, false, 1);
             }
             
             
         }else if (turno ==2){
             vivos = Contarvivos( personajes1);
             if (vivos ==0){
-                partidaFin(user2,user1, false);
+                partidaFin(user2,user1, false, 2);
             }
         }
     }
     
-    private void partidaFin(jugador ganador, jugador perdedor, boolean isRetirado){
-        
+    public void partidaFin(jugador ganador, jugador perdedor, boolean isRetirado, int equipo){
+
+        Partida pt= new Partida (ganador, perdedor, isRetirado);
+        Globales.Partidas.add(pt);
+        Resultado rt = new Resultado(this, pt , equipo, user1, user2);
         
         
         
@@ -379,6 +385,15 @@ public class juego extends JFrame{
 
      retirar2.setFocusPainted(false);
     retirar2.setBorderPainted(false);
+    
+    
+    retirar2.addActionListener(ev->{
+        opcionesTurno ot = new opcionesTurno(this, 1, user1, user2);
+        ot.setVisible(true);
+    });
+    
+    
+    
      ruletas.add(retirar2);
      retirar2.setAlignmentX(Component.CENTER_ALIGNMENT);
      
@@ -485,7 +500,7 @@ public class juego extends JFrame{
      retirar1.setFocusPainted(false);
     retirar1.setBorderPainted(false);
     retirar1.addActionListener(ev->{
-        opcionesTurno ot = new opcionesTurno(this, turno);
+        opcionesTurno ot = new opcionesTurno(this, 2, user1, user2);
         ot.setVisible(true);
     });
     
@@ -926,10 +941,12 @@ public class juego extends JFrame{
        
          
          statchat = new JPanel();
-         statchat.setBackground(Color.black);
+         statchat.setOpaque(false);
          statchat.setPreferredSize(new Dimension(350, 200));
          statchat.setMaximumSize(new Dimension(350, 200));
          statchat.setMinimumSize(new Dimension(350, 200));
+         Inicializarchat();
+         statchat.add(chat);
          
          
          statp1 = new JPanel();
@@ -979,6 +996,17 @@ public class juego extends JFrame{
             });
         JButton guia2= new JButton();
         ajustesPanel("Guia", guia2);
+        guia2.addActionListener(ev ->{
+
+       
+                 Guia gi = new Guia (this,2);
+                 gi.setVisible(true);
+                 
+                
+
+            
+            });
+        
         JButton info2= new JButton();
         
         ajustesPanel("Info", info2);
@@ -1018,6 +1046,17 @@ public class juego extends JFrame{
         });
         JButton guia= new JButton();
         ajustesPanel("Guia", guia);
+        guia.addActionListener(ev ->{
+
+       
+                 Guia gi = new Guia (this,1);
+                 gi.setVisible(true);
+                 
+                
+
+            
+            });
+        
         
         JButton info= new JButton();
         ajustesPanel("Info", info);
@@ -1096,6 +1135,40 @@ public class juego extends JFrame{
                     
         
     }
+    
+    
+    private void Inicializarchat(){
+        chat = new JTextArea();
+        chat.setEditable(false);
+        chat.setLineWrap(true);//hace salto de linea si se acaba el espacio
+        chat.setWrapStyleWord(true);//hace que se corte entre palabras, no entre letras
+        
+        chat.setPreferredSize(new Dimension (350,200));
+        chat.setMaximumSize(new Dimension (350,200));
+        chat.setMinimumSize(new Dimension (350,200));
+                
+    }
+    public void CrearMensaje(String mensaje){
+        mensajes.add(mensaje);
+        if (mensajes.size()> 5){
+            mensajes.remove(0);
+            
+        }
+        ActualizarMensaje();
+
+        
+    }
+    private void ActualizarMensaje(){
+        
+        chat.setText(" ");
+        for (String mensaje : mensajes){
+            chat.append(mensaje+"\n");
+        }
+    }
+            
+            
+            
+            
     public void inicializarnombres(){
          nombre1= new JLabel(user1.getUser());
         nombre1.setFont(new Font("Arial", Font.BOLD, 20));
@@ -1560,9 +1633,10 @@ public class juego extends JFrame{
             
             
             veces = 0;
-            tiempo = new Timer(300, null);
+            tiempo = new Timer(150, null);
             tiempo.addActionListener(e -> {
                 veces++;
+                limpiarMovimientos();
 
                 if (veces == 1) {
                     inicio.subPersonaje();
@@ -1575,7 +1649,7 @@ public class juego extends JFrame{
                     tiempo.stop();
                     indexs[0]=fila;
                     indexs[1]=columna;
-                    limpiarMovimientos();
+                    
                     removeAciones(turno);
                     VerificarFin();
                     finturno();//fin turno al final de timer
@@ -1734,11 +1808,14 @@ public class juego extends JFrame{
          limpiarAtaques();
          int resultado;
             resultado = atacante.getPersonaje().especial(atacado.getPersonaje(),0);
+            atacado.RepresentarAtaque();
             
             
             switch (resultado){
                 
                 case 1:
+                    
+                    
                     break;
                 case 2:
                     if (atacado.getClass().getSimpleName().equals("Muerte")){
@@ -1769,6 +1846,7 @@ public class juego extends JFrame{
   
         int resultado;
         resultado = atacado.getPersonaje().recibirataque(atacante.getPersonaje().getAtaque(),0, false);
+        atacado.RepresentarAtaque();
         System.out.println("se ataco");
             
             
@@ -1801,6 +1879,8 @@ public class juego extends JFrame{
         
         
     }
+     
+     
      
      public void limpiarAtaques() {
         for (casilla c : areaataque) {
@@ -1986,6 +2066,7 @@ public class juego extends JFrame{
   
             int resultado;
             resultado = atacado.getPersonaje().recibirataque(2,0, true);
+            atacado.RepresentarAtaque();
             
             
             switch (resultado){

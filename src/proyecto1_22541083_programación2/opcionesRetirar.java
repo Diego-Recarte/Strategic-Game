@@ -17,7 +17,7 @@ public class opcionesRetirar extends JDialog{
     private JPanel panelB;
     private JLabel error;
 
-    opcionesRetirar (juego padre, int equipo) {
+    opcionesRetirar (juego padre, int equipo, jugador user1, jugador user2) {
         super(padre, "Retirada", true);
 
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -29,7 +29,7 @@ public class opcionesRetirar extends JDialog{
         setAlwaysOnTop(true);
 
         inicializarJLabel(equipo);
-        Inicializarbotones(padre, equipo);
+        Inicializarbotones(padre, equipo, user1, user2);
         
         if (equipo == 1) {
             setLocation((padre.getWidth() - this.getWidth()) / 2, 300);
@@ -62,7 +62,7 @@ public class opcionesRetirar extends JDialog{
         add(panelLabel, BorderLayout.NORTH);
     }
 
-    public void Inicializarbotones(juego padre, int equipo) {
+    public void Inicializarbotones(juego padre, int equipo, jugador user1, jugador user2) {
         
         panelB = new JPanel();
 
@@ -90,6 +90,14 @@ public class opcionesRetirar extends JDialog{
         Aceptar.addActionListener(e -> {
             
             // poner fin de partida
+            if (equipo==1){
+                padre.partidaFin(user1,user2, true, 1);
+                this.dispose();
+            }else{
+                padre.partidaFin(user2,user1, true, 2);
+                this.dispose();
+            }
+            
             
         });
 

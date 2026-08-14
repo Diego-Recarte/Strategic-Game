@@ -19,7 +19,7 @@ public class opcionesTurno extends JDialog {
     private JPanel panelB;
     private JLabel error;
 
-    opcionesTurno (juego padre, int equipo) {
+    opcionesTurno (juego padre, int equipo, jugador user1, jugador user2) {
         super(padre, "Opciones", true);
 
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -31,7 +31,7 @@ public class opcionesTurno extends JDialog {
         setAlwaysOnTop(true);
 
         inicializarJLabel(equipo);
-        Inicializarbotones(padre, equipo);
+        Inicializarbotones(padre, equipo, user1, user2);
         
         if (equipo == 1) {
             setLocation((padre.getWidth() - this.getWidth()) / 2, 300);
@@ -64,7 +64,7 @@ public class opcionesTurno extends JDialog {
         add(panelLabel, BorderLayout.NORTH);
     }
 
-    public void Inicializarbotones(juego padre, int equipo) {
+    public void Inicializarbotones(juego padre, int equipo, jugador user1, jugador user2) {
         
         panelB = new JPanel();
 
@@ -91,7 +91,7 @@ public class opcionesTurno extends JDialog {
 
         retirarse.addActionListener(e -> {
             
-            opcionesRetirar or = new opcionesRetirar(padre,equipo);
+            opcionesRetirar or = new opcionesRetirar(padre,equipo, user1, user2);
             or.setVisible(true);
             this.dispose();
             

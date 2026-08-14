@@ -20,7 +20,8 @@ public class casilla extends JButton {
     private personaje personaje;
     private boolean relleno;
     private boolean atacable;
-    
+    private Timer timer;
+    private int  contador ;
     
     
     
@@ -94,6 +95,35 @@ public class casilla extends JButton {
             }
             repaint();
 
+        }
+        
+        public void RepresentarAtaque(){
+            
+            setIcon (null);
+            repaint();
+            contador = 0;
+            timer = new Timer (200, ev->{
+                
+                if (contador %2==0){
+                    setIcon (null);
+                    repaint();
+                }else{
+                    setIcon(personaje.imagen);
+                repaint();
+                }
+                contador++;
+                
+                if (contador==4){
+                    timer.stop();
+                }
+            });
+            
+            timer.start();
+            
+            
+            
+            
+            
         }
         
         

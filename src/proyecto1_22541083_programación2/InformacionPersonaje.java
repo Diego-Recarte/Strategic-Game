@@ -75,6 +75,8 @@ import javax.swing.*;
         ImageIcon x = new ImageIcon(
             getClass().getResource("/Imagenes/X.png")
         );
+        Image Escalada = x.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+        x = new ImageIcon(Escalada);
 
         muerte.setIcon(x);
         muerte.setAlignmentX(0.5f);

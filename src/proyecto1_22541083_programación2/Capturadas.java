@@ -20,7 +20,7 @@ public class Capturadas extends JDialog {
 
 
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            setSize(800, 800);
+            setSize(850, 750);
           setLayout(new BorderLayout(10, 10));
           
           
@@ -44,7 +44,7 @@ public class Capturadas extends JDialog {
         JPanel panel = new JPanel();
 
         panel.setLayout(new GridLayout(3, 3, 10, 10));
-        panel.setPreferredSize(new Dimension(600, 600));
+        panel.setPreferredSize(new Dimension(850, 750));
         panel.setOpaque(false);
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         int contador=0;
@@ -68,11 +68,11 @@ public class Capturadas extends JDialog {
         
         JPanel jaula = new JPanel(new BorderLayout());
         
-        Image Imagenpersonaje = Personaje.imagen.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+        Image Imagenpersonaje = Personaje.imagen.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
         ImageIcon persona = new ImageIcon(Imagenpersonaje);
         
         ImageIcon  celda = new ImageIcon(getClass().getResource("/Imagenes/celda.png"));
-        Image Escalada = celda.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        Image Escalada = celda.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
         celda = new ImageIcon(Escalada);
         
         jaula.setOpaque(false);
@@ -80,16 +80,16 @@ public class Capturadas extends JDialog {
         
         JLabel capturado = new JLabel();
         capturado.setIcon(persona);
-        capturado.setBounds(60, 50, 120, 150);
+        capturado.setBounds(60, 70, 150, 150);
         capturado.setOpaque(false);
         
         JLabel barrotes = new JLabel();
         barrotes.setIcon(celda);
-        barrotes.setBounds(0, 0, 200, 200);
+        barrotes.setBounds(0, 0, 250, 250);
         barrotes.setOpaque(false);
         
         JLayeredPane capas = new JLayeredPane();
-        capas.setPreferredSize(new Dimension(300, 300));
+        capas.setPreferredSize(new Dimension(250, 250));
         
         capas.add(capturado, JLayeredPane.DEFAULT_LAYER);
         capas.add(barrotes, JLayeredPane.PALETTE_LAYER);
@@ -102,12 +102,12 @@ public class Capturadas extends JDialog {
     private JLabel InicializarLabel(){
         JLabel label = new JLabel("JAULAS VACÍAS (No has capturado piezas)");
 
-        label.setFont(new Font("Arial", Font.BOLD, 16));
+        label.setFont(new Font("Arial", Font.BOLD, 25));
         label.setForeground(Color.red);
         label.setOpaque(false);
 
         label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setPreferredSize(new Dimension(600, 100));
+        label.setPreferredSize(new Dimension(700, 100));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         return label;

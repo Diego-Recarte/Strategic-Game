@@ -30,8 +30,12 @@ public class Vampiro extends personaje{
     }
     
     public int  especial(personaje victima, int tipo){
+        if (vida<4){
+            vida++;
+        }
+        
         int resultado = victima.recibirataque(1, 0, true);
-        vida++;
+        
         
         return resultado;
     }

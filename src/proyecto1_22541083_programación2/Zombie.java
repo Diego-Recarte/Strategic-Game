@@ -13,9 +13,9 @@ public class Zombie extends personaje {
     private final int indice;
     
     
-    public Zombie (String nombre, String acceso, int equipo, Muerte muerte){
+    public Zombie (String nombre, String acceso, int equipo, Muerte muerte, String acceso2){
         
-        super(acceso, nombre, equipo);
+        super(acceso, nombre, equipo, acceso2);
         
         indice = muerte.getZombies().size()-1;
         

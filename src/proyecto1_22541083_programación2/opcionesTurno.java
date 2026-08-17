@@ -19,7 +19,7 @@ public class opcionesTurno extends JDialog {
     private JPanel panelB;
     private JLabel error;
 
-    opcionesTurno (juego padre, int equipo, jugador user1, jugador user2) {
+    opcionesTurno (juego padre, int equipo, jugador user1, jugador user2, JButton botonB, JButton botonN) {
         super(padre, "Opciones", true);
 
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -31,13 +31,9 @@ public class opcionesTurno extends JDialog {
         setAlwaysOnTop(true);
 
         inicializarJLabel(equipo);
-        Inicializarbotones(padre, equipo, user1, user2);
+        Inicializarbotones(padre, equipo, user1, user2, botonB, botonN);
         
-        if (equipo == 1) {
-            setLocation((padre.getWidth() - this.getWidth()) / 2, 300);
-        } else if (equipo == 2) {
-            setLocation((padre.getWidth() - this.getWidth()) / 2, 900);
-        }
+         setLocationRelativeTo(padre);
         
 
     }
@@ -64,7 +60,7 @@ public class opcionesTurno extends JDialog {
         add(panelLabel, BorderLayout.NORTH);
     }
 
-    public void Inicializarbotones(juego padre, int equipo, jugador user1, jugador user2) {
+    public void Inicializarbotones(juego padre, int equipo, jugador user1, jugador user2, JButton botonB, JButton botonN) {
         
         panelB = new JPanel();
 
@@ -98,7 +94,7 @@ public class opcionesTurno extends JDialog {
             
         });
 
-        Darturno = new JButton("Zombie");
+        Darturno = new JButton("Dar turno");
 
         Darturno.setFont(new Font("Arial", Font.BOLD, 14));
         Darturno.setPreferredSize(new Dimension(120, 35));
@@ -118,6 +114,8 @@ public class opcionesTurno extends JDialog {
         Darturno.addActionListener(e -> {
             this.dispose();
             
+            botonN.setBackground(Color.black);
+            botonB.setBackground(Color.WHITE);
             padre.removeAciones(equipo);
             padre.finturno();
 

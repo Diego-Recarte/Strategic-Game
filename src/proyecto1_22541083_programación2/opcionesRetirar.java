@@ -31,12 +31,7 @@ public class opcionesRetirar extends JDialog{
         inicializarJLabel(equipo);
         Inicializarbotones(padre, equipo, user1, user2);
         
-        if (equipo == 1) {
-            setLocation((padre.getWidth() - this.getWidth()) / 2, 300);
-        } else if (equipo == 2) {
-            setLocation((padre.getWidth() - this.getWidth()) / 2, 900);
-        }
-        
+         setLocationRelativeTo(padre);
 
     }
 

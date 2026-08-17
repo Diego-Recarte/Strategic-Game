@@ -33,7 +33,16 @@ public class InicioJuego extends JDialog {
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         setSize(800, 500);
         setLayout(new BorderLayout(10, 10));
-        getContentPane().setBackground(Color.WHITE);
+        
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Image Escalada = imagen.getImage().getScaledInstance(pantalla.width,pantalla.height , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+        setUndecorated(true);
+        
 
         Inicializartabla();
         Inicializarlabel();
@@ -53,12 +62,16 @@ public class InicioJuego extends JDialog {
         panelP.add(panelIniciar, BorderLayout.SOUTH);
 
         add(panelP, BorderLayout.CENTER);
+        
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        setSize(dimension.width, dimension.height);
 
         setLocationRelativeTo(perfil);
     }
 
     private void ValoresTabla(jugador user) {
         jugador[] Vtablas = Globales.jugadores.toArray(new jugador[0]);
+       
 
         for (int i = 0; i < Vtablas.length - 1; i++) {
             for (int y = 0; y < Vtablas.length - 1; y++) {
@@ -170,8 +183,11 @@ public class InicioJuego extends JDialog {
                 return false;
             }
         };
+        
+        
 
         tabla = new JTable(modelo);
+        tabla.setOpaque(false);
         tabla.setFont(new Font("Arial", Font.PLAIN, 20));
         tabla.setRowHeight(24);
         tabla.setGridColor(Color.GRAY);
@@ -199,6 +215,8 @@ public class InicioJuego extends JDialog {
         headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
         scroll = new JScrollPane(tabla);
+        scroll.setOpaque(false);
+        scroll.getViewport().setOpaque(false);
         panelt.add(scroll, BorderLayout.CENTER);
     }
 

@@ -36,12 +36,26 @@ public class CrearCuenta extends JFrame {
          setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 630);
         setLayout(new BorderLayout(10, 10));
-        getContentPane().setBackground(Color.WHITE);
+        
+        
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Image Escalada = imagen.getImage().getScaledInstance(pantalla.width,pantalla.height , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+        setUndecorated(true);
+       
         Inicializarbotones();
         inicializarTimer();
        Inicializarbarra();
+       
+           
+    
         
         setLocationRelativeTo(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
         
 
@@ -118,6 +132,7 @@ public class CrearCuenta extends JFrame {
         
 
         JCheckBox chkMostrar = new JCheckBox("Mostrar contraseña");
+        chkMostrar.setOpaque(false);
 
         chkMostrar.setBackground(Color.WHITE);
 
@@ -286,10 +301,12 @@ public class CrearCuenta extends JFrame {
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setPreferredSize(new Dimension(150, 90));
         label.setVisible (false);
+        label.setOpaque(false);
         panelLogin.add(label);
         
 
         panelLogin.add(btnIngresar);
+        panelLogin.setOpaque(false);
         
         Panelenvuelto.add(panelLogin);
 
@@ -386,15 +403,11 @@ public class CrearCuenta extends JFrame {
 
         botonb.addActionListener(e -> {
             
-            if (practicante.isSelected()){
-                principiante prin = new principiante(this);
-                prin.setVisible(true);
-            }else{
+           
                  MenuInicio l = new MenuInicio();
 
                     l.setVisible(true);
                     this.dispose();
-            }
             
             
             

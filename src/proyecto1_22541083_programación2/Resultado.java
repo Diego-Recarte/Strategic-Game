@@ -26,17 +26,25 @@ public class Resultado extends JDialog{
         this.Ganador= partida.getGanador();
         this.equipo=equipo;
         
-         setUndecorated(true);
+        
+         ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Image Escalada = imagen.getImage().getScaledInstance(pantalla.width,pantalla.height , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+        setUndecorated(true);
+         
     
         setLayout(new BorderLayout(10, 10));
         
-        if (equipo ==1){
-        getContentPane().setBackground(Color.WHITE);
-        }else{
-            getContentPane().setBackground(Color.black);
-        }
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(pantalla.width, pantalla.height);
+        
+        
+        
+        
+        Dimension pantalla2 = Toolkit.getDefaultToolkit().getScreenSize();
+        setSize(pantalla2.width, pantalla2.height);
         setLocationRelativeTo(null);
         
         InicializarGanador();
@@ -104,7 +112,7 @@ public class Resultado extends JDialog{
         gbcPanel.anchor = GridBagConstraints.CENTER;
         gbcPanel.fill = GridBagConstraints.NONE;
 
-        add(panel, gbcPanel);
+        add(panel, BorderLayout.CENTER);
 
         
     }

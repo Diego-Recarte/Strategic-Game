@@ -12,10 +12,11 @@ import java.util.ArrayList;
 public class Muerte extends personaje{
     
     private ArrayList<Zombie> zombies= new ArrayList  <>();
+    private String acceso2;
     
-    public Muerte (String nombre, String acceso, int equipo){
-        
-        super(acceso, nombre, equipo);
+    public Muerte (String nombre, String acceso, int equipo, String acceso2){
+        this.acceso2 = acceso2;
+        super(acceso, nombre, equipo, acceso2);
         
         
         
@@ -23,9 +24,9 @@ public class Muerte extends personaje{
     
     public void addZombie(){
         if (equipo ==1){
-            zombies.add(new Zombie("zombie","/Imagenes/personajes_casillas/zombie1.png",equipo,this));
+            zombies.add(new Zombie("zombie","/Imagenes/personajes_casillas/zombie1.png",equipo,this, acceso2));
         }else if (equipo ==2){
-            zombies.add(new Zombie("zombie","/Imagenes/personajes_casillas/zombie2.png",equipo,this));
+            zombies.add(new Zombie("zombie","/Imagenes/personajes_casillas/zombie2.png",equipo,this, acceso2));
         }
         
     }

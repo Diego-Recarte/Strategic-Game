@@ -11,7 +11,7 @@ package proyecto1_22541083_programación2;
 import java.util.Calendar;
 import java.util.Date;
 
-public class jugador {
+public final class jugador {
     private String user;
     private char [] password;
     private int puntos;
@@ -80,6 +80,9 @@ public class jugador {
         return  dia + "/" + mes + "/" + anio;
     }
     
+    public void Sumarpuntos(){
+        puntos +=tipo.getPuntos();
+    }
     
     
     

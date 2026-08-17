@@ -30,7 +30,17 @@ public class partidasR extends JDialog {
                 setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
                 setSize(800, 500);
               setLayout(new BorderLayout(10, 10));
-                getContentPane().setBackground(Color.WHITE);
+              
+              
+              
+         ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Image Escalada = imagen.getImage().getScaledInstance(pantalla.width,pantalla.height , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+        setUndecorated(true);
                 
         Inicializartablero(user);
         Inicializartitulo();
@@ -111,9 +121,15 @@ public class partidasR extends JDialog {
         tabla.setCellSelectionEnabled(false);
         
         tabla.setFillsViewportHeight(true);
+        tabla.setOpaque(false);
+        tabla.setShowGrid(false);
         
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setPreferredSize(new Dimension(300, 180));
+        scroll.setOpaque(false);
+        scroll.getViewport().setOpaque(false);
+        scroll.setBorder(BorderFactory.createEmptyBorder());
+        scroll.setViewportBorder(null);
         
         
         
@@ -193,4 +209,7 @@ public class partidasR extends JDialog {
             
         add (barra, BorderLayout.NORTH);
     }
+    
+    
+    
 }

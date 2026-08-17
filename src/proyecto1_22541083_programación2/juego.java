@@ -104,7 +104,15 @@ public class juego extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
         setLayout(new BorderLayout(10, 10));
-        getContentPane().setBackground(Color.WHITE);
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoJuego.PNG"));
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Image Escalada = imagen.getImage().getScaledInstance(pantalla.width,pantalla.height , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+        setUndecorated(true);
+        
         Inicializarruletas();
         InicializarTablero();
         Inicializarpersonajes();
@@ -196,57 +204,36 @@ public class juego extends JFrame{
        
 
     }
-    public void iniciarcantidadronda(int toca){
+    public void iniciarcantidadronda(int toca) {
         rondasbonus(toca);
-        if (toca ==1){
-            
-            
-            
-                rondast1=rondas1;
-                iniciarturno(1);
-                
-            
-        }else if (toca == 2){
-            rondast2=rondas2;
+
+        if (toca == 1) {
+            iniciarturno(1);
+        } else if (toca == 2) {
             iniciarturno(2);
         }
-    }
+    } 
     
-    
-    public void rondasbonus(int toca){
-        if (toca ==1){
-            int vivos = Contarvivos(personajes1);
-            switch(vivos){
-                case 4:
-                    rondas1 += 1;
-                    break;
-                case 2:
-                    rondas1 += 1;
-                    break;
-                default:
-                    break;
-            }
+    public void rondasbonus(int toca) {
+            if (toca == 1) {
+                int vivos = Contarvivos(personajes1);
 
-        }else if (toca ==2){
-           int vivos =  Contarvivos( personajes2);
-           switch(vivos){
-                case 4:
-                    rondas2 += 1;
-                    break;
-                case 2:
-                    rondas2 += 1;
-                    break;
-                default:
-                    break;
+                rondast1 = user1.getTipo().getTurnosIniciales();
+
+                if (vivos == 4 || vivos == 2) {
+                    rondast1++;
+                }
+
+            } else if (toca == 2) {
+                int vivos = Contarvivos(personajes2);
+
+                rondast2 = user2.getTipo().getTurnosIniciales();
+
+                if (vivos == 4 || vivos == 2) {
+                    rondast2++;
+                }
             }
-           
-            
-        }
-        
-      
-        
-        
-    }
+        } 
     private int Contarvivos(ArrayList<personaje> personajes){
         int vivos=0;
         for (int i = 0; i<6; i++){
@@ -290,17 +277,17 @@ public class juego extends JFrame{
     
     //personajes
     public void Inicializarpersonajes(){
-        personaje LoboP1a = new HombreLobo("LoboP1a", "/Imagenes/personajes_casillas/hombrelobop1a.png", 1);
+        personaje LoboP1a = new HombreLobo("LoboP1a", "/Imagenes/personajes_casillas/hombrelobop1a.png", 1, "/Imagenes/personajes_personales/loboa.jpeg");
         
-        personaje VampiroP1a = new Vampiro("VampiroP1a", "/Imagenes/personajes_casillas/vampirop1a.png", 1 );
+        personaje VampiroP1a = new Vampiro("VampiroP1a", "/Imagenes/personajes_casillas/vampirop1a.png", 1, "/Imagenes/personajes_personales/vampiroa.jpeg" );
         
-        personaje MuerteP1a = new Muerte ("MuerteP1a", "/Imagenes/personajes_casillas/muertep1a.png", 1);
+        personaje MuerteP1a = new Muerte ("MuerteP1a", "/Imagenes/personajes_casillas/muertep1a.png", 1, "/Imagenes/personajes_personales/muertea.jpeg");
         
-        personaje MuerteP1b = new Muerte ("MuerteP1b", "/Imagenes/personajes_casillas/muertep1b.png", 1);
+        personaje MuerteP1b = new Muerte ("MuerteP1b", "/Imagenes/personajes_casillas/muertep1b.png", 1, "/Imagenes/personajes_personales/muerteb.jpeg");
         
-        personaje VampiroP1b = new Vampiro("VampiroP1b", "/Imagenes/personajes_casillas/vampirop1b.png", 1);
+        personaje VampiroP1b = new Vampiro("VampiroP1b", "/Imagenes/personajes_casillas/vampirop1b.png", 1, "/Imagenes/personajes_personales/vampirob.jpeg");
         
-        personaje LoboP1b = new HombreLobo("LoboP1b", "/Imagenes/personajes_casillas/hombrelobop1b.png", 1);
+        personaje LoboP1b = new HombreLobo("LoboP1b", "/Imagenes/personajes_casillas/hombrelobop1b.png", 1, "/Imagenes/personajes_personales/lobob.jpeg");
        
         
          
@@ -326,17 +313,17 @@ public class juego extends JFrame{
         
         
         
-        personaje LoboP2a = new HombreLobo("LoboP2a","/Imagenes/personajes_casillas/hombrelobop2a.png", 2 );
+        personaje LoboP2a = new HombreLobo("LoboP2a","/Imagenes/personajes_casillas/hombrelobop2a.png", 2 ,"/Imagenes/personajes_personales/loboa.jpeg");
         
-        personaje VampiroP2a = new  Vampiro("VampiroP2a", "/Imagenes/personajes_casillas/vampirop2a.png", 2);
+        personaje VampiroP2a = new  Vampiro("VampiroP2a", "/Imagenes/personajes_casillas/vampirop2a.png", 2, "/Imagenes/personajes_personales/vampiroa.jpeg");
         
-        personaje MuerteP2a =new  Muerte("MuerteP2a","/Imagenes/personajes_casillas/muertep2a.png", 2);
+        personaje MuerteP2a =new  Muerte("MuerteP2a","/Imagenes/personajes_casillas/muertep2a.png", 2,"/Imagenes/personajes_personales/muertea.jpeg");
         
-        personaje MuerteP2b = new  Muerte("MuerteP2b","/Imagenes/personajes_casillas/muertep2b.png", 2);
+        personaje MuerteP2b = new  Muerte("MuerteP2b","/Imagenes/personajes_casillas/muertep2b.png", 2, "/Imagenes/personajes_personales/muerteb.jpeg");
         
-        personaje VampiroP2b = new  Vampiro("VampiroP2b","/Imagenes/personajes_casillas/vampirop2b.png", 2);
+        personaje VampiroP2b = new  Vampiro("VampiroP2b","/Imagenes/personajes_casillas/vampirop2b.png", 2, "/Imagenes/personajes_personales/vampirob.jpeg");
         
-        personaje LoboP2b = new HombreLobo("LoboP2b","/Imagenes/personajes_casillas/hombrelobop2b.png", 2 );
+        personaje LoboP2b = new HombreLobo("LoboP2b","/Imagenes/personajes_casillas/hombrelobop2b.png", 2,  "/Imagenes/personajes_personales/lobob.jpeg" );
         
         
           
@@ -392,7 +379,8 @@ public class juego extends JFrame{
     
     
     retirar2.addActionListener(ev->{
-        opcionesTurno ot = new opcionesTurno(this, 1, user1, user2);
+        
+        opcionesTurno ot = new opcionesTurno(this, 1, user1, user2, botonB, botonN);
         ot.setVisible(true);
     });
     
@@ -504,7 +492,7 @@ public class juego extends JFrame{
      retirar1.setFocusPainted(false);
     retirar1.setBorderPainted(false);
     retirar1.addActionListener(ev->{
-        opcionesTurno ot = new opcionesTurno(this, 2, user1, user2);
+        opcionesTurno ot = new opcionesTurno(this, 2, user1, user2, botonB, botonN);
         ot.setVisible(true);
     });
     
@@ -527,7 +515,7 @@ public class juego extends JFrame{
         
         label.setFont(new Font("Arial", Font.BOLD, 10));
         label.setForeground(Color.BLACK);
-        label.setOpaque(false);
+        label.setOpaque(true);
 
 
         label.setPreferredSize(new Dimension(160, 13));
@@ -1151,6 +1139,7 @@ public class juego extends JFrame{
         chat.setMaximumSize(new Dimension (350,90));
         chat.setMinimumSize(new Dimension (350,90));
         chat.setMargin(new Insets(5, 10, 5, 10));
+        chat.setOpaque(false);
                 
     }
     public void CrearMensaje(String mensaje){
@@ -1812,8 +1801,9 @@ public class juego extends JFrame{
      public void chupar(casilla atacante, casilla atacado, ActionListener chupar){
          limpiarAtaques();
          int resultado;
-         atacado.RepresentarAtaque();
+         
             resultado = atacante.getPersonaje().especial(atacado.getPersonaje(),0);
+             personaje atacadoP = atacado.getPersonaje();
             
             
             
@@ -1826,8 +1816,9 @@ public class juego extends JFrame{
                     if (atacado.getPersonaje().getClass().getSimpleName().equals("Muerte")){
                         eliminarZombies(atacado.getPersonaje());
                     }
+                   
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Capturó a "+atacadoP.getClass().getSimpleName()+" chupando 1 punto de vida");
                     atacado.subPersonaje();
-                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Capturó a "+atacado.getPersonaje().getClass().getSimpleName()+" chupando 1 punto de vida");
                     break;
                 case 3:
                     CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Rompió el escudo de "+atacado.getPersonaje().getClass().getSimpleName()+ " y dejo su vida a "+ atacado.getPersonaje().getVida());
@@ -1840,6 +1831,9 @@ public class juego extends JFrame{
         
             
             }
+            if (resultado!= 2){
+                atacado.RepresentarAtaque();
+            }
             if (!VerificarFin()) {
                 finturno();
             }
@@ -1851,8 +1845,9 @@ public class juego extends JFrame{
         System.out.println("atacando() ejecutado");
   
         int resultado;
-        atacado.RepresentarAtaque();
+        
         resultado = atacado.getPersonaje().recibirataque(atacante.getPersonaje().getAtaque(),0, false);
+        personaje atacadoP = atacado.getPersonaje();
         
         System.out.println("se ataco");
             
@@ -1866,8 +1861,9 @@ public class juego extends JFrame{
                     if (atacado.getPersonaje().getClass().getSimpleName().equals("Muerte")){
                         eliminarZombies(atacado.getPersonaje());
                     }
+                    
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Capturó a "+atacadoP.getClass().getSimpleName());
                     atacado.subPersonaje();
-                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Capturó a "+atacado.getPersonaje().getClass().getSimpleName());
                     break;
                 case 3:
                     CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Rompió el escudo de "+atacado.getPersonaje().getClass().getSimpleName()+ " y dejo su vida a "+ atacado.getPersonaje().getVida());
@@ -1880,6 +1876,9 @@ public class juego extends JFrame{
         
 
             
+            }
+            if (resultado!= 2){
+                atacado.RepresentarAtaque();
             }
             removeAciones(turno);
             if (!VerificarFin()) {
@@ -2073,9 +2072,10 @@ public class juego extends JFrame{
      public void lanzar(casilla atacante, casilla atacado, ActionListener ataque){
         limpiarAtaques();
         
-            atacado.RepresentarAtaque();
+            
             int resultado;
             resultado = atacado.getPersonaje().recibirataque(2,0, true);
+            personaje atacadoP = atacado.getPersonaje();
             
             
             
@@ -2085,11 +2085,12 @@ public class juego extends JFrame{
                     CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Rompió el escudo de "+atacado.getPersonaje().getClass().getSimpleName()+ " con lanza");
                     break;
                 case 2:
-                    if (atacado.getPersonaje().getClass().getSimpleName().equals("Muerte")){
-                        eliminarZombies(atacado.getPersonaje());
+                    if (atacadoP.getClass().getSimpleName().equals("Muerte")){
+                        eliminarZombies(atacadoP);
                     }
+                   
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Capturó a "+atacadoP.getClass().getSimpleName()+ " con lanza");
                     atacado.subPersonaje();
-                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Capturó a "+atacado.getPersonaje().getClass().getSimpleName()+ " con lanza");
                     break;
                 case 3:
                     CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Rompió el escudo de "+atacado.getPersonaje().getClass().getSimpleName()+ " y dejo su vida a "+ atacado.getPersonaje().getVida()+ " con lanza");
@@ -2102,6 +2103,9 @@ public class juego extends JFrame{
         
 
             
+            }
+            if (resultado!= 2){
+                atacado.RepresentarAtaque();
             }
             
             removeAciones(turno);

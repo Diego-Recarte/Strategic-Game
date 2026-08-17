@@ -55,6 +55,7 @@ public class estadisticas extends JPanel{
        
        imagenCarta1= new JLabel();
        imagenCarta1.setText(" ");
+       imagenCarta1.setIcon(personaje.imagen2);
        imagenCarta1.setPreferredSize(new Dimension (350, 100));
        imagenCarta1.setMaximumSize(new Dimension (350, 100));
        imagenCarta1.setMinimumSize(new Dimension (350, 100));

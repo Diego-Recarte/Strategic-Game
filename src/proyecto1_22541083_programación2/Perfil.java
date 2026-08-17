@@ -10,7 +10,7 @@ public class Perfil extends JFrame{
     
     private JLabel nombre;
     private JButton iniciar;
-    private JLabel titulo;
+
     private JMenuBar barra;
     private JPanel panelB;
     private JMenu menu;
@@ -25,15 +25,29 @@ public class Perfil extends JFrame{
         super("Tu perfil");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 500);
+        setSize(1200, 1200);
         setLayout(new BorderLayout(10, 10));
-        getContentPane().setBackground(Color.WHITE);
+        
+         ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoPerfil.jpeg"));
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Image Escalada = imagen.getImage().getScaledInstance(pantalla.width,pantalla.height , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+        setUndecorated(true);
+        
+        
+       
         Inicialivarbarra(user, index);
         Inicializarinicio(user);
+        
+       
         
 
 
         setLocationRelativeTo(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
     }
     
@@ -160,26 +174,19 @@ public class Perfil extends JFrame{
     public void Inicializarinicio(jugador user){
         panelB= new JPanel ();
         panelB.setLayout(new BoxLayout(panelB, BoxLayout.Y_AXIS));
-        panelB.setPreferredSize(new Dimension(500, 400));
+        panelB.setPreferredSize(new Dimension(900, 250));
         panelB.setOpaque(false);
         panelB.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
-        titulo = new JLabel("Texto");
-
-        titulo.setFont(new Font("Arial", Font.BOLD, 14));
-        titulo.setForeground(Color.BLACK);
-        titulo.setOpaque(false);
-
-        titulo.setHorizontalAlignment(SwingConstants.CENTER);
-        titulo.setPreferredSize(new Dimension(500, 400));
+        
         
         
         
         iniciar = new JButton("JUGAR");
 
-        iniciar.setFont(new Font("Arial", Font.BOLD, 14));
-        iniciar.setPreferredSize(new Dimension(300, 150));
-        iniciar.setMaximumSize(new Dimension(300, 150));
+        iniciar.setFont(new Font("Arial", Font.BOLD, 23));
+        iniciar.setPreferredSize(new Dimension(900, 250));
+        iniciar.setMaximumSize(new Dimension(900, 250));
 
         iniciar.setForeground(Color.WHITE);
         iniciar.setBackground(Color.RED);
@@ -196,15 +203,15 @@ public class Perfil extends JFrame{
                 r.setVisible(true);
                 
         });
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
         iniciar.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        panelB.add(titulo);
+      
         panelB.add (Box.createVerticalBox());
         panelB.add(iniciar);
-        panelB.add (Box.createVerticalBox());
-        panelB.add (Box.createVerticalBox());
-        add(panelB, BorderLayout.CENTER);
+        
+        panelB.add (Box.createVerticalStrut(150));
+        add(panelB, BorderLayout.SOUTH);
         
         
         

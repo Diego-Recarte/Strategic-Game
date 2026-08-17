@@ -23,9 +23,10 @@ public abstract class personaje {
     protected int fila;
     protected int columna;
     protected ImageIcon imagen;
+    protected ImageIcon imagen2;
     protected int  equipo;
     
-    public personaje(String acceso, String nombre, int equipo){
+    public personaje(String acceso, String nombre, int equipo, String acceso2){
         this.nombre=  nombre;
         this.equipo = equipo;
         
@@ -36,6 +37,12 @@ public abstract class personaje {
         imagen = new ImageIcon(getClass().getResource(acceso));
         Image Escalada = imagen.getImage().getScaledInstance(90, 90, Image.SCALE_SMOOTH);
         imagen = new ImageIcon(Escalada);
+        
+        imagen2 = new ImageIcon(getClass().getResource(acceso2));
+        Image Escalada2 = imagen2.getImage().getScaledInstance(350, 100, Image.SCALE_SMOOTH);
+        imagen2 = new ImageIcon(Escalada2);
+        
+        
         
         
         inicializarStats();
@@ -58,7 +65,7 @@ public abstract class personaje {
         
     
     
-    public int recibirataque (int ataque, int combo, boolean directo){
+    public final int recibirataque (int ataque, int combo, boolean directo){
         System.out.println("dentro del metodo"+ ataque);
         if (ataque == 0){
             //mensaje de roptura de escudo
@@ -109,28 +116,28 @@ public abstract class personaje {
         
     
     
-    public int getmovimientos() {
+    public final int getmovimientos() {
         
         return movimiento;
     }
     
-    public boolean Isalive(){
+    public final boolean Isalive(){
         return alive;
     }
 
-    public String getNombre() {
+    public final String getNombre() {
         return nombre;
     }
 
-    public int getAtaque() {
+    public final int getAtaque() {
         return ataque;
     }
 
-    public int getVida() {
+    public final int getVida() {
         return vida;
     }
 
-    public int getEscudo() {
+    public final int getEscudo() {
         return escudo;
     }
     

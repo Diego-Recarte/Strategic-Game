@@ -28,13 +28,26 @@ public class login extends JFrame{
          setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 450);
         setLayout(new BorderLayout(10, 10));
-        getContentPane().setBackground(Color.WHITE);
+        
+        
+         ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Image Escalada = imagen.getImage().getScaledInstance(pantalla.width,pantalla.height , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+        setUndecorated(true);
+        
+        
         Inicializarbotones();
         inicializarTimer();
         Inicializarbarra();
-       
+        
+      
         
         setLocationRelativeTo(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
         
 
@@ -58,6 +71,7 @@ public class login extends JFrame{
     public void Inicializarbotones(){
         
         JPanel panelLogin = new JPanel();
+       
         JPanel Panelenvuelto =new JPanel(new GridBagLayout());
         Panelenvuelto.setOpaque(false);
 
@@ -125,8 +139,9 @@ public class login extends JFrame{
             }
 
         });
-
+        chkMostrar.setOpaque(false);
         panelLogin.add(chkMostrar);
+        
 
 
      
@@ -183,10 +198,11 @@ public class login extends JFrame{
         label.setVisible (false);
         
         panelLogin.add(label);
+        
 
         panelLogin.add(btnIngresar);
         
-        
+         panelLogin.setOpaque(false);
         
         Panelenvuelto.add(panelLogin);
 

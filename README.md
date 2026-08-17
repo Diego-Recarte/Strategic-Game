@@ -11,10 +11,13 @@ Durante un turno se debe :
 - Detener la ruleta.
 Seguido de 
 - Mover personaje
+- o
 - Atacar a un personaje rival
+- o
 - Utilizar una habilidad especial.
 tambien
 - Consultar las opciones de la partida.
+- o
 - Retirarse.
 
 

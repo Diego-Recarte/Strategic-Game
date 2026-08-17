@@ -26,17 +26,25 @@ public class Resultado extends JDialog{
         this.Ganador= partida.getGanador();
         this.equipo=equipo;
         
-         setUndecorated(true);
+        
+         ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Image Escalada = imagen.getImage().getScaledInstance(pantalla.width,pantalla.height , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+        setUndecorated(true);
+         
     
         setLayout(new BorderLayout(10, 10));
         
-        if (equipo ==1){
-        getContentPane().setBackground(Color.WHITE);
-        }else{
-            getContentPane().setBackground(Color.black);
-        }
-        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(pantalla.width, pantalla.height);
+        
+        
+        
+        
+        Dimension pantalla2 = Toolkit.getDefaultToolkit().getScreenSize();
+        setSize(pantalla2.width, pantalla2.height);
         setLocationRelativeTo(null);
         
         InicializarGanador();
@@ -53,6 +61,7 @@ public class Resultado extends JDialog{
        
 
         panel = new JPanel(new GridBagLayout());
+        panel.setOpaque(false);
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -60,8 +69,7 @@ public class Resultado extends JDialog{
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
 
-        panel.setBackground(Color.WHITE);
-        panel.setOpaque(true);
+       
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
   
@@ -104,7 +112,7 @@ public class Resultado extends JDialog{
         gbcPanel.anchor = GridBagConstraints.CENTER;
         gbcPanel.fill = GridBagConstraints.NONE;
 
-        add(panel, gbcPanel);
+        add(panel, BorderLayout.CENTER);
 
         
     }
@@ -112,6 +120,7 @@ public class Resultado extends JDialog{
     private void Inicializarbotones(juego padre, jugador user1, jugador user2){
         
         Revancha = new JButton("Revancha");
+        
 
         Revancha.setFont(new Font("Arial", Font.BOLD, 14));
         Revancha.setPreferredSize(new Dimension(120, 35));
@@ -200,10 +209,10 @@ public class Resultado extends JDialog{
     private void InicializarGanador(){
         Lganador = new JLabel(Ganador);
 
-        Lganador.setFont(new Font("Arial", Font.BOLD, 20));
+        Lganador.setFont(new Font("Arial", Font.BOLD, 40));
         
         
-        Lganador.setForeground(Color.yellow);
+        Lganador.setForeground(Color.red);
         Lganador.setOpaque(false);
 
         Lganador.setHorizontalAlignment(SwingConstants.CENTER);
@@ -214,17 +223,13 @@ public class Resultado extends JDialog{
         
         jugador = new JLabel("FELICIDADES");
 
-         jugador .setFont(new Font("Arial", Font.BOLD, 16));
+         jugador .setFont(new Font("Arial", Font.BOLD, 50));
          
-         if(equipo==1){
-             jugador .setForeground(Color.BLACK);
-         }else{
-            jugador .setForeground(Color.BLACK);
-         }
+         
          jugador .setOpaque(false);
 
          jugador .setHorizontalAlignment(SwingConstants.CENTER);
-         jugador .setPreferredSize(new Dimension(150, 30));
+         jugador .setPreferredSize(new Dimension(500, 50));
 
         
 

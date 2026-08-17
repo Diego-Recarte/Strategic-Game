@@ -18,15 +18,16 @@ public class Guia extends JDialog{
 
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             setSize(1200, 800);
+            
+            ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+        Image Escalada = imagen.getImage().getScaledInstance(1200,800 , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
           setLayout(new BorderLayout(10, 10));
           
-          if (equipo == 1){
-              
-          
-            getContentPane().setBackground(Color.WHITE);
-          }else {
-               getContentPane().setBackground(Color.black);
-          }
+         
             setLocationRelativeTo(Padre);
             InicializarGrid();
             InicializarBarra(equipo);
@@ -63,7 +64,7 @@ public class Guia extends JDialog{
 
         JLabel imagenLabel= new JLabel();
         imagenLabel.setPreferredSize(new Dimension (300, 200));
-        ImageIcon imagen = new ImageIcon(getClass().getResource(" "));//**********************************************************************
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/personajes_personales/vampiro.jpeg"));//**********************************************************************
         Image Escalada = imagen.getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH);
         imagen = new ImageIcon(Escalada);
         imagenLabel.setIcon(imagen);
@@ -86,9 +87,10 @@ public class Guia extends JDialog{
         info.setLineWrap(true);//hace salto de linea si se acaba el espacio
         info.setWrapStyleWord(true);//hace que se corte entre palabras, no entre letras
         
-        info.setPreferredSize(new Dimension (300,450));
-        info.setMaximumSize(new Dimension (300,450));
-        info.setMinimumSize(new Dimension (300,450));
+        info.setPreferredSize(new Dimension (300,200));
+        info.setMaximumSize(new Dimension (300,200));
+        info.setMinimumSize(new Dimension (300,200));
+        info.setOpaque(false);
         
         info.setText("Vida: 4 \n"
                 + "Escudo: 5 \n"
@@ -111,7 +113,7 @@ public class Guia extends JDialog{
 
         JLabel imagenLabel= new JLabel();
         imagenLabel.setPreferredSize(new Dimension (300, 200));
-        ImageIcon imagen = new ImageIcon(getClass().getResource(" "));//**********************************************************************
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/personajes_personales/muerte.jpeg"));//**********************************************************************
         Image Escalada = imagen.getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH);
         imagen = new ImageIcon(Escalada);
         imagenLabel.setIcon(imagen);
@@ -134,9 +136,10 @@ public class Guia extends JDialog{
         info.setLineWrap(true);
         info.setWrapStyleWord(true);
         
-        info.setPreferredSize(new Dimension (300,450));
-        info.setMaximumSize(new Dimension (300,450));
-        info.setMinimumSize(new Dimension (300,450));
+        info.setPreferredSize(new Dimension (300,200));
+        info.setMaximumSize(new Dimension (300,200));
+        info.setMinimumSize(new Dimension (300,200));
+        info.setOpaque(false);
         
         info.setText("\"Vida: 3 \n" +
                  "Escudo: 1 \n" +
@@ -160,7 +163,7 @@ public class Guia extends JDialog{
 
         JLabel imagenLabel= new JLabel();
         imagenLabel.setPreferredSize(new Dimension (300, 200));
-        ImageIcon imagen = new ImageIcon(getClass().getResource(" "));//**********************************************************************
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/personajes_personales/lobo.jpeg"));//**********************************************************************
         Image Escalada = imagen.getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH);
         imagen = new ImageIcon(Escalada);
         imagenLabel.setIcon(imagen);
@@ -183,9 +186,10 @@ public class Guia extends JDialog{
         info.setLineWrap(true);//hace salto de linea si se acaba el espacio
         info.setWrapStyleWord(true);//hace que se corte entre palabras, no entre letras
         
-        info.setPreferredSize(new Dimension (300,450));
-        info.setMaximumSize(new Dimension (300,450));
-        info.setMinimumSize(new Dimension (300,450));
+        info.setPreferredSize(new Dimension (300,200));
+        info.setMaximumSize(new Dimension (300,200));
+        info.setMinimumSize(new Dimension (300,200));
+        info.setOpaque(false);
         
         info.setText("\"Vida: 5 \n" +
                  "Escudo: 2 \n" +
@@ -208,7 +212,7 @@ public class Guia extends JDialog{
 
         JLabel imagenLabel= new JLabel();
         imagenLabel.setPreferredSize(new Dimension (300, 200));
-        ImageIcon imagen = new ImageIcon(getClass().getResource(" "));//**********************************************************************
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/personajes_personales/zombie.jpeg"));//**********************************************************************
         Image Escalada = imagen.getImage().getScaledInstance(300, 200, Image.SCALE_SMOOTH);
         imagen = new ImageIcon(Escalada);
         imagenLabel.setIcon(imagen);
@@ -230,9 +234,10 @@ public class Guia extends JDialog{
         info.setEditable(false);
         info.setLineWrap(true);
         info.setWrapStyleWord(true);
-        info.setPreferredSize(new Dimension (300,450));
-        info.setMaximumSize(new Dimension (300,450));
-        info.setMinimumSize(new Dimension (300,450));
+        info.setPreferredSize(new Dimension (300,200));
+        info.setMaximumSize(new Dimension (300,200));
+        info.setMinimumSize(new Dimension (300,200));
+        info.setOpaque(false);
         
         info.setText("Vida: 1 \n" +
                 "Escudo: 0 \n" +

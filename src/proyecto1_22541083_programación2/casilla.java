@@ -97,35 +97,35 @@ public class casilla extends JButton {
 
         }
         
-        public void RepresentarAtaque(){
-            
-            setIcon (null);
+       public void RepresentarAtaque() {
+            if (personaje == null) {
+                return;
+            }
+
+            ImageIcon imagenAtaque = personaje.imagen;
+
+            setIcon(null);
             repaint();
+
             contador = 0;
-            timer = new Timer (200, ev->{
-                
-                if (contador %2==0){
-                    setIcon (null);
-                    repaint();
-                }else{
-                    setIcon(personaje.imagen);
-                repaint();
+
+            timer = new Timer(200, ev -> {
+                if (contador % 2 == 0) {
+                    setIcon(null);
+                } else {
+                    setIcon(imagenAtaque);
                 }
+
+                repaint();
                 contador++;
-                
-                if (contador==4){
+
+                if (contador == 4) {
                     timer.stop();
                 }
             });
-            
+
             timer.start();
-            
-            
-            
-            
-            
         }
-        
         
         
         
@@ -139,8 +139,9 @@ public class casilla extends JButton {
             repaint();
         }
         public void subPersonaje (){
-            personaje = null;
+            
             setIcon(null);
+            personaje = null;
             repaint();
             
         }

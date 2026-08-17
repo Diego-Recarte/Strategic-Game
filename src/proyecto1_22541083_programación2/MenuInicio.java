@@ -25,10 +25,22 @@ public class MenuInicio extends JFrame {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(800, 500);
     setLayout(new BorderLayout(10, 10));
-    getContentPane().setBackground(Color.WHITE);
+    
+    ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+    Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+    Image Escalada = imagen.getImage().getScaledInstance(pantalla.width+50,pantalla.height+50 , Image.SCALE_SMOOTH);
+    imagen = new ImageIcon(Escalada);
+    JLabel fondo = new JLabel(imagen);
+    setContentPane(fondo);
+    setUndecorated(true);
+    fondo.setLayout(new BorderLayout());
+    
+    
     Inicializarbotones();
      setLocationRelativeTo(null);
+     setExtendedState(JFrame.MAXIMIZED_BOTH);
      setVisible(true);
+     
      System.out.println(getClass().getResource("/Imagenes/personajes_casillas/hombrelobop1a.png"));
     }
     
@@ -37,6 +49,7 @@ public class MenuInicio extends JFrame {
     
     private void Inicializarbotones(){
         JPanel Panelenvuelto =new JPanel(new GridBagLayout());
+        Panelenvuelto.setOpaque(false);
         boton1 = new JButton("Login");
 
         boton1.setFont(new Font("Arial", Font.BOLD, 14));
@@ -52,6 +65,7 @@ public class MenuInicio extends JFrame {
         boton1.setOpaque(true);
 
         boton1.setHorizontalAlignment(SwingConstants.CENTER);
+        boton1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         boton1.addActionListener(e -> {
             login l = new login();
@@ -101,6 +115,7 @@ public class MenuInicio extends JFrame {
         boton3.setOpaque(true);
 
         boton3.setHorizontalAlignment(SwingConstants.CENTER);
+        boton3.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         boton3.addActionListener(e -> {
             System.exit(0);

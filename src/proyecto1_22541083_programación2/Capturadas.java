@@ -21,16 +21,21 @@ public class Capturadas extends JDialog {
 
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             setSize(850, 750);
+            
+            
+            ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoCelda.jpeg"));
+        Image Escalada = imagen.getImage().getScaledInstance(850,750 , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+        
+        
+        
           setLayout(new BorderLayout(10, 10));
           
           
-          if (equipo == 1){
-              
           
-            getContentPane().setBackground(Color.WHITE);
-          }else {
-               getContentPane().setBackground(Color.black);
-          }
             setLocationRelativeTo(Padre);
             InicializarGrid(personajes);
             InicializarBarra(equipo);

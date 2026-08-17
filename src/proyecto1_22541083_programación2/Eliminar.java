@@ -24,6 +24,18 @@ public class Eliminar extends JDialog {
 
     public Eliminar (JFrame Perfil, int index) {
         super(Perfil, "Deshabilitar", true);
+        
+        
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+        Image Escalada = imagen.getImage().getScaledInstance(500,700 , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+        setUndecorated(true);
+      
+        
+        
         inicializarTimer();
         Inicializarbarra();
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -84,8 +96,10 @@ public class Eliminar extends JDialog {
         panel.add(campo);
         panel.add(boton);
         panel.add(labelE);
+        panel.setOpaque(false);
         
         conten.add(panel);
+        conten.setOpaque(false);
         
         add(conten);
 

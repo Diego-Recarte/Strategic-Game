@@ -24,13 +24,25 @@ public class cambioC extends JDialog {
     private JButton boton;
     private JLabel label;
     private Timer tempo;
+     private JMenuBar barra;
+     private JButton botonb;
 
     public cambioC(JFrame Perfil, jugador user) {
         super(Perfil, "Cambio de Contraseña", true);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        
+        
+        ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+        Image Escalada = imagen.getImage().getScaledInstance(500,500 , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+      
 
         inicializarTimer();
         inicializarbotones(user);
+        Inicializarbarra();
 
         pack();
         setLocationRelativeTo(Perfil);
@@ -45,6 +57,7 @@ public class cambioC extends JDialog {
 
     private void mostrarMensaje(String texto) {
         label.setText(texto);
+        
         if (tempo.isRunning()) {
             tempo.stop();
         }
@@ -58,11 +71,12 @@ public class cambioC extends JDialog {
         label.setFont(new Font("Arial", Font.BOLD, 14));
         label.setForeground(Color.RED);
         label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setOpaque(false);
         add(label, BorderLayout.NORTH);
 
         panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        panel.setBackground(Color.WHITE);
+        panel.setOpaque(false);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(6, 6, 6, 6);
@@ -150,8 +164,52 @@ public class cambioC extends JDialog {
         });
 
         JPanel sur = new JPanel();
-        sur.setBackground(Color.WHITE);
+        sur.setOpaque(false);
         sur.add(boton);
         add(sur, BorderLayout.SOUTH);
     }
+    
+    public void Inicializarbarra(){
+        barra = new JMenuBar();
+            barra.setBorderPainted(false);
+            barra.setMargin(new Insets(5, 5, 5, 5));
+            barra.setBackground(Color.red);
+            barra.setForeground(Color.WHITE);
+            barra.setFont(new Font("Arial", Font.BOLD, 14));
+            barra.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 20));
+            
+            
+            
+        botonb = new JButton("regresar");
+
+        botonb.setFont(new Font("Arial", Font.BOLD, 15));
+
+        botonb.setBackground(Color.red);
+
+        botonb.setForeground(Color.WHITE);
+
+        botonb.setFocusable(false);
+        botonb.setBorderPainted(false);
+
+        botonb.addActionListener(e -> {
+            
+        
+            
+            this.dispose();
+            
+            
+        });
+            
+        
+            
+        barra.add(botonb);
+        add (barra);
+            
+            
+            
+            
+        
+    }
+    
+  
 }

@@ -8,7 +8,7 @@ package proyecto1_22541083_programación2;
  *
  * @author user
  */
-public class Partida {
+public final class Partida {
     
     private int numero;
     private jugador ganador ;
@@ -21,22 +21,24 @@ public class Partida {
         this.ganador = ganador;
         this.perdedor = perdedor;
         this.isretired = isretired;
+        
+        ganador.Sumarpuntos();
     }
 
-    public int getNumero() {
+    public final int getNumero() {
         return numero;
     }
 
-    public String getGanador() {
+    public final String getGanador() {
         
         return ganador.getUser();
     }
 
-    public String getPerdedor() {
+    public final String getPerdedor() {
         return perdedor.getUser();
     }
 
-    public String isIsretired() {
+    public final String isIsretired() {
         if (isretired){
             return "Retiro";
         }

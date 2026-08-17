@@ -35,7 +35,18 @@ public class Ranking extends JDialog{
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             setSize(1100, 500);
             setLayout(new BorderLayout(10, 10));
-            getContentPane().setBackground(Color.WHITE);
+            
+            
+             ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+            Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+            Image Escalada = imagen.getImage().getScaledInstance(pantalla.width,pantalla.height , Image.SCALE_SMOOTH);
+            imagen = new ImageIcon(Escalada);
+            JLabel fondo = new JLabel(imagen);
+            setContentPane(fondo);
+            fondo.setLayout(new BorderLayout());
+            setUndecorated(true); 
+        
+        
             Inicializartabla();
             Inicializarlabel();
             
@@ -144,9 +155,17 @@ public class Ranking extends JDialog{
         tabla.setCellSelectionEnabled(false);
         
         tabla.setFillsViewportHeight(true);
+        
+         tabla.setFillsViewportHeight(true);
+        tabla.setOpaque(false);
+        tabla.setShowGrid(false);
 
         scroll = new JScrollPane(tabla);
         scroll.setPreferredSize(new Dimension(750, 225));
+        scroll.setOpaque(false);
+        scroll.getViewport().setOpaque(false);
+        scroll.setBorder(BorderFactory.createEmptyBorder());
+        scroll.setViewportBorder(null);
         panelt.add(scroll);
         
         

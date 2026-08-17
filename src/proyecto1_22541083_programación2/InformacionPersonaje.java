@@ -19,15 +19,18 @@ import javax.swing.*;
 
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             setSize(1000, 800);
+            
+            ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+        Image Escalada = imagen.getImage().getScaledInstance(1000,800 , Image.SCALE_SMOOTH);
+        imagen = new ImageIcon(Escalada);
+        JLabel fondo = new JLabel(imagen);
+        setContentPane(fondo);
+        fondo.setLayout(new BorderLayout());
+        
+        
           setLayout(new BorderLayout(10, 10));
           
-          if (equipo == 1){
-              
           
-            getContentPane().setBackground(Color.WHITE);
-          }else {
-               getContentPane().setBackground(Color.black);
-          }
             setLocationRelativeTo(Padre);
             InicializarGrid(personajes);
             InicializarBarra(equipo);

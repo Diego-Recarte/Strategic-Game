@@ -31,12 +31,7 @@ public class opcionesRetirar extends JDialog{
         inicializarJLabel(equipo);
         Inicializarbotones(padre, equipo, user1, user2);
         
-        if (equipo == 1) {
-            setLocation((padre.getWidth() - this.getWidth()) / 2, 300);
-        } else if (equipo == 2) {
-            setLocation((padre.getWidth() - this.getWidth()) / 2, 900);
-        }
-        
+         setLocationRelativeTo(padre);
 
     }
 
@@ -88,14 +83,14 @@ public class opcionesRetirar extends JDialog{
         Aceptar.setHorizontalAlignment(SwingConstants.CENTER);
 
         Aceptar.addActionListener(e -> {
-            
+            this.dispose();
             // poner fin de partida
             if (equipo==1){
-                padre.partidaFin(user1,user2, true, 1);
-                this.dispose();
+                padre.partidaFin(user1,user2, true, 1); 
+                
             }else{
                 padre.partidaFin(user2,user1, true, 2);
-                this.dispose();
+                
             }
             
             

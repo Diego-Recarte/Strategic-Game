@@ -515,7 +515,7 @@ public class juego extends JFrame{
         
         label.setFont(new Font("Arial", Font.BOLD, 10));
         label.setForeground(Color.BLACK);
-        label.setOpaque(false);
+        label.setOpaque(true);
 
 
         label.setPreferredSize(new Dimension(160, 13));

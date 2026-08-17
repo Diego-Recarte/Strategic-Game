@@ -247,7 +247,7 @@ public class CrearCuenta extends JFrame {
 
         btnIngresar.setFont(new Font("Arial", Font.BOLD, 15));
 
-        btnIngresar.setBackground(new Color(52,152,219));
+        btnIngresar.setBackground(Color.red);
 
         btnIngresar.setForeground(Color.WHITE);
 
@@ -383,7 +383,7 @@ public class CrearCuenta extends JFrame {
         barra = new JMenuBar();
             barra.setBorderPainted(false);
             barra.setMargin(new Insets(5, 5, 5, 5));
-            barra.setBackground(new Color(52,152,219));
+            barra.setBackground(Color.red);
             barra.setForeground(Color.WHITE);
             barra.setFont(new Font("Arial", Font.BOLD, 14));
             barra.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 20));
@@ -394,7 +394,7 @@ public class CrearCuenta extends JFrame {
 
         botonb.setFont(new Font("Arial", Font.BOLD, 15));
 
-        botonb.setBackground(new Color(52,152,219));
+        botonb.setBackground(Color.red);
 
         botonb.setForeground(Color.WHITE);
 

@@ -515,7 +515,7 @@ public class juego extends JFrame{
         
         label.setFont(new Font("Arial", Font.BOLD, 10));
         label.setForeground(Color.BLACK);
-        label.setOpaque(false);
+        label.setOpaque(true);
 
 
         label.setPreferredSize(new Dimension(160, 13));
@@ -1026,9 +1026,9 @@ public class juego extends JFrame{
         
         status.add(statsP2);
          status.add(statp2);
-         status.add(Box.createVerticalStrut(21));
+         status.add(Box.createVerticalStrut(80));
          status.add(statchat);
-         status.add(Box.createVerticalStrut(25));
+         status.add(Box.createVerticalStrut(100));
          status.add(statp1);
          JButton capturadas1= new JButton();
           ajustesPanel("Capturadas", capturadas1);

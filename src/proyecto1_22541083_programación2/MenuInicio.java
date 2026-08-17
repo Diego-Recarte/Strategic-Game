@@ -57,7 +57,7 @@ public class MenuInicio extends JFrame {
         boton1.setMaximumSize(new Dimension(600, 150));
 
         boton1.setForeground(Color.WHITE);
-        boton1.setBackground(new Color(52,152,219));
+        boton1.setBackground(Color.red);
 
         boton1.setFocusPainted(false);
         boton1.setBorderPainted(false);
@@ -83,7 +83,7 @@ public class MenuInicio extends JFrame {
         boton2.setMaximumSize(new Dimension(600, 150));
 
         boton2.setForeground(Color.WHITE);
-        boton2.setBackground(new Color(52,152,219));
+        boton2.setBackground(Color.red);
 
         boton2.setFocusPainted(false);
         boton2.setBorderPainted(false);
@@ -107,7 +107,7 @@ public class MenuInicio extends JFrame {
         boton3.setMaximumSize(new Dimension(600, 150));
 
         boton3.setForeground(Color.WHITE);
-        boton3.setBackground(new Color(52,152,219));
+        boton3.setBackground(Color.red);
 
         boton3.setFocusPainted(false);
         boton3.setBorderPainted(false);

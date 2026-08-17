@@ -97,7 +97,7 @@ public abstract class personaje {
                 
             }else{
                 //mensaje de quitar escudo
-                return 5;
+                return 1;
             }
 
         }

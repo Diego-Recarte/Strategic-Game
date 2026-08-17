@@ -77,6 +77,7 @@ public class MenuInicio extends JFrame {
         boton2.setOpaque(true);
 
         boton2.setHorizontalAlignment(SwingConstants.CENTER);
+        boton2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         boton2.addActionListener(e -> {
                 CrearCuenta c = new CrearCuenta();

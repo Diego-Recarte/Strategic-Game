@@ -43,8 +43,8 @@ public class Capturadas extends JDialog {
         
         JPanel panel = new JPanel();
 
-        panel.setLayout(new GridLayout(3, 3, 10, 10));
-        panel.setPreferredSize(new Dimension(850, 750));
+        panel.setLayout(new GridLayout(3, 2, 10, 10));
+        panel.setPreferredSize(new Dimension(850,  850));
         panel.setOpaque(false);
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         int contador=0;
@@ -76,11 +76,16 @@ public class Capturadas extends JDialog {
         celda = new ImageIcon(Escalada);
         
         jaula.setOpaque(false);
+        jaula.setPreferredSize(new Dimension (280, 280));
+        jaula.setMinimumSize(new Dimension (280, 280));
+        jaula.setMaximumSize(new Dimension (280, 280));
+        
+        
         
         
         JLabel capturado = new JLabel();
         capturado.setIcon(persona);
-        capturado.setBounds(60, 70, 150, 150);
+        capturado.setBounds(50, 70, 150, 150);
         capturado.setOpaque(false);
         
         JLabel barrotes = new JLabel();
@@ -89,7 +94,7 @@ public class Capturadas extends JDialog {
         barrotes.setOpaque(false);
         
         JLayeredPane capas = new JLayeredPane();
-        capas.setPreferredSize(new Dimension(250, 250));
+        capas.setPreferredSize(new Dimension(280, 280));
         
         capas.add(capturado, JLayeredPane.DEFAULT_LAYER);
         capas.add(barrotes, JLayeredPane.PALETTE_LAYER);

@@ -257,21 +257,25 @@ public class juego extends JFrame{
         return vivos;
     }
     
-    public void VerificarFin(){
+    public boolean VerificarFin(){
         int vivos;
         if (turno==1){
             vivos = Contarvivos( personajes2);
             if (vivos==0){
                 partidaFin(user1,user2, false, 1);
+                return true;
             }
+            
             
             
         }else if (turno ==2){
             vivos = Contarvivos( personajes1);
             if (vivos ==0){
                 partidaFin(user2,user1, false, 2);
+                return true;
             }
         }
+        return false;
     }
     
     public void partidaFin(jugador ganador, jugador perdedor, boolean isRetirado, int equipo){
@@ -942,9 +946,9 @@ public class juego extends JFrame{
          
          statchat = new JPanel();
          statchat.setOpaque(false);
-         statchat.setPreferredSize(new Dimension(350, 200));
-         statchat.setMaximumSize(new Dimension(350, 200));
-         statchat.setMinimumSize(new Dimension(350, 200));
+         statchat.setPreferredSize(new Dimension(350, 90));
+         statchat.setMaximumSize(new Dimension(350, 90));
+         statchat.setMinimumSize(new Dimension(350, 90));
          Inicializarchat();
          statchat.add(chat);
          
@@ -1143,9 +1147,10 @@ public class juego extends JFrame{
         chat.setLineWrap(true);//hace salto de linea si se acaba el espacio
         chat.setWrapStyleWord(true);//hace que se corte entre palabras, no entre letras
         
-        chat.setPreferredSize(new Dimension (350,200));
-        chat.setMaximumSize(new Dimension (350,200));
-        chat.setMinimumSize(new Dimension (350,200));
+        chat.setPreferredSize(new Dimension (350,90));
+        chat.setMaximumSize(new Dimension (350,90));
+        chat.setMinimumSize(new Dimension (350,90));
+        chat.setMargin(new Insets(5, 10, 5, 10));
                 
     }
     public void CrearMensaje(String mensaje){
@@ -1807,36 +1812,37 @@ public class juego extends JFrame{
      public void chupar(casilla atacante, casilla atacado, ActionListener chupar){
          limpiarAtaques();
          int resultado;
+         atacado.RepresentarAtaque();
             resultado = atacante.getPersonaje().especial(atacado.getPersonaje(),0);
-            atacado.RepresentarAtaque();
+            
             
             
             switch (resultado){
                 
                 case 1:
-                    
-                    
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Rompió el escudo de "+atacado.getPersonaje().getClass().getSimpleName());
                     break;
                 case 2:
-                    if (atacado.getClass().getSimpleName().equals("Muerte")){
+                    if (atacado.getPersonaje().getClass().getSimpleName().equals("Muerte")){
                         eliminarZombies(atacado.getPersonaje());
                     }
                     atacado.subPersonaje();
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Capturó a "+atacado.getPersonaje().getClass().getSimpleName()+" chupando 1 punto de vida");
                     break;
                 case 3:
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Rompió el escudo de "+atacado.getPersonaje().getClass().getSimpleName()+ " y dejo su vida a "+ atacado.getPersonaje().getVida());
                     break;
                 case 4:
-                    break;
-                case 5:
                     
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+ " dejo la vida de "+ atacado.getPersonaje().getClass().getSimpleName()+ " a "+ atacado.getPersonaje().getVida()+" chupando 1 punto de vida");
                     break;
                     //mensajes para el chat y muerte en caso de ser necesario
         
-
             
             }
-            VerificarFin();
-            finturno();
+            if (!VerificarFin()) {
+                finturno();
+            }
          
      }
      
@@ -1845,27 +1851,30 @@ public class juego extends JFrame{
         System.out.println("atacando() ejecutado");
   
         int resultado;
-        resultado = atacado.getPersonaje().recibirataque(atacante.getPersonaje().getAtaque(),0, false);
         atacado.RepresentarAtaque();
+        resultado = atacado.getPersonaje().recibirataque(atacante.getPersonaje().getAtaque(),0, false);
+        
         System.out.println("se ataco");
             
             
             switch (resultado){
                 
                 case 1:
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Rompió el escudo de "+atacado.getPersonaje().getClass().getSimpleName());
                     break;
                 case 2:
-                    if (atacado.getClass().getSimpleName().equals("Muerte")){
+                    if (atacado.getPersonaje().getClass().getSimpleName().equals("Muerte")){
                         eliminarZombies(atacado.getPersonaje());
                     }
                     atacado.subPersonaje();
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Capturó a "+atacado.getPersonaje().getClass().getSimpleName());
                     break;
                 case 3:
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Rompió el escudo de "+atacado.getPersonaje().getClass().getSimpleName()+ " y dejo su vida a "+ atacado.getPersonaje().getVida());
                     break;
                 case 4:
-                    break;
-                case 5:
                     
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+ " dejo la vida de "+ atacado.getPersonaje().getClass().getSimpleName()+ " a "+ atacado.getPersonaje().getVida());
                     break;
                     //mensajes para el chat y muerte en caso de ser necesario
         
@@ -1873,8 +1882,9 @@ public class juego extends JFrame{
             
             }
             removeAciones(turno);
-            VerificarFin();
-            finturno();
+            if (!VerificarFin()) {
+                finturno();
+            }
         
         
         
@@ -2063,28 +2073,30 @@ public class juego extends JFrame{
      public void lanzar(casilla atacante, casilla atacado, ActionListener ataque){
         limpiarAtaques();
         
-  
+            atacado.RepresentarAtaque();
             int resultado;
             resultado = atacado.getPersonaje().recibirataque(2,0, true);
-            atacado.RepresentarAtaque();
+            
             
             
             switch (resultado){
                 
-                case 1:
+                 case 1:
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Rompió el escudo de "+atacado.getPersonaje().getClass().getSimpleName()+ " con lanza");
                     break;
                 case 2:
-                    if (atacado.getClass().getSimpleName().equals("Muerte")){
+                    if (atacado.getPersonaje().getClass().getSimpleName().equals("Muerte")){
                         eliminarZombies(atacado.getPersonaje());
                     }
                     atacado.subPersonaje();
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Capturó a "+atacado.getPersonaje().getClass().getSimpleName()+ " con lanza");
                     break;
                 case 3:
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+"Rompió el escudo de "+atacado.getPersonaje().getClass().getSimpleName()+ " y dejo su vida a "+ atacado.getPersonaje().getVida()+ " con lanza");
                     break;
                 case 4:
-                    break;
-                case 5:
                     
+                    CrearMensaje(atacante.getPersonaje().getClass().getSimpleName()+ " dejo la vida de "+ atacado.getPersonaje().getClass().getSimpleName()+ " a "+ atacado.getPersonaje().getVida()+ " con lanza");
                     break;
                     //mensajes para el chat y muerte en caso de ser necesario
         
@@ -2093,8 +2105,10 @@ public class juego extends JFrame{
             }
             
             removeAciones(turno);
-            VerificarFin();
-            finturno();
+           
+            if (!VerificarFin()) {
+                finturno();
+            }
             
             
         

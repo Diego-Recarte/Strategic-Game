@@ -24,8 +24,7 @@ public class cambioC extends JDialog {
     private JButton boton;
     private JLabel label;
     private Timer tempo;
-     private JMenuBar barra;
-     private JButton botonb;
+   
 
     public cambioC(JFrame Perfil, jugador user) {
         super(Perfil, "Cambio de Contraseña", true);
@@ -42,7 +41,7 @@ public class cambioC extends JDialog {
 
         inicializarTimer();
         inicializarbotones(user);
-        Inicializarbarra();
+   
 
         pack();
         setLocationRelativeTo(Perfil);
@@ -169,47 +168,6 @@ public class cambioC extends JDialog {
         add(sur, BorderLayout.SOUTH);
     }
     
-    public void Inicializarbarra(){
-        barra = new JMenuBar();
-            barra.setBorderPainted(false);
-            barra.setMargin(new Insets(5, 5, 5, 5));
-            barra.setBackground(Color.red);
-            barra.setForeground(Color.WHITE);
-            barra.setFont(new Font("Arial", Font.BOLD, 14));
-            barra.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 20));
-            
-            
-            
-        botonb = new JButton("regresar");
-
-        botonb.setFont(new Font("Arial", Font.BOLD, 15));
-
-        botonb.setBackground(Color.red);
-
-        botonb.setForeground(Color.WHITE);
-
-        botonb.setFocusable(false);
-        botonb.setBorderPainted(false);
-
-        botonb.addActionListener(e -> {
-            
-        
-            
-            this.dispose();
-            
-            
-        });
-            
-        
-            
-        barra.add(botonb);
-        add (barra);
-            
-            
-            
-            
-        
-    }
-    
+   
   
 }

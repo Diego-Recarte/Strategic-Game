@@ -19,7 +19,7 @@ public class Guia extends JDialog{
             setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
             setSize(1200, 800);
             
-            ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo.jpeg"));
+            ImageIcon imagen = new ImageIcon(getClass().getResource("/Imagenes/fondos/fondoRollo2.jpg"));
         Image Escalada = imagen.getImage().getScaledInstance(1200,800 , Image.SCALE_SMOOTH);
         imagen = new ImageIcon(Escalada);
         JLabel fondo = new JLabel(imagen);
